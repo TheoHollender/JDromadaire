@@ -47,6 +47,7 @@ public class Parser {
 		
 		parentNodes.add(this.parseToken(tokens, false));
 		int last_eof_id = this.tok_id;
+		// IModify
 		if (this.current_token.type == end) {
 			return parentNodes;
 		}
@@ -124,6 +125,22 @@ public class Parser {
 				return null;
 			}
 			this.advance();
+			
+			ArrayList<StringNode> args = new ArrayList<>();
+			TokenType lastType = this.current_token.type;
+			while(this.advanceResult && lastType != TokenType.RPAREN
+					&& this.current_token.type == TokenType.NAME) {
+				Token a = this.current_token;
+				this.advance();
+				
+				lastType = this.current_token.type;
+				
+				if(lastType != TokenType.RPAREN) {
+					this.advance();
+				}
+				args.add(new StringNode(a.col, a.line, (String) a.value));
+			}
+			
 			if(this.current_token.type != TokenType.RPAREN) {
 				return null;
 			}
@@ -142,14 +159,18 @@ public class Parser {
 			
 			FunctionNode n = new FunctionNode(0, 0);
 			n.evaluators = nodes;
-			n.arguments = new ArrayList<>();
+			n.arguments = args;
+			
 			p.advance();
 			if (p.current_token.type != TokenType.RCURLYBRACKET) {
 				return null;
 			}
+			
 			p.advance();
 			EntryPoint.globalContext.setValue(name, n);
 			this.iModifier = p.tok_id;
+			this.tok_id = p.tok_id - 1;
+			this.advance();
 			return n;
 		}
 		
@@ -188,11 +209,9 @@ public class Parser {
 			n.evaluators = nodes;
 			n.arguments = new ArrayList<>();
 			
-			if(p.current_token.type != TokenType.RCURLYBRACKET) {
-				p.advance();
-				if (p.current_token.type != TokenType.RCURLYBRACKET) {
-					return null;
-				}
+			p.advance();
+			if (p.current_token.type != TokenType.RCURLYBRACKET) {
+				return null;
 			}
 			p.advance();
 			
