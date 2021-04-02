@@ -16,19 +16,11 @@ Which can be created using the following expressions (characters and dict can't 
 
 For the moment, you can define a function by saying
 
-function name() {
+The syntax will be like this:
+
+function name(arg0, arg1, arg2, [...] , argn) {
    Your code
 }
-
-The function arguments aren't implemented yet.
-
-The syntax will be something like this :
-
-function name(arg0, arg1, arg2) {
-
-}
-
-They are only implemented in backend, the parser needs to parse the names
 
 ## Classes
 
