@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import main.EntryPoint;
 import parser.Node;
 import parser.nodes.innerreturn.BreakNode;
+import parser.nodes.innerreturn.ContinueNode;
 import parser.nodes.innerreturn.InnerRNode;
 import variables.ClassNode;
 import variables.VariableContext;
@@ -66,6 +67,12 @@ public class FuncGetterNode extends Node {
 					System.out.println("Too many breaks occured");
 					EntryPoint.raiseNode((Node) d);
 					((BreakNode)d).reset();
+					return null;
+				}
+				if (d instanceof ContinueNode) {
+					System.out.println("Continue count too high");
+					EntryPoint.raiseNode((Node) d);
+					((ContinueNode)d).reset();
 					return null;
 				}
 			}

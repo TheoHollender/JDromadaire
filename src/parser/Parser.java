@@ -19,6 +19,7 @@ import parser.nodes.NumberNode;
 import parser.nodes.ReturnGetterNode;
 import parser.nodes.StringNode;
 import parser.nodes.innerreturn.BreakNode;
+import parser.nodes.innerreturn.ContinueNode;
 
 public class Parser {
 	
@@ -118,6 +119,9 @@ public class Parser {
 		if(this.current_token.type == TokenType.BREAK) {
 			return this.parseBreak();
 		}
+		if(this.current_token.type == TokenType.CONTINUE) {
+			return this.parseContinue();
+		}
 		if (this.current_token.type == TokenType.FUNCTION) {
 			return this.parseFunction();
 		}
@@ -167,6 +171,71 @@ public class Parser {
 		
 		return new BreakNode(t.col, t.line, i);
 	}
+	
+	private Node parseContinue() {
+		Token t = this.current_token;
+		this.advance();
+		int i = 1;
+		int j = 1;
+		if(this.current_token.type == TokenType.LPAREN) {
+			this.advance();
+			Node ex = this.expr();
+			try {
+				Object v = ex.evaluate(null);
+				if (v instanceof NumberNode && ((NumberNode)v).getValue() instanceof Integer) {
+					i = (int) ((NumberNode)v).getValue();
+				}else {
+					System.out.println("Continue count only supports integers");
+					EntryPoint.raiseToken(t);
+					return null;
+				}
+			} catch(Exception e) {
+				System.out.println("Continue count does not support dynamic expression");
+				EntryPoint.raiseToken(t);
+				return null;
+			}
+			if (this.current_token.type == TokenType.COMMA) {
+				this.advance();
+				Node ex2 = this.expr();
+				try {
+					Object v = ex2.evaluate(null);
+					if (v instanceof NumberNode && ((NumberNode)v).getValue() instanceof Integer) {
+						j = (int) ((NumberNode)v).getValue();
+					}else {
+						System.out.println("Continue jump count only supports integers");
+						EntryPoint.raiseToken(t);
+						return null;
+					}
+				} catch(Exception e) {
+					System.out.println("Continue jump count does not support dynamic expression");
+					EntryPoint.raiseToken(t);
+					return null;
+				}
+				
+			}
+			
+			if (this.current_token.type != TokenType.RPAREN) {
+				System.out.println("Missing right parenthesies of continue");
+				EntryPoint.raiseToken(t);
+				return null;
+			}
+			this.advance();
+		}
+		
+		if (i<=0) {
+			System.out.println("Continue count only supports positive integers");
+			EntryPoint.raiseToken(t);
+			return null;
+		}
+		if (j<=0) {
+			System.out.println("Continue jump count only supports positive integers");
+			EntryPoint.raiseToken(t);
+			return null;
+		}
+		
+		return new ContinueNode(t.col, t.line, i, j);
+	}
+	
 	public Node parseReturn() {
 		Token t = this.current_token;
 		this.advance();

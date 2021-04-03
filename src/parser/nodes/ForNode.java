@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import main.EntryPoint;
 import parser.Node;
 import parser.nodes.innerreturn.BreakNode;
+import parser.nodes.innerreturn.ContinueNode;
 import parser.nodes.innerreturn.InnerRNode;
 import variables.VariableContext;
 
@@ -37,8 +38,14 @@ public class ForNode extends Node {
 		
 		set.evaluate(context);
 		
+		int jcount = 0;
 		while(canContinue(context)) {
-			Object data = f.evaluate(context, new ArrayList<Object>());
+			Object data = null;
+			if (jcount == 0) {
+				data = f.evaluate(context, new ArrayList<Object>());
+			} else {
+				jcount -= 1;
+			}
 			
 			if(data instanceof ReturnNode) {
 				return data;
@@ -54,6 +61,16 @@ public class ForNode extends Node {
 						}
 						bn.reset();
 						return null;
+					}
+				} else if (data instanceof ContinueNode) {
+					ContinueNode cn = (ContinueNode) data;
+					if (cn.getContinueCount() > 0) {
+						if (cn.getContinueCount() > 1) {
+							cn.decreaseContinueCount();
+							return cn;
+						}
+						cn.reset();
+						jcount = cn.getJumpCount() - 1;
 					}
 				} else {
 					return data;
