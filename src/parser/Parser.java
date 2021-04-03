@@ -520,6 +520,64 @@ public class Parser {
 					}
 				}
 			}
+			
+			TokenType[] opeq_types = new TokenType[] {
+					TokenType.PLUS, TokenType.MINUS,
+					TokenType.POW, TokenType.MUL, TokenType.DIV,
+			};
+			int opeq_type_id = -1;
+			int i = 0;
+			for (TokenType t:opeq_types) {
+				if (t == this.current_token.type) {
+					opeq_type_id = i;
+					break;
+				}
+				i ++;
+			}
+			this.tok_id = cp_tok_id - 1;
+			this.advance();
+			
+			if (opeq_type_id != -1) {
+				this.advance();
+				if (this.current_token.type == TokenType.SET) {
+					this.advance();
+					Node n = this.bin();
+					if (n == null) {
+						return null;
+					}
+					Node g = new GetterNode((String) cur_tok.value, cur_tok.col, cur_tok.line);
+					Node op = new OpNode(opeq_types[opeq_type_id], g, n, cur_tok.col, cur_tok.line);
+					return new SetterNode(op, (String) cur_tok.value, cur_tok.col, cur_tok.line);
+				}
+			}
+			this.tok_id = cp_tok_id - 1;
+			this.advance();
+			this.advance();
+			
+			TokenType[] opop1_types = new TokenType[] {
+					TokenType.PLUS, TokenType.MINUS
+			};
+			int opop1_type_id = -1;
+			i = 0;
+			for (TokenType t:opop1_types) {
+				if (t == this.current_token.type) {
+					opop1_type_id = i;
+					break;
+				}
+				i ++;
+			}
+			
+			if(opop1_type_id != -1) {
+				this.advance();
+				if(this.current_token.type == opop1_types[opop1_type_id]) {
+					TokenType op = this.current_token.type;
+					Node g = new GetterNode((String) cur_tok.value, cur_tok.col, cur_tok.line);
+					Node n = new NumberNode(1, -1, -1);
+					Node opn = new OpNode(op, g, n, cur_tok.col, cur_tok.line);
+					this.advance();
+					return new SetterNode(opn, (String) cur_tok.value, cur_tok.col, cur_tok.line);
+				}
+			}
 		}
 		
 		this.tok_id = cp_tok_id - 1;
