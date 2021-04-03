@@ -68,4 +68,27 @@ public class ArrayFunctions {
 		
 	}
 	
+	public static class IndexFunction extends FunctionNode {
+		
+		public IndexFunction(int col, int line) {
+			super(col, line);
+		}
+		
+		public Object evaluate(VariableContext context, ArrayList<Object> args) {
+			ArrayNode arr = getFromArgs(args, "add", this);
+			
+			int i = -2;
+			if (!argsFound && args.size() > 1) {
+				System.out.println("Missing armuments on index function");
+				EntryPoint.raiseNode(this);
+				return null;
+			} else {
+				i = arr.array.indexOf(args.get(1));
+			}
+			
+			return new NumberNode(i, -1,-1);
+		}
+		
+	}
+	
 }

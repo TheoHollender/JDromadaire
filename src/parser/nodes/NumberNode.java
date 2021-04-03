@@ -14,6 +14,13 @@ public class NumberNode extends ValueNode implements EvaluateOperator<NumberNode
 		super(value, col, line);
 	}
 	
+	public boolean equals(Object other) {
+		if (other instanceof NumberNode) {
+			return this.value == ((NumberNode)other).value;
+		}
+		return false;
+	}
+	
 	public String toString() {
 		return String.valueOf(this.getValue());
 	}

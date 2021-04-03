@@ -1,9 +1,11 @@
-package parser.nodes;
+package parser.nodes.getters;
 
 import java.util.ArrayList;
 
 import main.EntryPoint;
 import parser.Node;
+import parser.nodes.FunctionNode;
+import parser.nodes.ReturnNode;
 import parser.nodes.innerreturn.BreakNode;
 import parser.nodes.innerreturn.ContinueNode;
 import parser.nodes.innerreturn.InnerRNode;

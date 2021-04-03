@@ -1,9 +1,12 @@
-package parser.nodes;
+package parser.nodes.statements;
 
 import java.util.ArrayList;
 
 import main.EntryPoint;
 import parser.Node;
+import parser.nodes.BooleanNode;
+import parser.nodes.FunctionNode;
+import parser.nodes.ReturnNode;
 import parser.nodes.innerreturn.InnerRNode;
 import variables.VariableContext;
 

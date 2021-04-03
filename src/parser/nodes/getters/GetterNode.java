@@ -1,4 +1,4 @@
-package parser.nodes;
+package parser.nodes.getters;
 
 import parser.Node;
 import variables.VariableContext;

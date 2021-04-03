@@ -1,6 +1,7 @@
-package parser.nodes;
+package parser.nodes.getters;
 
 import parser.Node;
+import parser.nodes.ReturnNode;
 import variables.VariableContext;
 
 public class ReturnGetterNode extends Node {

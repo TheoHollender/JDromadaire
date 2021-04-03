@@ -1,7 +1,9 @@
-package parser.nodes;
+package parser.nodes.getters;
 
 import main.EntryPoint;
 import parser.Node;
+import parser.nodes.NumberNode;
+import parser.nodes.StringNode;
 import parser.operators.ListOperator;
 import variables.VariableContext;
 

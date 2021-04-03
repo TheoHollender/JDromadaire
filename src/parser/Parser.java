@@ -8,18 +8,19 @@ import main.Token;
 import main.TokenType;
 import parser.nodes.ArrayNode;
 import parser.nodes.BooleanNode;
-import parser.nodes.ForNode;
-import parser.nodes.FuncGetterNode;
 import parser.nodes.FunctionNode;
-import parser.nodes.GetterNode;
-import parser.nodes.IfNode;
-import parser.nodes.ListGetterNode;
 import parser.nodes.ListSetterNode;
 import parser.nodes.NumberNode;
-import parser.nodes.ReturnGetterNode;
 import parser.nodes.StringNode;
+import parser.nodes.getters.FuncGetterNode;
+import parser.nodes.getters.GetterNode;
+import parser.nodes.getters.IteratorGetterNode;
+import parser.nodes.getters.ListGetterNode;
+import parser.nodes.getters.ReturnGetterNode;
 import parser.nodes.innerreturn.BreakNode;
 import parser.nodes.innerreturn.ContinueNode;
+import parser.nodes.statements.ForNode;
+import parser.nodes.statements.IfNode;
 
 public class Parser {
 	
@@ -356,9 +357,55 @@ public class Parser {
 	
 	private Node parseFor() {
 		int cp_tok_id = this.tok_id;
+		Token t = this.current_token;
+		this.advance();
+		
+		if(this.current_token.type == TokenType.LPAREN) {
+			this.advance();
+			if(this.current_token.type == TokenType.NAME) {
+				String name = (String) this.current_token.value;
+				this.advance();
+				if (this.current_token.type == TokenType.TWO_POINTS) {
+					this.advance();
+					
+					Node left = this.parseToken(this.tokens, this.tok_id, this.tokens.size());
+					
+					if(this.current_token.type == TokenType.RPAREN) {
+						
+						this.advance();
+						if(this.current_token.type == TokenType.LCURLYBRACKET) {
+							this.advance();
+							
+							Parser p = new Parser();
+							p.tokens = this.tokens;
+							p.tok_id = this.tok_id - 1;
+							p.length = this.tokens.size();
+							p.advance();
+							ArrayList<Node> nodes = p.parse(this.tokens, TokenType.RCURLYBRACKET);
+							
+							FunctionNode n = new FunctionNode(0, 0);
+							n.evaluators = nodes;
+							n.arguments = new ArrayList<>();
+							
+							p.advance();
+							if (p.current_token.type == TokenType.RCURLYBRACKET) {
+								p.advance();
+								
+								this.iModifier = p.tok_id;
+								this.tok_id = p.tok_id - 1;
+								this.advance();
+								
+								return new ForNode(t.col, t.line, n, new IteratorGetterNode(t.col, t.line, left), name);
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		this.tok_id = cp_tok_id;
 		this.advance();
 
-		Token t = this.current_token;
 		if(this.current_token.type == TokenType.LPAREN) {
 			this.advance();
 			Node exprSet = this.parseToken(this.tokens, this.tok_id, this.tokens.size());

@@ -4,18 +4,18 @@ import java.util.ArrayList;
 
 import functions.base.ArrayFunctions;
 import main.EntryPoint;
-import parser.Node;
+import parser.operators.IteratorOperator;
 import parser.operators.ListOperator;
 import variables.ClassNode;
 import variables.VariableContext;
 
-public class ArrayNode extends ClassNode implements ListOperator {
+public class ArrayNode extends ClassNode implements ListOperator, IteratorOperator {
 
-	private ArrayList<Object> array = new ArrayList<>();
+	public ArrayList<Object> array = new ArrayList<>();
 	
 	private static final FunctionNode add = new ArrayFunctions.AddFunction(-1, -1);
 	private static final FunctionNode remove = new ArrayFunctions.RemoveFunction(-1, -1);
-	private static final FunctionNode index = new ArrayFunctions.AddFunction(-1, -1);
+	private static final FunctionNode index = new ArrayFunctions.IndexFunction(-1, -1);
 	private static final FunctionNode contains = new ArrayFunctions.AddFunction(-1, -1);
 	
 	public ArrayNode(int col, int line) {
@@ -85,6 +85,32 @@ public class ArrayNode extends ClassNode implements ListOperator {
 	
 	public String toString() {
 		return this.array.toString();
+	}
+
+	
+	private class Iterator extends IteratorNode {
+
+		private ArrayNode node;
+		private int found = 0;
+		public Iterator(int col, int line, ArrayNode arr) {
+			super(col, line);
+			node = arr;
+		}
+		
+		public boolean hasNext() {
+			return found < node.length();
+		}
+		
+		public Object next() {
+			found += 1;
+			return node.get(new NumberNode(found - 1, -1, -1));
+		}
+		
+	}
+	
+	@Override
+	public IteratorNode getIterator(VariableContext context) {
+		return new Iterator(col, line, this);
 	}
 
 }
