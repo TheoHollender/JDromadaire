@@ -1,6 +1,6 @@
 # JDromadaire
 
-The goal of this tool is to create a language which uses the great points of python but uses the the Java/C++/C syntax and which uses the tools of Java like the Socket which is easyer than python's one.
+The goal of this tool is to create a language which uses the great points of python but uses the the Java/C++/C syntax and which uses the tools of Java like the Socket which is easier than python's one.
 
 ## Variables
 
@@ -30,7 +30,7 @@ The classes can't be created inside the code but the implementation can be done 
 
 ## OpenNS
 
-The networking subsystem is a project i am currently working on which will be implemented inside JDromadaire. It is used to make easyer cryptographical tunnels and it's base system creates 3 tunnels, a default for simple data, an encrypted for secure informations and a fallback for important data that needs to faster than the queue of the 2 others.
+The networking subsystem is a project i am currently working on which will be implemented inside JDromadaire. It is used to make easier cryptographical tunnels and it's base system creates 3 tunnels, a default for simple data, an encrypted for secure informations and a fallback for important data that needs to faster than the queue of the 2 others.
 
 ## File
 
