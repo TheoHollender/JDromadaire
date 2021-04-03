@@ -532,10 +532,8 @@ public class Parser {
 					opeq_type_id = i;
 					break;
 				}
-				i ++;
+				i++;
 			}
-			this.tok_id = cp_tok_id - 1;
-			this.advance();
 			
 			if (opeq_type_id != -1) {
 				this.advance();
