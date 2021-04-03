@@ -65,6 +65,7 @@ public class FuncGetterNode extends Node {
 				if (d instanceof BreakNode) {
 					System.out.println("Too many breaks occured");
 					EntryPoint.raiseNode((Node) d);
+					((BreakNode)d).reset();
 					return null;
 				}
 			}

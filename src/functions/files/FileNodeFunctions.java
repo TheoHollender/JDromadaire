@@ -27,7 +27,7 @@ public class FileNodeFunctions {
 		}
 		
 		if (!(args.get(0) instanceof FileNode)) {
-			System.out.println("An error occured during \"+name+\", this object not instance of FileNode, instance of "+args.get(0).getClass().toString());
+			System.out.println("An error occured during "+name+", this object not instance of FileNode, instance of "+args.get(0).getClass().toString());
 			EntryPoint.raiseNode(n);
 			argsFound = false;
 			return null;

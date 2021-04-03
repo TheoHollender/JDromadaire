@@ -52,6 +52,7 @@ public class ForNode extends Node {
 							bn.decreaseBreakCount();
 							return bn;
 						}
+						bn.reset();
 						return null;
 					}
 				} else {
