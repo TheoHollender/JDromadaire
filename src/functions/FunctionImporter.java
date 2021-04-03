@@ -11,6 +11,7 @@ public class FunctionImporter {
 		VariableContext cont = EntryPoint.globalContext;
 		
 		cont.setValue("print", new PrintFunction(-2, -2));
+		cont.setValue("help", new HelpFunction(-2,-2));
 		cont.setValue("File", new FileNode(-2,-2));
 	}
 	

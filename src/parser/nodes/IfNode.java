@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import main.EntryPoint;
 import parser.Node;
+import parser.nodes.innerreturn.InnerRNode;
 import variables.VariableContext;
 
 public class IfNode extends Node {
@@ -37,6 +38,9 @@ public class IfNode extends Node {
 		}
 		
 		if (data instanceof ReturnNode) {
+			return data;
+		}
+		if (data instanceof InnerRNode) {
 			return data;
 		}
 		

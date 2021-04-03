@@ -20,6 +20,6 @@ public enum TokenType {
 	STRING, NUMBER, TRUE, FALSE,
 	
 	// String Objects
-	FUNCTION, RETURN, IF,
+	FUNCTION, RETURN, IF, FOR, BREAK, CONTINUE,
 
 }

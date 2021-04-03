@@ -1,6 +1,7 @@
 package parser.nodes;
 
 import parser.Node;
+import variables.VariableContext;
 
 public class ReturnNode extends Node {
 
@@ -10,4 +11,8 @@ public class ReturnNode extends Node {
 		o = value;
 	}
 
+	public Object evaluate(VariableContext ctx) {
+		return o;
+	}
+	
 }

@@ -8,6 +8,7 @@ import main.Token;
 import main.TokenType;
 import parser.nodes.ArrayNode;
 import parser.nodes.BooleanNode;
+import parser.nodes.ForNode;
 import parser.nodes.FuncGetterNode;
 import parser.nodes.FunctionNode;
 import parser.nodes.GetterNode;
@@ -15,7 +16,9 @@ import parser.nodes.IfNode;
 import parser.nodes.ListGetterNode;
 import parser.nodes.ListSetterNode;
 import parser.nodes.NumberNode;
+import parser.nodes.ReturnGetterNode;
 import parser.nodes.StringNode;
+import parser.nodes.innerreturn.BreakNode;
 
 public class Parser {
 	
@@ -102,8 +105,18 @@ public class Parser {
 		this.tok_id = begin - 1;
 		this.length = length;
 		this.advance();
+		return parseChoice();
+	}
+	
+	private Node parseChoice() {
 		if (this.current_token.type == TokenType.EOF) {
 			return null;
+		}
+		if(this.current_token.type == TokenType.RETURN) {
+			return this.parseReturn();
+		}
+		if(this.current_token.type == TokenType.BREAK) {
+			return this.parseBreak();
 		}
 		if (this.current_token.type == TokenType.FUNCTION) {
 			return this.parseFunction();
@@ -111,7 +124,54 @@ public class Parser {
 		if (this.current_token.type == TokenType.IF) {
 			return this.parseIf();
 		}
+		if (this.current_token.type == TokenType.FOR) {
+			return this.parseFor();
+		}
 		return this.parseNode();
+	}
+	
+	private Node parseBreak() {
+		Token t = this.current_token;
+		this.advance();
+		int i = 1;
+		if(this.current_token.type == TokenType.LPAREN) {
+			this.advance();
+			Node ex = this.expr();
+			try {
+				Object v = ex.evaluate(null);
+				if (v instanceof NumberNode && ((NumberNode)v).getValue() instanceof Integer) {
+					i = (int) ((NumberNode)v).getValue();
+				}else {
+					System.out.println("Break only supports integers");
+					EntryPoint.raiseToken(t);
+					return null;
+				}
+			} catch(Exception e) {
+				System.out.println("Break does not support dynamic expression");
+				EntryPoint.raiseToken(t);
+				return null;
+			}
+			if (this.current_token.type != TokenType.RPAREN) {
+				System.out.println("Missing right parenthesies of break");
+				EntryPoint.raiseToken(t);
+				return null;
+			}
+			this.advance();
+		}
+		
+		if (i<=0) {
+			System.out.println("Break only supports positive integers");
+			EntryPoint.raiseToken(t);
+			return null;
+		}
+		
+		return new BreakNode(t.col, t.line, i);
+	}
+	public Node parseReturn() {
+		Token t = this.current_token;
+		this.advance();
+		Node dat = this.parseToken(tokens, this.tok_id, this.length);
+		return new ReturnGetterNode(t.col, t.line, dat);
 	}
 	
 	private Node parseFunction() {
@@ -224,6 +284,71 @@ public class Parser {
 		
 		return null;
 	}
+	
+	private Node parseFor() {
+		int cp_tok_id = this.tok_id;
+		this.advance();
+
+		Token t = this.current_token;
+		if(this.current_token.type == TokenType.LPAREN) {
+			this.advance();
+			Node exprSet = this.parseToken(this.tokens, this.tok_id, this.tokens.size());
+			if(this.current_token.type != TokenType.EOF) {
+				System.out.println("Syntax error, missing ;");
+				EntryPoint.raiseToken(t);
+				return null;
+			}
+			this.advance();
+			Node exprComp = this.bin();
+			if(this.current_token.type != TokenType.EOF) {
+				System.out.println("Syntax error, missing ;");
+				EntryPoint.raiseToken(t);
+				return null;
+			}
+			this.advance();
+			Node exprAdv = this.parseToken(this.tokens, this.tok_id, this.tokens.size());
+			
+			if(this.current_token.type != TokenType.RPAREN) {
+				System.out.println("Syntax error, missing right parenthesies");
+				EntryPoint.raiseToken(t);
+				return null;
+			}
+			
+			this.advance();
+			if(this.current_token.type != TokenType.LCURLYBRACKET) {
+				System.out.println("Syntax error, missing left curly bracket \"{\"");
+				EntryPoint.raiseToken(t);
+				return null;
+			}
+			this.advance();
+			
+			Parser p = new Parser();
+			p.tokens = this.tokens;
+			p.tok_id = this.tok_id - 1;
+			p.length = this.tokens.size();
+			p.advance();
+			ArrayList<Node> nodes = p.parse(this.tokens, TokenType.RCURLYBRACKET);
+			
+			FunctionNode n = new FunctionNode(0, 0);
+			n.evaluators = nodes;
+			n.arguments = new ArrayList<>();
+			
+			p.advance();
+			if (p.current_token.type != TokenType.RCURLYBRACKET) {
+				return null;
+			}
+			p.advance();
+			
+			this.iModifier = p.tok_id;
+			this.tok_id = p.tok_id - 1;
+			this.advance();
+			
+			return new ForNode(t.col, t.line, n, exprSet, exprComp, exprAdv);
+		}
+		
+		return null;
+	}
+	
 	private Node parseToken(List<Token> tokens, boolean reset) {
 		this.tokens = tokens;
 		this.length = this.tokens.size();
@@ -234,16 +359,7 @@ public class Parser {
 			this.tok_id -= 1;
 			this.advance();
 		}
-		if (this.current_token.type == TokenType.EOF) {
-			return null;
-		}
-		if (this.current_token.type == TokenType.FUNCTION) {
-			return this.parseFunction();
-		}
-		if (this.current_token.type == TokenType.IF) {
-			return this.parseIf();
-		}
-		return this.parseNode();
+		return parseChoice();
 	}
 	
 	private boolean contains(TokenType ty, TokenType[] types) {

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import main.EntryPoint;
 import parser.Node;
+import parser.nodes.innerreturn.BreakNode;
+import parser.nodes.innerreturn.InnerRNode;
 import variables.ClassNode;
 import variables.VariableContext;
 
@@ -54,6 +56,17 @@ public class FuncGetterNode extends Node {
 			Object d = leftf.evaluate(context, args);
 			if (creCont) {
 				leftf.unregisterStack(context);
+			}
+			
+			if (d instanceof ReturnNode) {
+				return ((ReturnNode)d).evaluate(context);
+			}
+			if (d instanceof InnerRNode) {
+				if (d instanceof BreakNode) {
+					System.out.println("Too many breaks occured");
+					EntryPoint.raiseNode((Node) d);
+					return null;
+				}
 			}
 			return d;
 		} else if (lefte instanceof ClassNode) {
