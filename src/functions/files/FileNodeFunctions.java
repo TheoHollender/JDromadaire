@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import main.EntryPoint;
+import parser.Node;
 import parser.nodes.BooleanNode;
 import parser.nodes.FunctionNode;
 import parser.nodes.StringNode;
@@ -15,6 +16,25 @@ import variables.VariableContext;
 
 public class FileNodeFunctions {
 
+	public static boolean argsFound = false;
+	public static FileNode getFromArgs(ArrayList<Object> args, String name, Node n) {
+		argsFound = true;
+		if (args.size() == 0) {
+			System.out.println("An error occured during "+name+", could not find this object");
+			EntryPoint.raiseNode(n);
+			argsFound = false;
+			return null;
+		}
+		
+		if (!(args.get(0) instanceof FileNode)) {
+			System.out.println("An error occured during \"+name+\", this object not instance of FileNode, instance of "+args.get(0).getClass().toString());
+			EntryPoint.raiseNode(n);
+			argsFound = false;
+			return null;
+		}
+		return (FileNode)args.get(0);
+	}
+	
 	public static class ExistsFunction extends FunctionNode {
 	
 		public ExistsFunction(int col, int line) {
@@ -22,19 +42,8 @@ public class FileNodeFunctions {
 		}
 		
 		public Object evaluate(VariableContext context, ArrayList<Object> args) {
-			if (args.size() == 0) {
-				System.out.println("An error occured during exists, could not find this object");
-				EntryPoint.raiseNode(this);
-				return null;
-			}
-			
-			if (!(args.get(0) instanceof FileNode)) {
-				System.out.println("An error occured during exists, this object not instance of FileNode, instance of "+args.get(0).getClass().toString());
-				EntryPoint.raiseNode(this);
-				return null;
-			}
-			
-			FileNode fn = (FileNode)args.get(0);
+			FileNode fn = getFromArgs(args, "exists", this);
+			if (!argsFound) {return null;}
 			File f = fn.file;
 			
 			return new BooleanNode(fn.col, fn.line, f.exists());
@@ -49,19 +58,8 @@ public class FileNodeFunctions {
 		}
 		
 		public Object evaluate(VariableContext context, ArrayList<Object> args) {
-			if (args.size() == 0) {
-				System.out.println("An error occured during mkdir, could not find this object");
-				EntryPoint.raiseNode(this);
-				return null;
-			}
-			
-			if (!(args.get(0) instanceof FileNode)) {
-				System.out.println("An error occured during mkdir, this object not instance of FileNode, instance of "+args.get(0).getClass().toString());
-				EntryPoint.raiseNode(this);
-				return null;
-			}
-			
-			FileNode fn = (FileNode)args.get(0);
+			FileNode fn = getFromArgs(args, "mkdir", this);
+			if (!argsFound) {return null;}
 			File f = fn.file;
 			
 			return new BooleanNode(fn.col, fn.line, f.mkdirs());
@@ -76,19 +74,9 @@ public class FileNodeFunctions {
 		}
 		
 		public Object evaluate(VariableContext context, ArrayList<Object> args) {
-			if (args.size() == 0) {
-				System.out.println("An error occured during create_file, could not find this object");
-				EntryPoint.raiseNode(this);
-				return null;
-			}
+			FileNode fn = getFromArgs(args, "create_file", this);
+			if (!argsFound) {return null;}
 			
-			if (!(args.get(0) instanceof FileNode)) {
-				System.out.println("An error occured during create_file, this object not instance of FileNode, instance of "+args.get(0).getClass().toString());
-				EntryPoint.raiseNode(this);
-				return null;
-			}
-			
-			FileNode fn = (FileNode)args.get(0);
 			File f = fn.file;
 			
 			try {
@@ -110,19 +98,8 @@ public class FileNodeFunctions {
 		}
 		
 		public Object evaluate(VariableContext context, ArrayList<Object> args) {
-			if (args.size() == 0) {
-				System.out.println("An error occured during delete_file, could not find this object");
-				EntryPoint.raiseNode(this);
-				return null;
-			}
-			
-			if (!(args.get(0) instanceof FileNode)) {
-				System.out.println("An error occured during delete_file, this object not instance of FileNode, instance of "+args.get(0).getClass().toString());
-				EntryPoint.raiseNode(this);
-				return null;
-			}
-			
-			FileNode fn = (FileNode)args.get(0);
+			FileNode fn = getFromArgs(args, "delete", this);
+			if (!argsFound) {return null;}
 			File f = fn.file;
 			
 			if (f.isDirectory()) {
@@ -146,19 +123,9 @@ public class FileNodeFunctions {
 		}
 		
 		public Object evaluate(VariableContext context, ArrayList<Object> args) {
-			if (args.size() == 0) {
-				System.out.println("An error occured during read_file, could not find this object");
-				EntryPoint.raiseNode(this);
-				return null;
-			}
+			FileNode fn = getFromArgs(args, "read_file", this);
+			if (!argsFound) {return null;}
 			
-			if (!(args.get(0) instanceof FileNode)) {
-				System.out.println("An error occured during read_file, this object not instance of FileNode, instance of "+args.get(0).getClass().toString());
-				EntryPoint.raiseNode(this);
-				return null;
-			}
-			
-			FileNode fn = (FileNode)args.get(0);
 			File f = fn.file;
 
 			try {
@@ -181,17 +148,9 @@ public class FileNodeFunctions {
 		}
 		
 		public Object evaluate(VariableContext context, ArrayList<Object> args) {
-			if (args.size() < 2) {
-				System.out.println("An error occured during read_file, could not find this object");
-				EntryPoint.raiseNode(this);
-				return null;
-			}
+			FileNode fn = getFromArgs(args, "exists", this);
+			if (!argsFound || args.size() < 2) {return null;}
 			
-			if (!(args.get(0) instanceof FileNode)) {
-				System.out.println("An error occured during write_file, this object not instance of FileNode, instance of "+args.get(0).getClass().toString());
-				EntryPoint.raiseNode(this);
-				return null;
-			}
 			if (!(args.get(1) instanceof StringNode)) {
 				System.out.println("An error occured during write_file, arg number 0 object not instance of StringNode, instance of "+args.get(1).getClass().toString());
 				EntryPoint.raiseNode(this);
@@ -203,7 +162,6 @@ public class FileNodeFunctions {
 				append = ((BooleanNode)args.get(2)).value;
 			}
 			
-			FileNode fn = (FileNode)args.get(0);
 			File f = fn.file;
 			String str = ((StringNode)args.get(1)).getValue();
 
