@@ -19,9 +19,24 @@ public class ClassNode extends Node implements ListOperator {
 		super(col, line);
 	}
 	
+	public String toString() {
+		Object str = this.objects.get("str");
+		if (str instanceof FunctionNode) {
+			FunctionNode stringify = (FunctionNode) str;
+			ArrayList<Object> args = new ArrayList<Object>(1);
+			args.add(this);
+			Object d = stringify.evaluate(new VariableContext(), args);
+			if (d instanceof StringNode) {
+				return ((StringNode)d).getValue();
+			}
+		}
+		return "<class:ClassNode:"+this.name+">";
+	}
+	
 	protected ClassNode(ClassNode other, ArrayList<Object> args) {
 		super(other.col, other.line);
 		isRoot = false;
+		this.name = other.name;
 		
 		for(Entry<String, Object> dat:other.objects.entrySet())  {
 			this.objects.put(dat.getKey(), dat.getValue());
@@ -78,10 +93,6 @@ public class ClassNode extends Node implements ListOperator {
 	@Override
 	public int length() {
 		return 0;
-	}
-	
-	public String toString() {
-		return this.objects.toString();
 	}
 
 	
