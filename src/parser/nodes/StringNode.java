@@ -1,12 +1,18 @@
 package parser.nodes;
 
+import java.io.File;
+import java.util.ArrayList;
+
+import functions.base.string.StringFunctions;
+import functions.files.FileNode;
 import main.EntryPoint;
 import parser.Node;
 import parser.operators.EvaluateOperator;
 import parser.operators.ListOperator;
+import variables.ClassNode;
 import variables.VariableContext;
 
-public class StringNode extends Node implements EvaluateOperator,ListOperator {
+public class StringNode extends ClassNode implements EvaluateOperator,ListOperator {
 
 	public boolean equals(Object o) {
 		if (o instanceof StringNode) {
@@ -14,10 +20,26 @@ public class StringNode extends Node implements EvaluateOperator,ListOperator {
 		}
 		return false;
 	}
+
+	public StringNode(StringNode other, ArrayList<Object> args) {
+		super(other, args);
+	}
 	
+	public Object createInstance(VariableContext context, ArrayList<Object> args) {
+		if(!isRoot) {
+			System.out.println("Can't create instance with sub child");
+			return null;
+		}
+		return new StringNode(this, args);
+	}
+	
+	public static final FunctionNode SPLIT = new StringFunctions.SplitFunction(-1, -1);
 	public StringNode(int col, int line, String string) {
 		super(col, line);
 		this.value = string;
+		this.isRoot = false;
+		
+		this.objects.put("split", SPLIT);
 	}
 	private String value;
 
@@ -66,9 +88,6 @@ public class StringNode extends Node implements EvaluateOperator,ListOperator {
 	public boolean set(NumberNode n, Object o) {return false;}
 
 	@Override
-	public boolean set(StringNode n, Object o) {return false;}
-
-	@Override
 	public Object get(NumberNode n) {
 		if (n.getValue() instanceof Integer) {
 			if (this.value.length() < (int) n.getValue() || (int) n.getValue() < 0) {
@@ -82,9 +101,6 @@ public class StringNode extends Node implements EvaluateOperator,ListOperator {
 		}
 		return null;
 	}
-
-	@Override
-	public Object get(StringNode n) {return null;}
 
 	@Override
 	public int length() {

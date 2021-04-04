@@ -81,6 +81,7 @@ public class MapFunction extends FunctionNode {
 		
 		ArrayNode arr = new ArrayNode(this.col, this.line);
 		arr.array = datas;
+		arr.updateLength();
 		return arr;
 	}
 	

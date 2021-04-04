@@ -54,8 +54,6 @@ public class ClassNode extends Node implements ListOperator {
 	public Object evaluate(VariableContext context) {
 		return this;
 	}
-	
-	public void add(Object o) {}
 
 	@Override
 	public boolean set(NumberNode n, Object o) {return false;}

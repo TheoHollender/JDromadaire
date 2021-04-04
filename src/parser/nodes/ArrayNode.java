@@ -16,7 +16,7 @@ public class ArrayNode extends ClassNode implements ListOperator, IteratorOperat
 	private static final FunctionNode add = new ArrayFunctions.AddFunction(-1, -1);
 	private static final FunctionNode remove = new ArrayFunctions.RemoveFunction(-1, -1);
 	private static final FunctionNode index = new ArrayFunctions.IndexFunction(-1, -1);
-	private static final FunctionNode contains = new ArrayFunctions.AddFunction(-1, -1);
+	private static final FunctionNode contains = new ArrayFunctions.ContainsFunction(-1, -1);
 	
 	public ArrayNode(int col, int line) {
 		super(col, line);
@@ -111,6 +111,13 @@ public class ArrayNode extends ClassNode implements ListOperator, IteratorOperat
 	@Override
 	public IteratorNode getIterator(VariableContext context) {
 		return new Iterator(col, line, this);
+	}
+
+	public void updateLength() {
+		this.isSetable = true;
+		this.set(new StringNode(this.col, this.line, "length"), 
+				new NumberNode(this.length(), this.col, this.line));
+		this.isSetable = false;
 	}
 
 }
