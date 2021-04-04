@@ -6,9 +6,20 @@
 Welcome to JDromadaire's documentation!
 =======================================
 
+JDromadaire
+-----------
+
+Welcome to JDromadaire's Wiki, it is the implementation of Drom in Java.
+
+Basic
+-----
+
+The goal of this project is to create a language which takes java's syntax and python advantages to create a better language on the point of syntax but also on some flaws of python like sockets.
+
+Here are the actual utils for JDrom :
+
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
 
    install
 
