@@ -7,7 +7,7 @@ import parser.operators.ListOperator;
 
 public class VariableContext {
 
-	private HashMap<String, Object> values = new HashMap<String, Object>();
+	public HashMap<String, Object> values = new HashMap<String, Object>();
 	
 	public void setValue(String name, Object object) {
 		String[] names = name.split("\\.");
@@ -51,7 +51,7 @@ public class VariableContext {
 			
 			if( dat != null && dat instanceof ListOperator ) {
 				dat = ((ListOperator)dat).get(new StringNode(-1,-1,name[i]));
-			} else {
+			} else if(dat != null) {
 				System.out.println("Object "+name[i-1]+" can't be used as list: "+dat);
 				return null;
 			}

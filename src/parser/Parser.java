@@ -3,6 +3,7 @@ package parser;
 import java.util.ArrayList;
 import java.util.List;
 
+import evaluator.Evaluator;
 import main.EntryPoint;
 import main.Token;
 import main.TokenType;
@@ -21,6 +22,8 @@ import parser.nodes.innerreturn.BreakNode;
 import parser.nodes.innerreturn.ContinueNode;
 import parser.nodes.statements.ForNode;
 import parser.nodes.statements.IfNode;
+import variables.ClassNode;
+import variables.VariableContext;
 
 public class Parser {
 	
@@ -29,6 +32,7 @@ public class Parser {
 	private int length;
 	public Token current_token;
 	public boolean advanceResult;
+	public VariableContext saverContext = EntryPoint.globalContext;
 	
 	public Token advance() {
 		this.tok_id += 1;
@@ -132,9 +136,59 @@ public class Parser {
 		if (this.current_token.type == TokenType.FOR) {
 			return this.parseFor();
 		}
+		if (this.current_token.type == TokenType.CLASS) {
+			return this.parseClass();
+		}
 		return this.parseNode();
 	}
 	
+	private Node parseClass() {
+		Token t = this.current_token;
+		this.advance();
+		if (this.current_token.type == TokenType.NAME) {
+			String name = (String) this.current_token.value;
+			this.advance();
+			if (this.current_token.type != TokenType.LCURLYBRACKET) {
+				System.out.println("Missing left curly bracket.");
+				EntryPoint.raiseToken(this.current_token);
+				return null;
+			}
+			this.advance();
+			
+			VariableContext ctx = new VariableContext();
+			
+			Parser p = new Parser();
+			p.tokens = this.tokens;
+			p.tok_id = this.tok_id - 1;
+			p.length = this.tokens.size();
+			p.saverContext = ctx;
+			p.advance();
+			ArrayList<Node> nodes = p.parse(this.tokens, TokenType.RCURLYBRACKET);
+			
+			this.tok_id = p.tok_id;
+			this.length = this.tokens.size();
+			this.advance();
+			if (this.current_token.type != TokenType.RCURLYBRACKET) {
+				System.out.println("Missing right curly bracket.");
+				EntryPoint.raiseToken(this.current_token);
+				return null;
+			}
+			this.advance();
+			iModifier = this.tok_id;
+			
+			Evaluator.evaluate(nodes, ctx, false);
+			
+			ClassNode clNode = new ClassNode(t.col, t.line);
+			clNode.name = name;
+			clNode.importContext(ctx);
+			
+			saverContext.setValue(name, clNode);
+		} else {
+			System.out.println("Expected name, got "+this.current_token.type);
+			EntryPoint.raiseToken(this.current_token);
+		}
+		return null;
+	}
 	private Node parseBreak() {
 		Token t = this.current_token;
 		this.advance();
@@ -297,7 +351,7 @@ public class Parser {
 			}
 			
 			p.advance();
-			EntryPoint.globalContext.setValue(name, n);
+			this.saverContext.setValue(name, n);
 			this.iModifier = p.tok_id;
 			this.tok_id = p.tok_id - 1;
 			this.advance();
