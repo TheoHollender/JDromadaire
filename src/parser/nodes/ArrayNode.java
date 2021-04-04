@@ -2,7 +2,7 @@ package parser.nodes;
 
 import java.util.ArrayList;
 
-import functions.base.ArrayFunctions;
+import functions.base.array.ArrayFunctions;
 import main.EntryPoint;
 import parser.operators.IteratorOperator;
 import parser.operators.ListOperator;
