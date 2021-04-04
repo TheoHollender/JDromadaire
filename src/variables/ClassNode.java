@@ -13,6 +13,7 @@ import parser.operators.ListOperator;
 public class ClassNode extends Node implements ListOperator {
 
 	public boolean isRoot = true;
+	public String name;
 	protected boolean isSetable = true;
 	public ClassNode(int col, int line) {
 		super(col, line);
@@ -23,6 +24,19 @@ public class ClassNode extends Node implements ListOperator {
 		isRoot = false;
 		
 		for(Entry<String, Object> dat:other.objects.entrySet())  {
+			this.objects.put(dat.getKey(), dat.getValue());
+		}
+		
+		Object init = this.objects.get("init");
+		if (init instanceof FunctionNode) {
+			FunctionNode constructor = (FunctionNode) init;
+			args.add(0, this);
+			constructor.evaluate(new VariableContext(), args);
+		}
+	}
+	
+	public void importContext(VariableContext context) {
+		for(Entry<String, Object> dat:context.values.entrySet())  {
 			this.objects.put(dat.getKey(), dat.getValue());
 		}
 	}
