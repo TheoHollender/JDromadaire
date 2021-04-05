@@ -361,25 +361,78 @@ public class Parser {
 		return null;
 	}
 	private Node parseIf() {
-		this.advance();
-
-		Token t = this.current_token;
-		if(this.current_token.type == TokenType.LPAREN) {
-			Node expr = this.bin();
-			this.tok_id -= 2;
+		IfNode fdat = null;
+		IfNode adat = null;
+		boolean hasElse = false;
+		this.length = tokens.size();
+		while(this.current_token.type == TokenType.IF) {
+			hasElse = false;
 			this.advance();
-			if(this.current_token.type != TokenType.RPAREN) {
-				System.out.println("Syntax error, missing right parenthesies");
-				EntryPoint.raiseToken(t);
+	
+			Token t = this.current_token;
+			if(this.current_token.type == TokenType.LPAREN) {
+				Node expr = this.bin();
+				this.tok_id -= 2;
+				this.advance();
+				if(this.current_token.type != TokenType.RPAREN) {
+					System.out.println("Syntax error, missing right parenthesies");
+					EntryPoint.raiseToken(t);
+					return null;
+				}
+				
+				this.advance();
+				if(this.current_token.type != TokenType.LCURLYBRACKET) {
+					System.out.println("Syntax error, missing left curly bracket \"{\"");
+					EntryPoint.raiseToken(t);
+					return null;
+				}
+				this.advance();
+				
+				Parser p = new Parser();
+				p.tokens = this.tokens;
+				p.tok_id = this.tok_id - 1;
+				p.length = this.tokens.size();
+				p.advance();
+				ArrayList<Node> nodes = p.parse(this.tokens, TokenType.RCURLYBRACKET);
+				
+				FunctionNode n = new FunctionNode(0, 0);
+				n.evaluators = nodes;
+				n.arguments = new ArrayList<>();
+				
+				p.advance();
+				if (p.current_token.type != TokenType.RCURLYBRACKET) {
+					return null;
+				}
+				p.advance();
+				
+				this.iModifier = p.tok_id;
+				this.tok_id = p.tok_id - 1;
+				this.advance();
+				
+				IfNode dat = new IfNode(t.col, t.line, n, expr);
+				
+				if (fdat == null) {
+					fdat = dat;
+					adat = dat;
+				} else {
+					adat.elser = dat;
+					adat = dat;
+				}
+			} else {
+				System.out.println("Missing left parenthesies");
+				EntryPoint.raiseToken(current_token);
 				return null;
 			}
 			
-			this.advance();
-			if(this.current_token.type != TokenType.LCURLYBRACKET) {
-				System.out.println("Syntax error, missing left curly bracket \"{\"");
-				EntryPoint.raiseToken(t);
-				return null;
+			if (this.current_token.type == TokenType.ELSE) {
+				hasElse = true;
+				this.advance();
+			} else {
+				return fdat;
 			}
+		}
+		
+		if (this.current_token.type == TokenType.LCURLYBRACKET) {
 			this.advance();
 			
 			Parser p = new Parser();
@@ -403,10 +456,14 @@ public class Parser {
 			this.tok_id = p.tok_id - 1;
 			this.advance();
 			
-			return new IfNode(t.col, t.line, n, expr);
+			adat.elser = n;
+		} else {
+			System.out.println("Missing left curly bracket");
+			EntryPoint.raiseToken(current_token);
+			return null;
 		}
 		
-		return null;
+		return fdat;
 	}
 	
 	private Node parseFor() {

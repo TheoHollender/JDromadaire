@@ -14,7 +14,7 @@ public class IfNode extends Node {
 	
 	private FunctionNode innerNode;
 	private Node expr;
-	private Node elser;
+	public Node elser;
 	
 	public IfNode(int col, int line, FunctionNode in, Node exp) {
 		super(col, line);
@@ -37,7 +37,11 @@ public class IfNode extends Node {
 		if (((BooleanNode)ev).value) {
 			data = innerNode.evaluate(context, new ArrayList<>());
 		} else if (elser != null) {
-			data = elser.evaluate(context);
+			if (elser instanceof FunctionNode) {
+				data = ((FunctionNode)elser).evaluate(context, new ArrayList<>());
+			} else {
+				data = elser.evaluate(context);
+			}
 		}
 		
 		if (data instanceof ReturnNode) {
