@@ -29,6 +29,9 @@ public class ClassNode extends Node implements ListOperator {
 			if (d instanceof StringNode) {
 				return ((StringNode)d).getValue();
 			}
+			if (d!=null) {
+				return d.toString();
+			}
 		}
 		return "<class:ClassNode:"+this.name+">";
 	}
