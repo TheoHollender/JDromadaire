@@ -1,4 +1,4 @@
-package functions.base;
+package functions.base.array;
 
 import java.util.ArrayList;
 
@@ -79,7 +79,7 @@ public class ArrayFunctions {
 			
 			int i = -2;
 			if (!argsFound && args.size() > 1) {
-				System.out.println("Missing armuments on index function");
+				System.out.println("Missing arguments on index function");
 				EntryPoint.raiseNode(this);
 				return null;
 			} else {
@@ -87,6 +87,29 @@ public class ArrayFunctions {
 			}
 			
 			return new NumberNode(i, -1,-1);
+		}
+		
+	}
+	
+	public static class ContainsFunction extends FunctionNode {
+		
+		public ContainsFunction(int col, int line) {
+			super(col, line);
+		}
+		
+		public Object evaluate(VariableContext context, ArrayList<Object> args) {
+			ArrayNode arr = getFromArgs(args, "add", this);
+			
+			boolean i = false;
+			if (!argsFound && args.size() > 1) {
+				System.out.println("Missing arguments on index function");
+				EntryPoint.raiseNode(this);
+				return null;
+			} else {
+				 i = arr.array.contains(args.get(1));
+			}
+			
+			return new BooleanNode(-1,-1, i);
 		}
 		
 	}
