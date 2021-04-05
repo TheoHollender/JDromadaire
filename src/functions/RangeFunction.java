@@ -15,16 +15,16 @@ public class RangeFunction extends FunctionNode {
 	}
 
 	public Object evaluate(VariableContext context, ArrayList<Object> args) {
-		int debut = 0;
-		int rng = 1;
-		int fin = 1;
+		double debut = 0;
+		double rng = 1;
+		double fin = 1;
 		if(args.size()==1) {
 			if (!(args.get(0) instanceof NumberNode)) {
 	            System.out.println("Expected number as first argument, got "+args.get(0).getClass().toString());
 	            EntryPoint.raiseNode(this);
 	            return null;
 			}
-			fin = (int) ((NumberNode)args.get(0)).getValue();
+			fin = (double) ((NumberNode)args.get(0)).getDoubleValue();
 		}
 		else if(args.size()==2) {
 			if (!(args.get(0) instanceof NumberNode)) {
@@ -37,8 +37,8 @@ public class RangeFunction extends FunctionNode {
 	            EntryPoint.raiseNode(this);
 	            return null;
 			}
-			debut = (int) ((NumberNode)args.get(0)).getValue();
-			fin = (int) ((NumberNode)args.get(1)).getValue();
+			debut = (double) ((NumberNode)args.get(0)).getDoubleValue();
+			fin = (double) ((NumberNode)args.get(1)).getDoubleValue();
 		}
 		else if(args.size()==3) {
 			if (!(args.get(0) instanceof NumberNode)) {
@@ -56,9 +56,14 @@ public class RangeFunction extends FunctionNode {
 	            EntryPoint.raiseNode(this);
 	            return null;
 			}
-			debut = (int) ((NumberNode)args.get(0)).getValue();
-			fin = (int) ((NumberNode)args.get(1)).getValue();
-			rng = (int) ((NumberNode)args.get(2)).getValue();
+			debut = (double) ((NumberNode)args.get(0)).getDoubleValue();
+			fin = (double) ((NumberNode)args.get(1)).getDoubleValue();
+			rng = (double) ((NumberNode)args.get(2)).getDoubleValue();
+			if(rng==0) {
+				System.out.println("Third argument cannot be a zero");
+				EntryPoint.raiseNode(this);
+	            return null;
+			}
 		}
 		else {
 			System.out.println("1,2 or 3 arguments expected, "+args.size()+" received");
