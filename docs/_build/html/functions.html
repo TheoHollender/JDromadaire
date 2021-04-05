@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Search &mdash; JDromadaire  documentation</title>
+  <title>Functions &mdash; JDromadaire  documentation</title>
   
 
   
@@ -23,7 +23,6 @@
   
 
   
-    
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -37,10 +36,8 @@
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
-    <script type="text/javascript" src="_static/searchtools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="#" /> 
+    <link rel="search" title="Search" href="search.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -67,7 +64,7 @@
 
           
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="#" method="get">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -88,8 +85,6 @@
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="install.html">Install JDromadaire</a></li>
 <li class="toctree-l1"><a class="reference internal" href="loops.html">Loops</a></li>
-<li class="toctree-l1"><a class="reference internal" href="functions.html">Functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="boolean.html">Boolean, if else and logical operators</a></li>
 </ul>
 
             
@@ -138,10 +133,14 @@
     
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
-      <li>Search</li>
+      <li>Functions</li>
     
     
       <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/functions.rst.txt" rel="nofollow"> View page source</a>
+          
         
       </li>
     
@@ -153,18 +152,38 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <noscript>
-  <div id="fallback" class="admonition warning">
-    <p class="last">
-      Please activate JavaScript to enable the search functionality.
-    </p>
-  </div>
-  </noscript>
+  <div class="section" id="functions">
+<h1>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="define-functions">
+<h2>Define functions<a class="headerlink" href="#define-functions" title="Permalink to this headline">¶</a></h2>
+<p>In Drom, you can define function with the keyword <code class="docutils literal notranslate"><span class="pre">function</span></code> It is used as the followed example :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">){</span>
+        <span class="c1">## Your code</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>A function can take multiple arguments :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">){</span>
+        <span class="c1">## Your code</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="specificities-function">
+<h2>Specificities function<a class="headerlink" href="#specificities-function" title="Permalink to this headline">¶</a></h2>
+<p>Like others programming languages, a function can be called and return arguments</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">JDrom</span> <span class="n">Console</span> <span class="o">-</span> <span class="n">Alpha</span> <span class="p">[</span><span class="mf">0.0</span><span class="o">.</span><span class="mi">1</span><span class="p">]</span>
+<span class="o">&gt;</span> <span class="n">function</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">){</span><span class="k">return</span> <span class="n">x</span><span class="o">^</span><span class="mi">2</span><span class="p">;}</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">FunctionNode</span><span class="nd">@5cad8086</span>
+<span class="o">&gt;</span> <span class="n">f</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<span class="mi">36</span>
+</pre></div>
+</div>
+<p>The main specificity of Drom’s function, is that you don’t have to specify the type of function (<code class="docutils literal notranslate"><span class="pre">void</span></code> / <code class="docutils literal notranslate"><span class="pre">int</span></code> / <code class="docutils literal notranslate"><span class="pre">long</span></code> … )</p>
+<p>All functions are defined with <code class="docutils literal notranslate"><span class="pre">function</span></code> whether they have return arguments or not.</p>
+</div>
+</div>
 
-  
-  <div id="search-results">
-  
-  </div>
 
            </div>
            
@@ -206,14 +225,7 @@
   
   
     
-  
-  <script type="text/javascript">
-    jQuery(function() { Search.loadIndex("searchindex.js"); });
-  </script>
-  
-  <script type="text/javascript" id="searchindexloader"></script>
    
-
 
 </body>
 </html>

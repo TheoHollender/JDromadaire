@@ -23,6 +23,8 @@ Here are the actual utils for JDrom :
 
    install
    loops
+   functions
+   boolean
 
 Indices and tables
 ==================
