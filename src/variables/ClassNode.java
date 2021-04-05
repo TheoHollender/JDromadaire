@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 import parser.Node;
 import parser.nodes.FunctionNode;
 import parser.nodes.NumberNode;
+import parser.nodes.ReturnNode;
 import parser.nodes.StringNode;
 import parser.operators.ListOperator;
 
@@ -25,9 +26,13 @@ public class ClassNode extends Node implements ListOperator {
 			FunctionNode stringify = (FunctionNode) str;
 			ArrayList<Object> args = new ArrayList<Object>(1);
 			args.add(this);
-			Object d = stringify.evaluate(new VariableContext(), args);
+			VariableContext ctx = new VariableContext();
+			Object d = stringify.evaluate(ctx, args);
 			if (d instanceof StringNode) {
 				return ((StringNode)d).getValue();
+			}
+			if (d instanceof ReturnNode) {
+				return ((ReturnNode)d).evaluate(ctx).toString();
 			}
 			if (d!=null) {
 				return d.toString();
