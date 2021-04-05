@@ -71,6 +71,46 @@ public class Scanner {
 		advanceResult = false;
 		return false;
 	}
+
+	final int NO_COMMENTARY = 0;
+	final int COMMENTARY_LINE = 1;
+	final int COMMENTARY_AREA = 2;
+	private int getCommentary(int actual) {
+		if (actual == NO_COMMENTARY && this.current_char == '/') {
+			int cp_id = this.idx;
+			int cp_col = this.col;
+			int cp_line = this.line;
+			this.advance();
+			if (this.current_char == '/') {
+				return COMMENTARY_LINE;
+			}
+			if (this.current_char == '*') {
+				return COMMENTARY_AREA;
+			}
+			
+			this.idx = cp_id - 1;
+			this.col = cp_col - 1;
+			this.line = cp_line;
+		} else if (actual == COMMENTARY_LINE && this.current_char == '\n') {
+			this.advance();
+			return NO_COMMENTARY;
+		} else if (actual == COMMENTARY_AREA && this.current_char == '*') {
+			int cp_id = this.idx;
+			int cp_col = this.col;
+			int cp_line = this.line;
+			this.advance();
+			if (this.current_char == '/') {
+				this.advance();
+				return NO_COMMENTARY;
+			}
+			
+			this.idx = cp_id - 1;
+			this.col = cp_col - 1;
+			this.line = cp_line;
+		}
+		
+		return actual;
+	}
 	
 	public List<Token> scanTokens() {
 		ArrayList<Token> tokens = new ArrayList<>();
@@ -78,35 +118,38 @@ public class Scanner {
 		boolean hasToAdvance = true;
 		int index;
 		this.advance();
+		int commentary = NO_COMMENTARY;
 		while(this.advanceResult) {
 			Token data = null;
 			hasToAdvance = true;
+			commentary = getCommentary(commentary);
 			
-			
-			if (INT_CHARS.contains(String.valueOf(this.current_char))) {
-				data = this.scanNumber();
-				hasToAdvance = false;
-			} else if ((index = this.scanOperator()) != -1) {
-				data = new Token(OPERATORTOKEN_TYPE[index], this.col, this.line);
-				hasToAdvance = false;
-			} else if (this.current_char == '\"') {
-				int baseLine = this.line;
-				int baseCol = this.col;
-				data = this.scanString();
-				if (data == null) {
-					System.out.println("String Not Finished");
-					EntryPoint.raiseToken(new Token(null, baseLine, baseCol));
+			if (commentary == NO_COMMENTARY) {
+				if (INT_CHARS.contains(String.valueOf(this.current_char))) {
+					data = this.scanNumber();
+					hasToAdvance = false;
+				} else if ((index = this.scanOperator()) != -1) {
+					data = new Token(OPERATORTOKEN_TYPE[index], this.col, this.line);
+					hasToAdvance = false;
+				} else if (this.current_char == '\"') {
+					int baseLine = this.line;
+					int baseCol = this.col;
+					data = this.scanString();
+					if (data == null) {
+						System.out.println("String Not Finished");
+						EntryPoint.raiseToken(new Token(null, baseLine, baseCol));
+						return null;
+					}
+				} else if (NAME_FIRST_CHARS.contains(String.valueOf(this.current_char))) {
+					data = this.scanName();
+					hasToAdvance = false;
+				} else if ((index = this.scanCharIndex()) != -1) {
+					data = new Token(ONECHARTOKEN_TYPE[index], this.col, this.line);
+				} else if (!this.isCharIgnore()) {
+					System.out.println("Unexpected Character : \'" + this.current_char + "\'");
+					EntryPoint.raiseToken(new Token(null, this.col, this.line));
 					return null;
 				}
-			} else if (NAME_FIRST_CHARS.contains(String.valueOf(this.current_char))) {
-				data = this.scanName();
-				hasToAdvance = false;
-			} else if ((index = this.scanCharIndex()) != -1) {
-				data = new Token(ONECHARTOKEN_TYPE[index], this.col, this.line);
-			} else if (!this.isCharIgnore()) {
-				System.out.println("Unexpected Character : \'" + this.current_char + "\'");
-				EntryPoint.raiseToken(new Token(null, this.col, this.line));
-				return null;
 			}
 			
 			if (data != null) {

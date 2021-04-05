@@ -35,13 +35,13 @@ public class EntryPoint {
 	
 	public static void runFile(String path) throws IOException {
 		byte[] bytes = Files.readAllBytes(Paths.get(path));
-	    run(new String(bytes, Charset.defaultCharset()).replaceAll("\r", ""));
+	    run(new String(bytes, Charset.defaultCharset()).replaceAll("\r", ""), false);
 	    
 	    if (hadError) System.exit(65);
 	}
 	
 	public static void runPrompt() throws IOException{
-		System.out.println("JDromadaire Console - Alpha [0.0.1]");
+		System.out.println("JDrom Console - Alpha [0.0.1]");
 		InputStreamReader input = new InputStreamReader(System.in);
 	    BufferedReader reader = new BufferedReader(input);
 
@@ -54,7 +54,7 @@ public class EntryPoint {
 	    	  runFile(spl[1]);
 	    	  continue;
 	      }
-	      run(line);
+	      run(line, true);
 	      hadError = false;
 	    }
 	}
@@ -71,7 +71,7 @@ public class EntryPoint {
 		System.out.println("Error at line "+(node.line+1)+" at col "+(node.col+1));
 	}
 	
-	public static void run(String source) {
+	public static void run(String source, boolean printAll) {
 		raised = false;
 		Scanner scanner = new Scanner(source);
 	    List<Token> tokens = scanner.scanTokens();
@@ -85,7 +85,7 @@ public class EntryPoint {
 	    	return ;
 	    }
 	    
-	    Evaluator.evaluate(evNodes, globalContext, true);
+	    Evaluator.evaluate(evNodes, globalContext, printAll);
 	}
 
 }
