@@ -2,6 +2,11 @@
 
 The goal of this tool is to create a language which uses the great points of python but uses the the Java/C++/C syntax and which uses the tools of Java like the Socket which is easier than python's one.
 
+## Documentation
+
+You can see the full documentation [here](https://jdromadaire.readthedocs.io)
+<!--
+
 ## Variables
 
 You can define a variable without saying the type like this
@@ -53,6 +58,8 @@ file.create()
 
 You can read inside the file with file.read(), write with file.write(text, append) and delete it with file.delete()
 
-# And the name
+-->
+
+## And the name
 
 The name comes from a team of people in which i worked during a contest. This means camel in English.
