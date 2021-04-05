@@ -2,6 +2,17 @@
 
 The goal of this tool is to create a language which uses the great points of python but uses the the Java/C++/C syntax and which uses the tools of Java like the Socket which is easier than python's one.
 
+## License
+
+This software is licensed under the [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.html).
+
+Copyright © Thimote75.
+
+## Documentation
+
+You can see the full documentation [here](https://jdromadaire.readthedocs.io)
+<!--
+
 ## Variables
 
 You can define a variable without saying the type like this
@@ -53,6 +64,8 @@ file.create()
 
 You can read inside the file with file.read(), write with file.write(text, append) and delete it with file.delete()
 
-# And the name
+-->
+
+## And the name
 
 The name comes from a team of people in which i worked during a contest. This means camel in English.
