@@ -22,7 +22,7 @@ Here are the actual utils for JDrom :
    :maxdepth: 2
 
    install
-
+   loops
 
 Indices and tables
 ==================

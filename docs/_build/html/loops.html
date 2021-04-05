@@ -1,0 +1,339 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Loops &mdash; JDromadaire  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Install JDromadaire" href="install.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> JDromadaire
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Install JDromadaire</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Loops</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#for-syntax">For syntax</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#base-syntax">Base syntax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#iterator-syntax">Iterator syntax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#while">While</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#break-continue">Break / Continue</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#break">Break</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#continue">Continue</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">JDromadaire</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Loops</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/loops.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="loops">
+<h1>Loops<a class="headerlink" href="#loops" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="for-syntax">
+<h2>For syntax<a class="headerlink" href="#for-syntax" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="base-syntax">
+<h3>Base syntax<a class="headerlink" href="#base-syntax" title="Permalink to this headline">¶</a></h3>
+<p>Example code:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="p">(</span><span class="n">var</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">var</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">var</span> <span class="o">=</span> <span class="n">var</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">## Your code</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This syntax is the base syntax in informatic, it uses first a set expression, here <code class="docutils literal notranslate"><span class="pre">var</span> <span class="pre">=</span> <span class="pre">0</span></code>, a comparate expression, here <code class="docutils literal notranslate"><span class="pre">var</span> <span class="pre">&lt;</span> <span class="pre">n</span></code>, and an advance expression at the end of each iteration, here <code class="docutils literal notranslate"><span class="pre">var</span> <span class="pre">=</span> <span class="pre">var</span> <span class="pre">+</span> <span class="pre">1</span></code></p>
+<p>It will run your code while the comparate expression returns true.</p>
+</div>
+<div class="section" id="iterator-syntax">
+<h3>Iterator syntax<a class="headerlink" href="#iterator-syntax" title="Permalink to this headline">¶</a></h3>
+<p>Example code:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="p">(</span><span class="n">var</span><span class="p">:</span><span class="nb">iter</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">## Your code</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This syntax can be used when iter is for an example an array. If it is an array, it will result in looping on every object of the array.</p>
+</div>
+<div class="section" id="while">
+<h3>While<a class="headerlink" href="#while" title="Permalink to this headline">¶</a></h3>
+<p>Example code:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">while</span><span class="p">(</span><span class="n">true</span><span class="p">)</span> <span class="p">{</span>
+
+   <span class="c1">## Your code</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>So this syntax is not implemented. Your code will run while the expression gives you a true, here <code class="docutils literal notranslate"><span class="pre">true</span></code>.</p>
+</div>
+</div>
+<div class="section" id="break-continue">
+<h2>Break / Continue<a class="headerlink" href="#break-continue" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="break">
+<h3>Break<a class="headerlink" href="#break" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Base Break</p></li>
+</ul>
+<p>You can launch a base break by doing <code class="docutils literal notranslate"><span class="pre">break</span></code>. This will break the loop in which you are</p>
+<p>For an example, this code:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+
+   <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+
+       <span class="k">break</span><span class="p">;</span>
+
+   <span class="p">}</span>
+
+   <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>returns <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">1</span></code></p>
+<ul class="simple">
+<li><p>Multiple Breaks</p></li>
+</ul>
+<p>As a dev, you may have already tryed to do double or triple break, but to do this, there is a syntax in Drom to do it : you can do <code class="docutils literal notranslate"><span class="pre">break(x)</span></code> to break x times. But you can not break with a variable, it is always a known number like 1,2,3…</p>
+<p>This means that if you have two loops :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">x</span><span class="p">;</span> <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+
+   <span class="k">for</span> <span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">y</span><span class="p">;</span> <span class="n">j</span> <span class="o">=</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+
+       <span class="k">break</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+   <span class="p">}</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">break(2)</span></code> will break both loops</p>
+</div>
+<div class="section" id="continue">
+<h3>Continue<a class="headerlink" href="#continue" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Base Continue</p></li>
+</ul>
+<p>You can launch a base continue by doing <code class="docutils literal notranslate"><span class="pre">continue</span></code>. This will stop the actual iteration of the loop in which you are</p>
+<p>For an example, this code:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+
+   <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+
+       <span class="k">continue</span><span class="p">;</span>
+
+   <span class="p">}</span>
+
+   <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>returns <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">1</span> <span class="pre">3</span> <span class="pre">4</span></code></p>
+<ul class="simple">
+<li><p>Multiple Continues</p></li>
+</ul>
+<p>Like the break, you can give parameters to the continue. The first parameter is the id of the loop. For an example if you set the first parameter x to 5, this will break 4 loops and will continue the 5th. The second parameter is the number of jump, this means the count of times you will execute the advance expression in a for loop before continuing normally.</p>
+<p>For an example,</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+
+   <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+
+       <span class="k">continue</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+
+   <span class="p">}</span>
+
+   <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>returns <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">1</span> <span class="pre">4</span></code>. Here, it has jumped two times the loop while launching <code class="docutils literal notranslate"><span class="pre">i</span> <span class="pre">=</span> <span class="pre">i</span> <span class="pre">+</span> <span class="pre">1</span></code>.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="install.html" class="btn btn-neutral float-left" title="Install JDromadaire" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Thimote75.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
