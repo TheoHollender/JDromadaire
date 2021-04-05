@@ -7,12 +7,13 @@ import functions.base.string.StringFunctions;
 import functions.files.FileNode;
 import main.EntryPoint;
 import parser.Node;
+import parser.operators.ComparateOperator;
 import parser.operators.EvaluateOperator;
 import parser.operators.ListOperator;
 import variables.ClassNode;
 import variables.VariableContext;
 
-public class StringNode extends ClassNode implements EvaluateOperator,ListOperator {
+public class StringNode extends ClassNode implements EvaluateOperator,ListOperator,ComparateOperator<StringNode> {
 
 	public boolean equals(Object o) {
 		if (o instanceof StringNode) {
@@ -105,6 +106,11 @@ public class StringNode extends ClassNode implements EvaluateOperator,ListOperat
 	@Override
 	public int length() {
 		return this.value.length();
+	}
+	
+	@Override
+	public int compare(StringNode e) {
+		return this.value.compareTo(e.getValue());
 	}
 	
 }

@@ -4,12 +4,13 @@ import java.util.ArrayList;
 
 import functions.base.array.ArrayFunctions;
 import main.EntryPoint;
+import parser.operators.ComparateOperator;
 import parser.operators.IteratorOperator;
 import parser.operators.ListOperator;
 import variables.ClassNode;
 import variables.VariableContext;
 
-public class ArrayNode extends ClassNode implements ListOperator, IteratorOperator {
+public class ArrayNode extends ClassNode implements ListOperator, IteratorOperator, ComparateOperator<ArrayNode> {
 
 	public ArrayList<Object> array = new ArrayList<>();
 	
@@ -118,6 +119,23 @@ public class ArrayNode extends ClassNode implements ListOperator, IteratorOperat
 		this.set(new StringNode(this.col, this.line, "length"), 
 				new NumberNode(this.length(), this.col, this.line));
 		this.isSetable = false;
+	}
+
+	@Override
+	public int compare(ArrayNode e) {
+		if (e.length() < this.length()) {
+			return -1;
+		}
+		if (e.length() > this.length()) {
+			return -1;
+		}
+		
+		for (int i = 0; i < e.length(); i++) {
+			if (!e.array.get(i).equals(this.array.get(i))) {
+				return -1;
+			}
+		}
+		return 0;
 	}
 
 }
