@@ -36,9 +36,7 @@ While
 Example code::
 
  while(true) {
-
     ## Your code
-
  }
 
 
@@ -57,15 +55,10 @@ You can launch a base break by doing ``break``. This will break the loop in whic
 For an example, this code::
 
  for(i = 0; i < 5; i = i + 1) {
-
     if (i == 2) {
-
         break;
-
     }
-
     print(i);
-
  }
 
 
@@ -78,13 +71,9 @@ As a dev, you may have already tryed to do double or triple break, but to do thi
 This means that if you have two loops : ::
 
  for (i = 0; i < x; i = i + 1) {
-
     for (j = 0; j < y; j = j + 1) {
-
         break(2)
-
     }
-
  }
 
 
@@ -100,15 +89,10 @@ You can launch a base continue by doing ``continue``. This will stop the actual 
 For an example, this code::
 
  for(i = 0; i < 5; i = i + 1) {
-
     if (i == 2) {
-
         continue;
-
     }
-
     print(i);
-
  }
 
 
@@ -121,15 +105,10 @@ Like the break, you can give parameters to the continue. The first parameter is 
 For an example, ::
 
  for(i = 0; i < 5; i = i + 1) {
-
     if (i == 2) {
-
         continue(1,2);
-
     }
-
     print(i);
-
  }
 
 returns ``0 1 4``. Here, it has jumped two times the loop while launching ``i = i + 1``.

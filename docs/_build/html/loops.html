@@ -195,9 +195,7 @@
 <h3>While<a class="headerlink" href="#while" title="Permalink to this headline">¶</a></h3>
 <p>Example code:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">while</span><span class="p">(</span><span class="n">true</span><span class="p">)</span> <span class="p">{</span>
-
    <span class="c1">## Your code</span>
-
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -214,15 +212,10 @@
 <p>You can launch a base break by doing <code class="docutils literal notranslate"><span class="pre">break</span></code>. This will break the loop in which you are</p>
 <p>For an example, this code:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-
    <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
-
        <span class="k">break</span><span class="p">;</span>
-
    <span class="p">}</span>
-
    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
-
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -233,13 +226,9 @@
 <p>As a dev, you may have already tryed to do double or triple break, but to do this, there is a syntax in Drom to do it : you can do <code class="docutils literal notranslate"><span class="pre">break(x)</span></code> to break x times. But you can not break with a variable, it is always a known number like 1,2,3…</p>
 <p>This means that if you have two loops :</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">x</span><span class="p">;</span> <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-
    <span class="k">for</span> <span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">y</span><span class="p">;</span> <span class="n">j</span> <span class="o">=</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-
        <span class="k">break</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-
    <span class="p">}</span>
-
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -253,15 +242,10 @@
 <p>You can launch a base continue by doing <code class="docutils literal notranslate"><span class="pre">continue</span></code>. This will stop the actual iteration of the loop in which you are</p>
 <p>For an example, this code:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-
    <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
-
        <span class="k">continue</span><span class="p">;</span>
-
    <span class="p">}</span>
-
    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
-
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -272,15 +256,10 @@
 <p>Like the break, you can give parameters to the continue. The first parameter is the id of the loop. For an example if you set the first parameter x to 5, this will break 4 loops and will continue the 5th. The second parameter is the number of jump, this means the count of times you will execute the advance expression in a for loop before continuing normally.</p>
 <p>For an example,</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-
    <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
-
        <span class="k">continue</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
-
    <span class="p">}</span>
-
    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
-
 <span class="p">}</span>
 </pre></div>
 </div>
