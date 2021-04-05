@@ -20,6 +20,7 @@ public class FunctionImporter {
 		cont.setValue("int", new ToNumberFunction(-2,-2, 0));
 		cont.setValue("number", new ToNumberFunction(-2,-2, 1));
 		cont.setValue("File", new FileNode(-2,-2));
+		cont.setValue("range", new RangeFunction(-2,-2));
 	}
 	
 }
