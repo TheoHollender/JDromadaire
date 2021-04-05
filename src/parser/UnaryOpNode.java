@@ -24,7 +24,7 @@ public class UnaryOpNode extends Node {
 		
 		Object data = null;
 		try {
-			if (operator == TokenType.MINUS) {
+			if (operator == TokenType.MINUS || operator == TokenType.NOT) {
 				data = (((UnaryOperator) leftv).invert());
 			}
 		} catch(Exception e) {
