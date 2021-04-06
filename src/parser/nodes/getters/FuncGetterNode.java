@@ -54,11 +54,12 @@ public class FuncGetterNode extends Node {
 			}
 			
 			if (creCont) {
-				leftf.registerStack(context);
+				EntryPoint.registerStack(context);
+				EntryPoint.setStackName(leftf.name);
 			}
 			Object d = leftf.evaluate(context, args);
 			if (creCont) {
-				leftf.unregisterStack(context);
+				EntryPoint.unregisterStack(context);
 			}
 			
 			if (d instanceof ReturnNode) {

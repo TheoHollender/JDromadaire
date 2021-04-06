@@ -11,19 +11,13 @@ public class FunctionNode extends Node {
 
 	public ArrayList<Node> evaluators;
 	public ArrayList<StringNode> arguments;
+	public String name;
 	public FunctionNode(int col, int line) {
 		super(col, line);
 	}
 
 	public Object evaluate(VariableContext context) {
 		return this;
-	}
-	
-	public void registerStack(VariableContext ctx) {
-		
-	}
-	public void unregisterStack(VariableContext ctx) {
-		
 	}
 	
 	public Object evaluate(VariableContext context, ArrayList<Object> args) {
