@@ -23,7 +23,7 @@ public class LogFunction extends FunctionNode {
             return null;
 		}
 		double nb = (double) ((NumberNode)args.get(0)).getDoubleValue();
-		return new NumberNode(Math.log10(nb),col,line);
+		return new NumberNode(Math.round(10000000000d*Math.log10(nb))/10000000000d,col,line);
 	}
 	
 }
