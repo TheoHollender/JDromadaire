@@ -27,8 +27,8 @@ public class ChrFunction extends FunctionNode {
             EntryPoint.raiseErr("Expected integer as first argument, got "+((NumberNode)args.get(0)).getValue() .getClass().toString());
             return null;
 		}
-		if (((Integer)((NumberNode)args.get(0)).getValue())<0) {
-            EntryPoint.raiseErr("Expected positive Integer as first argument");
+		if (((Integer)((NumberNode)args.get(0)).getValue())<0 || ((Integer)((NumberNode)args.get(0)).getValue())>1114112) {
+            EntryPoint.raiseErr("Expected positive Integer less than 1114112 as first argument");
             return null;
 		}
 		int ch = (int) ((NumberNode)args.get(0)).getValue();
