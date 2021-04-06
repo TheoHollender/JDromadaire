@@ -4,6 +4,7 @@ import functions.base.array.MapFunction;
 import functions.base.cast.ToNumberFunction;
 import functions.base.cast.ToStringFunction;
 import functions.files.FileNode;
+import libs.LibLoader;
 import main.EntryPoint;
 import variables.VariableContext;
 
@@ -24,6 +25,8 @@ public class FunctionImporter {
 		cont.setValue("sum", new SumFunction(-2,-2));
 		cont.setValue("chr", new ChrFunction(-2,-2));
 		cont.setValue("ord", new OrdFunction(-2,-2));
+		
+		LibLoader.registerModule("socket", "libs/lib_openns.jar");
 	}
 	
 }
