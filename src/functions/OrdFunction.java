@@ -26,6 +26,11 @@ public class OrdFunction extends FunctionNode {
             return null;
 		}
 		String ch = (String) ((StringNode)args.get(0)).getValue();
+		if(ch.length()!=1) {
+			System.out.println("Expected one character, got "+ch.length());
+            EntryPoint.raiseNode(this);
+            return null;
+		}
 		return new NumberNode((int) ch.charAt(0), col, line);
 	}
 	
