@@ -55,7 +55,7 @@ public class OpNode extends Node {
 			}
 			
 			if(isCompareToken) {
-				int compare = ((ComparateOperator)leftv).compare(rightv);
+				double compare = ((ComparateOperator)leftv).compare(rightv);
 				
 				boolean result = false;
 				if (operator == TokenType.NOTEQ) {result = (compare != 0);}

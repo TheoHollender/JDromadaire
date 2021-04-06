@@ -52,7 +52,7 @@ public class CharNode extends Node implements EvaluateOperator,ComparateOperator
 	public Object power(Object e) {return null;}
 
 	@Override
-	public int compare(CharNode e) {
+	public double compare(CharNode e) {
 		return (int)this.getValue() - (int)e.getValue();
 	}
 

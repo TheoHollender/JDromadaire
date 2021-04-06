@@ -45,7 +45,7 @@ public class BooleanNode extends Node implements UnaryOperator, BinaryOperator<B
 	}
 
 	@Override
-	public int compare(BooleanNode e) {
+	public double compare(BooleanNode e) {
 		int a0 = 0;
 		if (this.value) {a0 = 1;}
 		int a1 = 0;

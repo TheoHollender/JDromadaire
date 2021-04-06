@@ -2,6 +2,6 @@ package parser.operators;
 
 public interface ComparateOperator<E> {
 
-	public int compare(E e);
+	public double compare(E e);
 	
 }

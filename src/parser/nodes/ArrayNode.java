@@ -121,7 +121,7 @@ public class ArrayNode extends ClassNode implements ListOperator, IteratorOperat
 	}
 
 	@Override
-	public int compare(ArrayNode e) {
+	public double compare(ArrayNode e) {
 		if (e.length() < this.length()) {
 			return -1;
 		}
