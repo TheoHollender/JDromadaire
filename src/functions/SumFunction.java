@@ -34,7 +34,7 @@ public class SumFunction extends FunctionNode {
 			}
 			sum+=((NumberNode)i).getDoubleValue();
 		}
-		return sum;
+		return new NumberNode(sum,col,line);
 	}
 	
 }
