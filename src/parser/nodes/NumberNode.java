@@ -92,8 +92,8 @@ public class NumberNode extends ValueNode implements EvaluateOperator<NumberNode
 	}
 
 	@Override
-	public int compare(NumberNode e) {
-		return (Integer)this.value - (Integer)e.value;
+	public double compare(NumberNode e) {
+		return this.getDoubleValue() - e.getDoubleValue();
 	}
 
 }

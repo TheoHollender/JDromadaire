@@ -107,7 +107,7 @@ public class StringNode extends ClassNode implements EvaluateOperator,ListOperat
 	}
 	
 	@Override
-	public int compare(StringNode e) {
+	public double compare(StringNode e) {
 		return this.value.compareTo(e.getValue());
 	}
 	
