@@ -91,6 +91,7 @@ public class Scanner {
 			this.idx = cp_id - 1;
 			this.col = cp_col - 1;
 			this.line = cp_line;
+			this.advance();
 		} else if (actual == COMMENTARY_LINE && this.current_char == '\n') {
 			this.advance();
 			return NO_COMMENTARY;
@@ -107,6 +108,7 @@ public class Scanner {
 			this.idx = cp_id - 1;
 			this.col = cp_col - 1;
 			this.line = cp_line;
+			this.advance();
 		}
 		
 		return actual;
