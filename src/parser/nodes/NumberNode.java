@@ -78,7 +78,12 @@ public class NumberNode extends ValueNode implements EvaluateOperator<NumberNode
 			EntryPoint.raiseErr("Division by Zero Error");
 			return null;
 		}
-		return this.getMaxPriority(e, this.getDoubleValue() / e.getDoubleValue());
+		if(this.getDoubleValue() % e.getDoubleValue() == 0) {
+			return this.getMaxPriority(e, this.getDoubleValue() / e.getDoubleValue());
+		}
+		else {
+			return this.getMaxPriority(new NumberNode(this.getDoubleValue() / e.getDoubleValue(),col,line), this.getDoubleValue() / e.getDoubleValue());
+		}
 	}
 
 	@Override
