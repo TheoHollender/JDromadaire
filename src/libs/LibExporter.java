@@ -8,6 +8,6 @@ import variables.ClassNode;
 
 public interface LibExporter {
 	
-	public HashMap<String,ClassNode> exportClasses();
+	public HashMap<String,Node> exportClasses();
 
 }

@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 
 import main.EntryPoint;
+import parser.Node;
 import variables.ClassNode;
 
 public class LibLoader {
@@ -31,7 +32,7 @@ public class LibLoader {
 			return;
 		}
 		
-		HashMap<String,ClassNode> exports = new HashMap<String, ClassNode>();
+		HashMap<String, Node> exports = new HashMap<String, Node>();
 		try {
 			Class classToLoad = Class.forName("config.Exporter", true, child);
 			Object o = classToLoad.newInstance();
@@ -43,7 +44,7 @@ public class LibLoader {
 		}
 		
 		ClassNode cl = new ClassNode(-1, -1);
-		for(Entry<String, ClassNode> obj:exports.entrySet()) {
+		for(Entry<String, Node> obj:exports.entrySet()) {
 			cl.objects.put(obj.getKey(), obj.getValue());
 		}
 		EntryPoint.globalContext.values.put(name, cl);
