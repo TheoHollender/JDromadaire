@@ -56,8 +56,7 @@ public class ArrayNode extends ClassNode implements ListOperator, IteratorOperat
 	
 	public boolean removeByIndex(int i) {
 		if (i<0 || i>=this.array.size()) {
-			System.out.println("Index Out of bound Exception : tryed to remove index "+i+" for size "+this.array.size());
-			EntryPoint.raiseNode(this);
+			EntryPoint.raiseErr("Index Out of bound Exception : tryed to remove index "+i+" for size "+this.array.size());
 			return false;
 		}
 		this.isSetable = true;

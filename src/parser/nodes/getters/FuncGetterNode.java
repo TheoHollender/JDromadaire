@@ -67,14 +67,12 @@ public class FuncGetterNode extends Node {
 			}
 			if (d instanceof InnerRNode) {
 				if (d instanceof BreakNode) {
-					System.out.println("Too many breaks occured");
-					EntryPoint.raiseNode((Node) d);
+					EntryPoint.raiseErr("Too many breaks occured");
 					((BreakNode)d).reset();
 					return null;
 				}
 				if (d instanceof ContinueNode) {
-					System.out.println("Continue count too high");
-					EntryPoint.raiseNode((Node) d);
+					EntryPoint.raiseErr("Continue count too high");
 					((ContinueNode)d).reset();
 					return null;
 				}
@@ -83,8 +81,7 @@ public class FuncGetterNode extends Node {
 		} else if (lefte instanceof ClassNode) {
 			return ((ClassNode)lefte).createInstance(new VariableContext(), args);
 		} else {
-			System.out.println("Function could not be found");
-			EntryPoint.raiseNode(left);
+			EntryPoint.raiseErr("Function could not be found");
 		}
 		
 		return null;

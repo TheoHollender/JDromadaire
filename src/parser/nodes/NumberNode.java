@@ -75,8 +75,7 @@ public class NumberNode extends ValueNode implements EvaluateOperator<NumberNode
 	@Override
 	public Object divide(NumberNode e) {
 		if (e.getDoubleValue() == 0) {
-			System.out.println("Division by Zero Error");
-			EntryPoint.raiseNode(e);
+			EntryPoint.raiseErr("Division by Zero Error");
 			return null;
 		}
 		return this.getMaxPriority(e, this.getDoubleValue() / e.getDoubleValue());

@@ -16,15 +16,13 @@ public class ArrayFunctions {
 	public static ArrayNode getFromArgs(ArrayList<Object> args, String name, Node n) {
 		argsFound = true;
 		if (args.size() == 0) {
-			System.out.println("An error occured during "+name+", could not find this object");
-			EntryPoint.raiseNode(n);
+			EntryPoint.raiseErr("An error occured during "+name+", could not find this object");
 			argsFound = false;
 			return null;
 		}
 		
 		if (!(args.get(0) instanceof ArrayNode)) {
-			System.out.println("An error occured during "+name+", this object not instance of ArrayNode, instance of "+args.get(0).getClass().toString());
-			EntryPoint.raiseNode(n);
+			EntryPoint.raiseErr("An error occured during "+name+", this object not instance of ArrayNode, instance of "+args.get(0).getClass().toString());
 			argsFound = false;
 			return null;
 		}
@@ -79,8 +77,7 @@ public class ArrayFunctions {
 			
 			int i = -2;
 			if (!argsFound && args.size() > 1) {
-				System.out.println("Missing arguments on index function");
-				EntryPoint.raiseNode(this);
+				EntryPoint.raiseErr("Missing arguments on index function");
 				return null;
 			} else {
 				i = arr.array.indexOf(args.get(1));
@@ -102,8 +99,7 @@ public class ArrayFunctions {
 			
 			boolean i = false;
 			if (!argsFound && args.size() > 1) {
-				System.out.println("Missing arguments on index function");
-				EntryPoint.raiseNode(this);
+				EntryPoint.raiseErr("Missing arguments on contains function");
 				return null;
 			} else {
 				 i = arr.array.contains(args.get(1));

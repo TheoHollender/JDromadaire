@@ -28,8 +28,7 @@ public class FileNode extends ClassNode {
 		if(args.size() > 0 && (args.get(0) instanceof StringNode)) {
 			this.objects.put("filename", ((StringNode)args.get(0)).getValue());
 		} else {
-			System.out.println("Missing filename parameter");
-			EntryPoint.raiseNode(this);
+			EntryPoint.raiseErr("Missing filename parameter");
 		}
 		
 		String fname = ((StringNode)args.get(0)).getValue();

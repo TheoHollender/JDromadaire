@@ -15,8 +15,7 @@ public class ToStringFunction extends FunctionNode {
 
 	public Object evaluate(VariableContext context, ArrayList<Object> args) {
 		if (args.size() != 1) {
-			System.out.println("Expected 1 argument in str, got "+args.size());
-			EntryPoint.raiseNode(this);
+			EntryPoint.raiseErr("Expected 1 argument in str, got "+args.size());
 			return null;
 		}
 		

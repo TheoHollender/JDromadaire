@@ -20,15 +20,13 @@ public class FileNodeFunctions {
 	public static FileNode getFromArgs(ArrayList<Object> args, String name, Node n) {
 		argsFound = true;
 		if (args.size() == 0) {
-			System.out.println("An error occured during "+name+", could not find this object");
-			EntryPoint.raiseNode(n);
+			EntryPoint.raiseErr("An error occured during "+name+", could not find this object");
 			argsFound = false;
 			return null;
 		}
 		
 		if (!(args.get(0) instanceof FileNode)) {
-			System.out.println("An error occured during "+name+", this object not instance of FileNode, instance of "+args.get(0).getClass().toString());
-			EntryPoint.raiseNode(n);
+			EntryPoint.raiseErr("An error occured during "+name+", this object not instance of FileNode, instance of "+args.get(0).getClass().toString());
 			argsFound = false;
 			return null;
 		}
@@ -82,9 +80,7 @@ public class FileNodeFunctions {
 			try {
 				return new BooleanNode(fn.col, fn.line, f.createNewFile());
 			} catch (IOException e) {
-				System.out.println("An IOException error occured in the creation of the file");
-				System.out.println("One of the directories in "+fn.file.getPath()+" might not exists or your programm might not have access to this location");
-				EntryPoint.raiseNode(this);
+				EntryPoint.raiseErr("An IOException error occured in the creation of the file\nOne of the directories in \"+fn.file.getPath()+\" might not exists or your programm might not have access to this location");
 			}
 			return null;
 		}
@@ -132,9 +128,7 @@ public class FileNodeFunctions {
 				byte[] bytes = Files.readAllBytes(Paths.get(f.getAbsolutePath()));
 				return new StringNode(fn.col, fn.line, new String(bytes));
 			} catch (IOException e) {
-				System.out.println("An error occured during reading of "+f.getAbsolutePath());
-				System.out.println("The file or directories might not exist or you might not have access to these files");
-				EntryPoint.raiseNode(this);
+				EntryPoint.raiseErr("An IOException error occured in the creation of the file\nOne of the directories in \"+fn.file.getPath()+\" might not exists or your programm might not have access to this location");
 				return null;
 			}
 		}
@@ -152,8 +146,7 @@ public class FileNodeFunctions {
 			if (!argsFound || args.size() < 2) {return null;}
 			
 			if (!(args.get(1) instanceof StringNode)) {
-				System.out.println("An error occured during write_file, arg number 0 object not instance of StringNode, instance of "+args.get(1).getClass().toString());
-				EntryPoint.raiseNode(this);
+				EntryPoint.raiseErr("An error occured during write_file, arg number 0 object not instance of StringNode, instance of "+args.get(1).getClass().toString());
 				return null;
 			}
 			
@@ -171,9 +164,7 @@ public class FileNodeFunctions {
 				fw.close();
 				return new BooleanNode(fn.col, fn.line, true);
 			} catch (IOException e) {
-				System.out.println("An error occured during writing of "+f.getAbsolutePath());
-				System.out.println("The file or directories might not exist or you might not have access to these files");
-				EntryPoint.raiseNode(this);
+				EntryPoint.raiseErr("An IOException error occured in the creation of the file\nOne of the directories in \"+fn.file.getPath()+\" might not exists or your programm might not have access to this location");
 				return new BooleanNode(fn.col, fn.line, false);
 			}
 		}

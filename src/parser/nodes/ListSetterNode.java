@@ -32,19 +32,16 @@ public class ListSetterNode extends Node {
 						return op.get((NumberNode) index);
 					} else {
 						if(!(((NumberNode) index).getValue() instanceof Integer)) {
-							System.out.println("Integer Object needed, received Float/Double");
-							EntryPoint.raiseNode(this);
+							EntryPoint.raiseErr("Integer Object needed, received Float/Double");
 							return null;
 						}
-						System.out.println("Index out of range exception");
-						EntryPoint.raiseNode(this);
+						EntryPoint.raiseErr("Index out of range exception");
 						return null;
 					}
 				}else if (index instanceof StringNode) {
 					return op.get((StringNode) index);
 				}
-				System.out.println("List only support usage with numbers or strings");
-				EntryPoint.raiseNode(this.left);
+				EntryPoint.raiseErr("List only support usage with numbers or strings");
 			}
 		} else {
 			Object expr = this.expr.evaluate(context);
@@ -57,20 +54,17 @@ public class ListSetterNode extends Node {
 						return expr;
 					} else {
 						if(!(((NumberNode) index).getValue() instanceof Integer)) {
-							System.out.println("Integer Object needed, received Float/Double");
-							EntryPoint.raiseNode(this);
+							EntryPoint.raiseErr("Integer Object needed, received Float/Double");
 							return null;
 						}
-						System.out.println("Index out of range exception");
-						EntryPoint.raiseNode(this);
+						EntryPoint.raiseErr("Index out of range exception");
 						return null;
 					}
 				}else if (index instanceof StringNode) {
 					op.set((StringNode) index, expr);
 					return expr;
 				}
-				System.out.println("List only support usage with numbers or strings");
-				EntryPoint.raiseNode(this.left);
+				EntryPoint.raiseErr("List only support usage with numbers or strings");
 			}
 		}
 		

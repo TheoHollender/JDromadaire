@@ -25,19 +25,16 @@ public class MapFunction extends FunctionNode {
 
 	public Object evaluate(VariableContext ctx, ArrayList<Object> args) {
 		if (args.size() != 2 && args.size() != 4) {
-			System.out.println("Expected 2 or 4 arguments, got "+args.size());
-			EntryPoint.raiseNode(this);
+			EntryPoint.raiseErr("Expected 2 or 4 arguments, got "+args.size());
 			return null;
 		}
 		
 		if (!(args.get(0) instanceof FunctionNode)) {
-			System.out.println("Expected function as first argument, got "+args.get(0).getClass().toString());
-			EntryPoint.raiseNode(this);
+			EntryPoint.raiseErr("Expected function as first argument, got "+args.get(0).getClass().toString());
 			return null;
 		}
 		if (!(args.get(1) instanceof ArrayNode)) {
-			System.out.println("Expected array as second argument, got "+args.get(1).getClass().toString());
-			EntryPoint.raiseNode(this);
+			EntryPoint.raiseErr("Expected array as second argument, got "+args.get(1).getClass().toString());
 			return null;
 		}
 		
@@ -50,18 +47,15 @@ public class MapFunction extends FunctionNode {
 		int index = 0;
 		if (args.size() == 4) {
 			if (!(args.get(2) instanceof NumberNode)) {
-				System.out.println("Expected number as third argument, got "+args.get(2).getClass().toString());
-				EntryPoint.raiseNode(this);
+				EntryPoint.raiseErr("Expected number as third argument, got "+args.get(2).getClass().toString());
 				return null;
 			}
 			if(!(((NumberNode)args.get(2)).getValue() instanceof Integer)) {
-				System.out.println("Expected integer as third argument, got "+((NumberNode)args.get(2)).getValue().getClass().toString());
-				EntryPoint.raiseNode(this);
+				EntryPoint.raiseErr("Expected integer as third argument, got "+((NumberNode)args.get(2)).getValue().getClass().toString());
 				return null;
 			}
 			if (!(args.get(3) instanceof ArrayNode)) {
-				System.out.println("Expected array as fourth argument, got "+args.get(3).getClass().toString());
-				EntryPoint.raiseNode(this);
+				EntryPoint.raiseErr("Expected array as fourth argument, got "+args.get(3).getClass().toString());
 				return null;
 			}
 			

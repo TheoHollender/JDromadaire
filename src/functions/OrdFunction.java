@@ -16,19 +16,16 @@ public class OrdFunction extends FunctionNode {
 
 	public Object evaluate(VariableContext context, ArrayList<Object> args) {
 		if(args.size()!=1) {
-			System.out.println("Expected 1 argument, got "+args.size());
-			EntryPoint.raiseNode(this);
+			EntryPoint.raiseErr("Expected 1 argument, got "+args.size());
             return null;
 		}
 		if (!(args.get(0) instanceof StringNode)) {
-            System.out.println("Expected string as first argument, got "+args.get(0).getClass().toString());
-            EntryPoint.raiseNode(this);
+            EntryPoint.raiseErr("Expected string as first argument, got "+args.get(0).getClass().toString());
             return null;
 		}
 		String ch = (String) ((StringNode)args.get(0)).getValue();
 		if(ch.length()!=1) {
-			System.out.println("Expected one character, got "+ch.length());
-            EntryPoint.raiseNode(this);
+            EntryPoint.raiseErr("Expected one character, got "+ch.length());
             return null;
 		}
 		return new NumberNode((int) ch.charAt(0), col, line);

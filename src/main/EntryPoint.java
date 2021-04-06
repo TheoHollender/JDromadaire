@@ -66,12 +66,12 @@ public class EntryPoint {
 		raised = true;
 		System.out.println("Error at line "+(tok.line+1)+" at col "+(tok.col+1));
 	}
-	public static void raiseNode(Node node) {
+	/*public static void raiseNode(Node node) {
 		raised = true;
 		for(StackItem it:stack) {
 			it.throwException();
 		}
-	}
+	}*/
 	
 	public static void run(String source, boolean printAll) {
 		raised = false;
