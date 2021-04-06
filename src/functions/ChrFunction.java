@@ -16,23 +16,19 @@ public class ChrFunction extends FunctionNode {
 
 	public Object evaluate(VariableContext context, ArrayList<Object> args) {
 		if(args.size()!=1) {
-			System.out.println("Expected 1 argument, got "+args.size());
-			EntryPoint.raiseNode(this);
+			EntryPoint.raiseErr("Expected 1 argument, got "+args.size());
             return null;
 		}
 		if (!(args.get(0) instanceof NumberNode)) {
-            System.out.println("Expected number as first argument, got "+args.get(0).getClass().toString());
-            EntryPoint.raiseNode(this);
+            EntryPoint.raiseErr("Expected number as first argument, got "+args.get(0).getClass().toString());
             return null;
 		}
 		if (!(((NumberNode)args.get(0)).getValue() instanceof Integer)) {
-            System.out.println("Expected integer as first argument, got "+((NumberNode)args.get(0)).getValue() .getClass().toString());
-            EntryPoint.raiseNode(this);
+            EntryPoint.raiseErr("Expected integer as first argument, got "+((NumberNode)args.get(0)).getValue() .getClass().toString());
             return null;
 		}
 		if (((Integer)((NumberNode)args.get(0)).getValue())<0) {
-			System.out.println("Expected positive Integer as first argument");
-            EntryPoint.raiseNode(this);
+            EntryPoint.raiseErr("Expected positive Integer as first argument");
             return null;
 		}
 		int ch = (int) ((NumberNode)args.get(0)).getValue();

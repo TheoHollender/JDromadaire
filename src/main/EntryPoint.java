@@ -66,10 +66,12 @@ public class EntryPoint {
 		raised = true;
 		System.out.println("Error at line "+(tok.line+1)+" at col "+(tok.col+1));
 	}
-	public static void raiseNode(Node node) {
+	/*public static void raiseNode(Node node) {
 		raised = true;
-		System.out.println("Error at line "+(node.line+1)+" at col "+(node.col+1));
-	}
+		for(StackItem it:stack) {
+			it.throwException();
+		}
+	}*/
 	
 	public static void run(String source, boolean printAll) {
 		raised = false;
@@ -85,7 +87,32 @@ public class EntryPoint {
 	    	return ;
 	    }
 	    
+	    registerStack(globalContext);
+	    setStackName("<module>");
 	    Evaluator.evaluate(evNodes, globalContext, printAll);
+	    unregisterStack(globalContext);
 	}
 
+
+	public static ArrayList<StackItem> stack = new ArrayList<StackItem>();
+	public static void registerStack(VariableContext ctx) {
+		stack.add(new StackItem(ctx));
+	}
+	public static void unregisterStack(VariableContext ctx) {
+		stack.remove(stack.size() - 1);
+	}
+	public static void setStackDat(int col, int line) {
+		stack.get(stack.size() - 1).setInfo(col, line);
+	}
+	public static void setStackName(String name) {
+		stack.get(stack.size() - 1).name = name;
+	}
+
+	public static void raiseErr(String string) {
+		for(StackItem it:stack) {
+			it.throwException();
+		}
+		System.out.println("Exception : "+string);
+	}
+	
 }

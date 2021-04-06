@@ -16,20 +16,17 @@ public class SumFunction extends FunctionNode {
 
 	public Object evaluate(VariableContext context, ArrayList<Object> args) {
 		if(args.size()!=1) {
-			System.out.println("Expected one argument, got "+args.size());
-            EntryPoint.raiseNode(this);
+            EntryPoint.raiseErr("Expected one argument, got "+args.size());
             return null;
 		}
 		if (!(args.get(0) instanceof ArrayNode)) {
-            System.out.println("Expected array as first argument, got "+args.get(0).getClass().toString());
-            EntryPoint.raiseNode(this);
+            EntryPoint.raiseErr("Expected array as first argument, got "+args.get(0).getClass().toString());
             return null;
 		}
 		double sum = 0;
 		for(Object i:((ArrayNode) args.get(0)).array) {
 			if (!(i instanceof NumberNode)) {
-	            System.out.println("Expected array of numbers, got "+i.getClass().toString());
-	            EntryPoint.raiseNode(this);
+	            EntryPoint.raiseErr("Expected array of numbers, got "+i.getClass().toString());
 	            return null;
 			}
 			sum+=((NumberNode)i).getDoubleValue();

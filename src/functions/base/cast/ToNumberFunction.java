@@ -22,8 +22,7 @@ public class ToNumberFunction extends FunctionNode {
 	
 	public Object evaluate(VariableContext context, ArrayList<Object> args) {
 		if (args.size() != 1) {
-			System.out.println("Expected 1 argument in number cast, got "+args.size());
-			EntryPoint.raiseNode(this);
+			EntryPoint.raiseErr("Expected 1 argument in number cast, got "+args.size());
 			return null;
 		}
 		
@@ -33,14 +32,12 @@ public class ToNumberFunction extends FunctionNode {
 			Scanner sc = new Scanner(s);
 			List<Token> tokens = sc.scanTokens();
 			if (tokens.size() != 2) {
-				System.out.println("Parsed bad count of Tokens");
-				EntryPoint.raiseNode(this);
+				EntryPoint.raiseErr("Parsed bad count of Tokens");
 				return null;
 			}
 			
 			if (tokens.get(0).type != TokenType.NUMBER) {
-				System.out.println("The token isn't a number");
-				EntryPoint.raiseNode(this);
+				EntryPoint.raiseErr("The token isn't a number");
 				return null;
 			}
 			

@@ -29,8 +29,7 @@ public class IfNode extends Node {
 		Object ev = expr.evaluate(context);
 		
 		if (!(ev instanceof BooleanNode)) {
-			System.out.println("Expected boolean in IF statement, got "+ev.getClass().toString());
-			EntryPoint.raiseNode(expr);
+			EntryPoint.raiseErr("Expected boolean in IF statement, got "+ev.getClass().toString());
 			return null;
 		}
 		

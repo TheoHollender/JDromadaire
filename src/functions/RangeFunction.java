@@ -20,21 +20,18 @@ public class RangeFunction extends FunctionNode {
 		double fin = 1;
 		if(args.size()==1) {
 			if (!(args.get(0) instanceof NumberNode)) {
-	            System.out.println("Expected number as first argument, got "+args.get(0).getClass().toString());
-	            EntryPoint.raiseNode(this);
+	            EntryPoint.raiseErr("Expected number as first argument, got "+args.get(0).getClass().toString());
 	            return null;
 			}
 			fin = (double) ((NumberNode)args.get(0)).getDoubleValue();
 		}
 		else if(args.size()==2) {
 			if (!(args.get(0) instanceof NumberNode)) {
-	            System.out.println("Expected number as first argument, got "+args.get(0).getClass().toString());
-	            EntryPoint.raiseNode(this);
+	            EntryPoint.raiseErr("Expected number as first argument, got "+args.get(0).getClass().toString());
 	            return null;
 			}
 			if (!(args.get(1) instanceof NumberNode)) {
-	            System.out.println("Expected number as second argument, got "+args.get(0).getClass().toString());
-	            EntryPoint.raiseNode(this);
+	            EntryPoint.raiseErr("Expected number as second argument, got "+args.get(1).getClass().toString());
 	            return null;
 			}
 			debut = (double) ((NumberNode)args.get(0)).getDoubleValue();
@@ -42,32 +39,27 @@ public class RangeFunction extends FunctionNode {
 		}
 		else if(args.size()==3) {
 			if (!(args.get(0) instanceof NumberNode)) {
-	            System.out.println("Expected number as first argument, got "+args.get(0).getClass().toString());
-	            EntryPoint.raiseNode(this);
+	            EntryPoint.raiseErr("Expected number as first argument, got "+args.get(0).getClass().toString());
 	            return null;
 			}
 			if (!(args.get(1) instanceof NumberNode)) {
-	            System.out.println("Expected number as second argument, got "+args.get(0).getClass().toString());
-	            EntryPoint.raiseNode(this);
+	            EntryPoint.raiseErr("Expected number as second argument, got "+args.get(1).getClass().toString());
 	            return null;
 			}
 			if (!(args.get(2) instanceof NumberNode)) {
-	            System.out.println("Expected number as third argument, got "+args.get(0).getClass().toString());
-	            EntryPoint.raiseNode(this);
+	            EntryPoint.raiseErr("Expected number as third argument, got "+args.get(2).getClass().toString());
 	            return null;
 			}
 			debut = (double) ((NumberNode)args.get(0)).getDoubleValue();
 			fin = (double) ((NumberNode)args.get(1)).getDoubleValue();
 			rng = (double) ((NumberNode)args.get(2)).getDoubleValue();
 			if(rng==0) {
-				System.out.println("Third argument cannot be a zero");
-				EntryPoint.raiseNode(this);
+				EntryPoint.raiseErr("Third argument cannot be a zero");
 	            return null;
 			}
 		}
 		else {
-			System.out.println("1,2 or 3 arguments expected, "+args.size()+" received");
-			EntryPoint.raiseNode(this);
+			EntryPoint.raiseErr("1,2 or 3 arguments expected, "+args.size()+" received");
 			return null;
 		}
 		return new RangeNode(this.col, this.line, new RangeIterator(this.col, this.line, debut, fin, rng));

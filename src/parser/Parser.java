@@ -344,6 +344,7 @@ public class Parser {
 			FunctionNode n = new FunctionNode(0, 0);
 			n.evaluators = nodes;
 			n.arguments = args;
+			n.name = name;
 			
 			p.advance();
 			if (p.current_token.type != TokenType.RCURLYBRACKET) {

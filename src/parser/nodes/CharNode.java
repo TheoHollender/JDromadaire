@@ -1,9 +1,10 @@
 package parser.nodes;
 
 import parser.Node;
+import parser.operators.ComparateOperator;
 import parser.operators.EvaluateOperator;
 
-public class CharNode extends Node implements EvaluateOperator {
+public class CharNode extends Node implements EvaluateOperator,ComparateOperator<CharNode> {
 
 	private char c;
 	
@@ -49,5 +50,10 @@ public class CharNode extends Node implements EvaluateOperator {
 
 	@Override
 	public Object power(Object e) {return null;}
+
+	@Override
+	public int compare(CharNode e) {
+		return (int)this.getValue() - (int)e.getValue();
+	}
 
 }

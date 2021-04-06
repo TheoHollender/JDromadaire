@@ -11,6 +11,7 @@ public class FunctionNode extends Node {
 
 	public ArrayList<Node> evaluators;
 	public ArrayList<StringNode> arguments;
+	public String name;
 	public FunctionNode(int col, int line) {
 		super(col, line);
 	}
@@ -19,19 +20,11 @@ public class FunctionNode extends Node {
 		return this;
 	}
 	
-	public void registerStack(VariableContext ctx) {
-		
-	}
-	public void unregisterStack(VariableContext ctx) {
-		
-	}
-	
 	public Object evaluate(VariableContext context, ArrayList<Object> args) {
 		Object data = null;
 		
 		if (args.size() != arguments.size()) {
-			System.out.println("Expected "+arguments.size()+" arguments, got "+args.size());
-			EntryPoint.raiseNode(this);
+			EntryPoint.raiseErr("Expected "+arguments.size()+" arguments, got "+args.size());
 			return null;
 		}
 		int i = 0;

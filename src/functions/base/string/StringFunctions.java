@@ -16,15 +16,13 @@ public class StringFunctions {
 	public static StringNode getFromArgs(ArrayList<Object> args, String name, Node n) {
 		argsFound = true;
 		if (args.size() == 0) {
-			System.out.println("An error occured during "+name+", could not find this object");
-			EntryPoint.raiseNode(n);
+			EntryPoint.raiseErr("An error occured during "+name+", could not find this object");
 			argsFound = false;
 			return null;
 		}
 		
 		if (!(args.get(0) instanceof StringNode)) {
-			System.out.println("An error occured during "+name+", this object not instance of StringNode, instance of "+args.get(0).getClass().toString());
-			EntryPoint.raiseNode(n);
+			EntryPoint.raiseErr("An error occured during "+name+", this object not instance of StringNode, instance of "+args.get(0).getClass().toString());
 			argsFound = false;
 			return null;
 		}
@@ -41,18 +39,15 @@ public class StringFunctions {
 			StringNode str = getFromArgs(args, "add", this);
 			if (!argsFound) {return new BooleanNode(-1,-1, false);}
 			if (args.size() != 2) {
-				System.out.println("Received "+args.size()+" arguments, expected 2");
-				EntryPoint.raiseNode(this);
+				EntryPoint.raiseErr("Received "+args.size()+" arguments, expected 2");
 				return null;
 			}
 			if (!(args.get(1) instanceof StringNode)) {
-				System.out.println("Expected StringNode as second argument, got "+args.get(1).getClass().toString());
-				EntryPoint.raiseNode(this);
+				EntryPoint.raiseErr("Expected StringNode as second argument, got "+args.get(1).getClass().toString());
 				return null;
 			}
 			if (((StringNode)args.get(1)).getValue().equals("")) {
-				System.out.println("Regular expression can't be empty(\"\")");
-				EntryPoint.raiseNode(this);
+				EntryPoint.raiseErr("Regular expression can't be empty(\"\")");
 				return null;
 			}
 			

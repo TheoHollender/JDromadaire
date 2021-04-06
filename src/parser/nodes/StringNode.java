@@ -92,13 +92,11 @@ public class StringNode extends ClassNode implements EvaluateOperator,ListOperat
 	public Object get(NumberNode n) {
 		if (n.getValue() instanceof Integer) {
 			if (this.value.length() < (int) n.getValue() || (int) n.getValue() < 0) {
-				System.out.println("Index out of range exception");
-				EntryPoint.raiseNode(n);
+				EntryPoint.raiseErr("Index out of range exception");
 			}
 			return new CharNode(this.col, this.line, this.value.charAt((int) n.getValue()));
 		} else {
-			System.out.println("Integer Object needed, received Float/Double");
-			EntryPoint.raiseNode(n);
+			EntryPoint.raiseErr("Integer Object needed, received Float/Double");
 		}
 		return null;
 	}
