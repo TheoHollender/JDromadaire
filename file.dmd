@@ -1,8 +1,0 @@
-print("hello world")
-print("I'm launched in a file")
-if(1==2){
-	print("1==1")
-}
-else{
-	print("1!=2")
-}
