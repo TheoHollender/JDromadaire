@@ -176,7 +176,10 @@ public class Parser {
 			this.advance();
 			iModifier = this.tok_id;
 			
+			EntryPoint.registerStack(ctx);
+			EntryPoint.setStackName("<classloader>");
 			Evaluator.evaluate(nodes, ctx, false);
+			EntryPoint.unregisterStack(ctx);
 			
 			ClassNode clNode = new ClassNode(t.col, t.line);
 			clNode.name = name;
