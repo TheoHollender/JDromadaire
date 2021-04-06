@@ -23,7 +23,7 @@ public class SqrtFunction extends FunctionNode {
             return null;
 		}
 		double nb = (double) ((NumberNode)args.get(0)).getDoubleValue();
-		return new NumberNode(Math.sqrt(nb),col,line);
+		return new NumberNode(Math.round(10000000000d*Math.sqrt(nb))/10000000000d,col,line);
 	}
 	
 }

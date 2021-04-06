@@ -47,7 +47,7 @@ public class FunctionImporter {
 		cont.setValue("ord", new OrdFunction(-2,-2));
 		cont.setValue("sqrt", new SqrtFunction(-2,-2));
 		cont.setValue("abs", new AbsFunction(-2,-2));
-		cont.setValue("pi", new NumberNode(Math.toRadians(180),-2,-2));
+		cont.setValue("pi", new NumberNode(Math.round(10000000000d*Math.toRadians(180))/10000000000d,-2,-2));
 		cont.setValue("factorial", new FacFunction(-2,-2));
 		cont.setValue("acos", new AcosFunction(-2,-2));
 		cont.setValue("acosh", new AcoshFunction(-2,-2));
@@ -66,6 +66,7 @@ public class FunctionImporter {
 		cont.setValue("sinh", new SinhFunction(-2,-2));
 		cont.setValue("tan", new TanFunction(-2,-2));
 		cont.setValue("tanh", new TanhFunction(-2,-2));
+		cont.setValue("round", new RoundFunction(-2,-2));
 	}
 	
 }

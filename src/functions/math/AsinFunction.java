@@ -23,7 +23,7 @@ public class AsinFunction extends FunctionNode {
             return null;
 		}
 		double nb = (double) ((NumberNode)args.get(0)).getDoubleValue();
-		return new NumberNode(Math.asin(nb),col,line);
+		return new NumberNode(Math.round(10000000000d*Math.asin(nb))/10000000000d,col,line);
 	}
 	
 }

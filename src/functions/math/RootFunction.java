@@ -24,7 +24,7 @@ public class RootFunction extends FunctionNode {
 		}
 		double nb = (double) ((NumberNode)args.get(0)).getDoubleValue();
 		double nb2 = (double) ((NumberNode)args.get(0)).getDoubleValue();
-		return new NumberNode(Math.pow(nb,1/nb2),col,line);
+		return new NumberNode(Math.round(10000000000d*Math.pow(nb,1/nb2))/10000000000d,col,line);
 	}
 	
 }

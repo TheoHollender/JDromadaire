@@ -23,7 +23,7 @@ public class AtanhFunction extends FunctionNode {
             return null;
 		}
 		double nb = (double) ((NumberNode)args.get(0)).getDoubleValue();
-		return new NumberNode(0.5*Math.log( (nb + 1.0) / (nb - 1.0)),col,line);
+		return new NumberNode(Math.round(10000000000d*0.5*Math.log( (nb + 1.0) / (nb - 1.0)))/10000000000d,col,line);
 	}
 	
 }

@@ -23,7 +23,7 @@ public class SinFunction extends FunctionNode {
             return null;
 		}
 		double nb = (double) ((NumberNode)args.get(0)).getDoubleValue();
-		return new NumberNode(Math.sin(nb),col,line);
+		return new NumberNode(Math.round(10000000000d*Math.sin(nb))/10000000000d,col,line);
 	}
 	
 }

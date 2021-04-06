@@ -23,7 +23,7 @@ public class ExpFunction extends FunctionNode {
             return null;
 		}
 		double nb = (double) ((NumberNode)args.get(0)).getDoubleValue();
-		return new NumberNode(Math.exp(nb),col,line);
+		return new NumberNode(Math.round(10000000000d*Math.exp(nb))/10000000000d,col,line);
 	}
 	
 }
