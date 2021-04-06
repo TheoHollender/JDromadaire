@@ -22,6 +22,8 @@ public class FunctionImporter {
 		cont.setValue("File", new FileNode(-2,-2));
 		cont.setValue("range", new RangeFunction(-2,-2));
 		cont.setValue("sum", new SumFunction(-2,-2));
+		cont.setValue("chr", new ChrFunction(-2,-2));
+		cont.setValue("ord", new OrdFunction(-2,-2));
 	}
 	
 }
