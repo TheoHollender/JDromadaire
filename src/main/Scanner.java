@@ -262,10 +262,17 @@ public class Scanner {
 			this.advance();
 		}
 		
-		if (dot_count == 0) {
-			return new Token(TokenType.NUMBER, Integer.parseInt(numberString.toString()), this.col, this.line);
+		try {
+			if (dot_count == 0) {
+				return new Token(TokenType.NUMBER, Integer.parseInt(numberString.toString()), this.col, this.line);
+			}
+			return new Token(TokenType.NUMBER, Float.parseFloat(numberString.toString()), this.col, this.line);
+		} catch(NumberFormatException e) {
+			System.out.println("The number you requested is too big for the format used by JDrom");
+			System.out.println("Error at line "+line+" at col "+col);
+			EntryPoint.raised = true;
+			return null;
 		}
-		return new Token(TokenType.NUMBER, Float.parseFloat(numberString.toString()), this.col, this.line);
 	}
 	
 }
