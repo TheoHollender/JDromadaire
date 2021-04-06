@@ -399,9 +399,11 @@ public class Parser {
 				n.evaluators = nodes;
 				n.arguments = new ArrayList<>();
 				
-				p.advance();
 				if (p.current_token.type != TokenType.RCURLYBRACKET) {
-					return null;
+					p.advance();
+					if (p.current_token.type != TokenType.RCURLYBRACKET) {
+						return null;
+					}
 				}
 				p.advance();
 				
@@ -424,7 +426,11 @@ public class Parser {
 				return null;
 			}
 			
-			if (this.current_token.type == TokenType.ELSE) {
+			if (this.current_token.type == TokenType.ELSE ||
+					(this.next() != null && this.next().type == TokenType.ELSE)) {
+				if (this.current_token.type != TokenType.ELSE) {
+					this.advance();
+				}
 				hasElse = true;
 				this.advance();
 			} else {
@@ -446,9 +452,11 @@ public class Parser {
 			n.evaluators = nodes;
 			n.arguments = new ArrayList<>();
 			
-			p.advance();
 			if (p.current_token.type != TokenType.RCURLYBRACKET) {
-				return null;
+				p.advance();
+				if (p.current_token.type != TokenType.RCURLYBRACKET) {
+					return null;
+				}
 			}
 			p.advance();
 			
