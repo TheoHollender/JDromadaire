@@ -6,7 +6,7 @@ The goal of this tool is to create a language which uses the great points of pyt
 
 This software is licensed under the [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.html).
 
-Copyright © Thimote75.
+Copyright © Thimote75 and Itai12.
 
 ## Documentation
 
