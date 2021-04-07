@@ -4,6 +4,7 @@ import functions.base.array.MapFunction;
 import functions.base.cast.ToNumberFunction;
 import functions.base.cast.ToStringFunction;
 import functions.files.FileNode;
+import libs.LibLoader;
 import functions.math.AbsFunction;
 import functions.math.AcosFunction;
 import functions.math.AcoshFunction;
@@ -45,6 +46,8 @@ public class FunctionImporter {
 		cont.setValue("sum", new SumFunction(-2,-2));
 		cont.setValue("chr", new ChrFunction(-2,-2));
 		cont.setValue("ord", new OrdFunction(-2,-2));
+
+		// Math
 		cont.setValue("sqrt", new SqrtFunction(-2,-2));
 		cont.setValue("abs", new AbsFunction(-2,-2));
 		cont.setValue("pi", new NumberNode(Math.round(10000000000d*Math.toRadians(180))/10000000000d,-2,-2));
@@ -67,6 +70,8 @@ public class FunctionImporter {
 		cont.setValue("tan", new TanFunction(-2,-2));
 		cont.setValue("tanh", new TanhFunction(-2,-2));
 		cont.setValue("round", new RoundFunction(-2,-2));
+		
+		LibLoader.registerModule("socket", "libs/lib_openns.jar");
 	}
 	
 }
