@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import evaluator.Evaluator;
+import libs.LibLoader;
 import main.EntryPoint;
 import main.Token;
 import main.TokenType;
@@ -139,7 +140,26 @@ public class Parser {
 		if (this.current_token.type == TokenType.CLASS) {
 			return this.parseClass();
 		}
+		if (this.current_token.type == TokenType.IMPORT) {
+			return this.parseImport();
+		}
 		return this.parseNode();
+	}
+	
+	private Node parseImport() {
+		this.advance();
+		if (this.current_token.type != TokenType.NAME) {
+			System.out.println("Missing name after import");
+			EntryPoint.raiseToken(this.current_token);
+			return null;
+		}
+
+		if (!LibLoader.loadModule((String) this.current_token.value)) {
+			// Load file
+		}
+		this.advance();
+		
+		return null;
 	}
 	
 	private Node parseClass() {

@@ -12,6 +12,7 @@ import variables.ClassNode;
 
 public class LibLoader {
 
+	private static HashMap<String, Node> datas = new HashMap();
 	public static void registerModule(String name, String module_path) {
 		File f = new File(module_path);
 		
@@ -47,7 +48,14 @@ public class LibLoader {
 		for(Entry<String, Node> obj:exports.entrySet()) {
 			cl.objects.put(obj.getKey(), obj.getValue());
 		}
-		EntryPoint.globalContext.values.put(name, cl);
+		datas.put(name, cl);
+	}
+	
+	public static boolean loadModule(String name) {
+		if (!datas.containsKey(name)) {return false;}
+		
+		EntryPoint.globalContext.values.put(name, datas.get(name));
+		return true;
 	}
 	
 }

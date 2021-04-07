@@ -25,12 +25,12 @@ public class Scanner {
 	};
 	static final String[] STRINGTOKEN_STRING = new String[] {
 		"function", "return", "true", "false", "if", "for", "break",
-		"continue", "class", "else"
+		"continue", "class", "else", "import"
 	};
 	static final TokenType[] STRINGTOKEN_TYPE = new TokenType[] {
 		TokenType.FUNCTION, TokenType.RETURN, TokenType.TRUE,
 		TokenType.FALSE, TokenType.IF, TokenType.FOR, TokenType.BREAK,
-		TokenType.CONTINUE, TokenType.CLASS, TokenType.ELSE,
+		TokenType.CONTINUE, TokenType.CLASS, TokenType.ELSE, TokenType.IMPORT,
 	};
 	static final String[] OPERATORTOKEN_STRING = new String[] {
 		"==", "<=", ">=", "!=", "&&", "||", "<", ">"

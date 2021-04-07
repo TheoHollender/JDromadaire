@@ -72,6 +72,9 @@ public class EntryPoint {
 			it.throwException();
 		}
 	}*/
+	static {
+		System.setProperty("java.library.path", "./lib");
+	}
 	
 	public static void run(String source, boolean printAll) {
 		raised = false;
