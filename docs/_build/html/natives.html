@@ -1,0 +1,401 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Natives Functions &mdash; JDromadaire  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Classes" href="class.html" />
+    <link rel="prev" title="Socket Library" href="socket.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> JDromadaire
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Install JDromadaire</a></li>
+<li class="toctree-l1"><a class="reference internal" href="loops.html">Loops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="functions.html">Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="boolean.html">Boolean, if else and logical operators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="import.html">Import module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="libraries.html">Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="math.html">Math library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="socket.html">Socket Library</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Natives Functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#mathematic">Mathematic</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#range">Range</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#round">Round</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sum">Sum</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#utils">Utils</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#print">Print</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#help">Help</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#input">Input</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#map">Map</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#conversion">Conversion</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#int">Int</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str">Str</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#number">Number</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#characters">Characters</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#chr">Chr</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ord">Ord</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#file">File</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class.html">Classes</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">JDromadaire</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Natives Functions</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/natives.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="natives-functions">
+<h1>Natives Functions<a class="headerlink" href="#natives-functions" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="mathematic">
+<h2>Mathematic<a class="headerlink" href="#mathematic" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="range">
+<h3>Range<a class="headerlink" href="#range" title="Permalink to this headline">¶</a></h3>
+<p>The range function is used as in python for the loop</p>
+<p>It’s used as the follow :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="p">:</span><span class="nb">range</span><span class="p">(</span><span class="n">nb</span><span class="p">)){</span>
+        <span class="c1">##Your code</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>It can be used with :
+- one argument (from 0 to this number, increasing by 1)
+- two arguments (from first to second incresing by 1)
+- three arguments (from first to second incresing by the third)</p>
+</div>
+<div class="section" id="round">
+<h3>Round<a class="headerlink" href="#round" title="Permalink to this headline">¶</a></h3>
+<p>The round function is used to approxime the numbers with (or not) a given precision .</p>
+<p>It can be used as the follow :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nb">round</span><span class="p">(</span><span class="mf">1.4235346575685</span><span class="p">)</span>
+<span class="mi">1</span>
+<span class="o">&gt;</span> <span class="nb">round</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="mf">3.14</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sum">
+<h3>Sum<a class="headerlink" href="#sum" title="Permalink to this headline">¶</a></h3>
+<p>The sum function take an array in argument, and return his sum :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nb">sum</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<span class="mf">6.0</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="utils">
+<h2>Utils<a class="headerlink" href="#utils" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="print">
+<h3>Print<a class="headerlink" href="#print" title="Permalink to this headline">¶</a></h3>
+<p>The print function is used to print all given arguments :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="s2">&quot;hello&quot;</span><span class="p">,[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="mi">1</span>
+<span class="s1">&#39;hello&#39;</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="help">
+<h3>Help<a class="headerlink" href="#help" title="Permalink to this headline">¶</a></h3>
+<p>The help function gives you some help (laughing)</p>
+</div>
+<div class="section" id="input">
+<h3>Input<a class="headerlink" href="#input" title="Permalink to this headline">¶</a></h3>
+<p>The input function will give you the text written :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span><span class="n">a</span><span class="o">=</span><span class="nb">input</span><span class="p">()</span>
+<span class="n">hello</span>
+<span class="o">&gt;</span><span class="n">a</span>
+<span class="s1">&#39;hello&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="map">
+<h3>Map<a class="headerlink" href="#map" title="Permalink to this headline">¶</a></h3>
+<p>The map function is used as in python :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">a</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<span class="o">&gt;</span> <span class="n">function</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">){</span><span class="k">return</span> <span class="n">x</span><span class="o">^</span><span class="mi">2</span><span class="p">;}</span>
+<span class="o">&gt;</span> <span class="nb">map</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">a</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">9</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>It’s the equivalent to do :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">b</span><span class="o">=</span><span class="p">[]</span>
+<span class="o">&gt;</span> <span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="p">:</span><span class="n">a</span><span class="p">){</span><span class="n">b</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">i</span><span class="p">));}</span>
+<span class="o">&gt;</span> <span class="n">b</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">9</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="conversion">
+<h2>Conversion<a class="headerlink" href="#conversion" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="int">
+<h3>Int<a class="headerlink" href="#int" title="Permalink to this headline">¶</a></h3>
+<p>The int function convert a string (or number) to an integer :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nb">int</span><span class="p">(</span><span class="s2">&quot;12&quot;</span><span class="p">)</span>
+<span class="mi">12</span>
+<span class="o">&gt;</span> <span class="nb">int</span><span class="p">(</span><span class="mf">1.4634575685658</span><span class="p">)</span>
+<span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="str">
+<h3>Str<a class="headerlink" href="#str" title="Permalink to this headline">¶</a></h3>
+<p>The str function convert an integer (or array or string) to a string :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nb">str</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+<span class="s1">&#39;12&#39;</span>
+<span class="o">&gt;</span> <span class="nb">str</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="s1">&#39;[1,2,3]&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="number">
+<h3>Number<a class="headerlink" href="#number" title="Permalink to this headline">¶</a></h3>
+<p>The number function convert a string (or number) to a number :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">number</span><span class="p">(</span><span class="s2">&quot;12.53&quot;</span><span class="p">)</span>
+<span class="mf">12.53</span>
+<span class="o">&gt;</span> <span class="n">number</span><span class="p">(</span><span class="mf">3.14</span><span class="p">)</span>
+<span class="mf">3.14</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="characters">
+<h2>Characters<a class="headerlink" href="#characters" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="chr">
+<h3>Chr<a class="headerlink" href="#chr" title="Permalink to this headline">¶</a></h3>
+<p>The chr function convert a int to a character :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nb">chr</span><span class="p">(</span><span class="mi">65</span><span class="p">)</span>
+<span class="s1">&#39;A&#39;</span>
+<span class="o">&gt;</span> <span class="nb">chr</span><span class="p">(</span><span class="mi">66</span><span class="p">)</span>
+<span class="s1">&#39;B&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="ord">
+<h3>Ord<a class="headerlink" href="#ord" title="Permalink to this headline">¶</a></h3>
+<p>The ord function convert a character to an integer :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nb">ord</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">)</span>
+<span class="mi">65</span>
+<span class="o">&gt;</span> <span class="nb">ord</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">)</span>
+<span class="mi">66</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="file">
+<h2>File<a class="headerlink" href="#file" title="Permalink to this headline">¶</a></h2>
+<p>The file system uses java’s file system and is already implemented, it can be used like this</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">file</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This creates a file, if it doesn’t exists using</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">file</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>you can create the folder with</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fold</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">pathWithoutEnd</span><span class="p">)</span>
+<span class="n">fold</span><span class="o">.</span><span class="n">mkdir</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>And then create the file with</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">file</span><span class="o">.</span><span class="n">create</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>You can read inside the file with <code class="docutils literal notranslate"><span class="pre">file.read()</span></code>, write with <code class="docutils literal notranslate"><span class="pre">file.write(text,</span> <span class="pre">append)</span></code> and delete it with <code class="docutils literal notranslate"><span class="pre">file.delete()</span></code></p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="class.html" class="btn btn-neutral float-right" title="Classes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="socket.html" class="btn btn-neutral float-left" title="Socket Library" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Thimote75 and Itai12.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

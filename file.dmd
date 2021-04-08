@@ -1,6 +1,4 @@
-if(1==2){
-	print("no")
-}
-else{
-	print("yes")
+a=23
+function f(x){
+	return x^2
 }

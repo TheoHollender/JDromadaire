@@ -25,6 +25,13 @@ Here are the actual utils for JDrom :
    loops
    functions
    boolean
+   import
+   libraries
+   math
+   socket
+   time
+   natives
+   class
 
 Indices and tables
 ==================
