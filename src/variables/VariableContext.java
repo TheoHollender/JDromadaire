@@ -1,7 +1,9 @@
 package variables;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
+import main.EntryPoint;
 import parser.nodes.StringNode;
 import parser.operators.ListOperator;
 
@@ -27,6 +29,47 @@ public class VariableContext {
 		
 		return get(names, names.length);
 	}
+	public void importClass(ClassNode cs, ArrayList<String> strs) {
+		if (strs.contains("*")) {
+			values.putAll(cs.objects);
+		} else {
+			for (String s:strs) {
+				if (cs.objects.containsKey(s)) {
+					values.put(s, cs.objects.get(s));
+				} else {
+					EntryPoint.raiseErr("The requested name does not exist in import");
+				}
+			}
+		}
+	}
+
+	public void createClasses(String name, Object data)  {
+		String[] spl = name.split("\\.");
+		
+		if (spl.length > 1) {
+			ListOperator act = null;
+			if(!(this.values.getOrDefault(spl[0], null) instanceof ListOperator)) {
+				ClassNode cl = new ClassNode(-1,-1);
+				cl.name = spl[0];
+				this.values.put(spl[0], cl);
+				act = cl;
+			} else {
+				act = (ListOperator) this.values.get(spl[0]);
+			}
+			
+			for(int i = 1; i < spl.length - 1; i++) {
+				if(!(this.values.getOrDefault(spl[i], null) instanceof ListOperator)) {
+					ClassNode cl = new ClassNode(-1,-1);
+					cl.name = spl[i];
+					this.values.put(spl[i], cl);
+					act = cl;
+				} else {
+					act = (ListOperator) this.values.get(spl[i]);
+				}
+			}
+		}
+	}
+	
 	public Object getLastValue(String name) {
 		String[] names = name.split("\\.");
 		

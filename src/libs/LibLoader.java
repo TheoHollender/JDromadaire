@@ -58,4 +58,12 @@ public class LibLoader {
 		return true;
 	}
 	
+	public static boolean hasModule(String name) {
+		return datas.containsKey(name);
+	}
+	
+	public static ClassNode getModule(String name) {
+		return (ClassNode) datas.get(name);
+	}
+	
 }

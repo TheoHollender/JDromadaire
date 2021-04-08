@@ -59,9 +59,7 @@ public class ClassNode extends Node implements ListOperator {
 	}
 	
 	public void importContext(VariableContext context) {
-		for(Entry<String, Object> dat:context.values.entrySet())  {
-			this.objects.put(dat.getKey(), dat.getValue());
-		}
+		this.objects.putAll(context.values);
 	}
 
 	public Object createInstance(VariableContext context, ArrayList<Object> args) {
