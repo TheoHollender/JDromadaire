@@ -5,17 +5,21 @@ Libraries
 Installed libraries
 ===================
 
-For the moment, two libraries are installed by default : ``math`` and ``socket``
+For the moment, three libraries are installed by default : ``math``, ``time`` and ``socket``
 
 The ``math`` library is here to bring some mathematical operators such as ``sqrt``, ``cos``, ``sin``, ``tan``, ``abs``
 
 The ``socket`` library is here to bring some socket connection utils.
+
+The ``time`` library proide some functions like ``sleep`` or ``now``
 
 You can find the documentations here : 
 
 - Math : `here <math.html>`_
 
 - Socket : `here <socket.html>`_
+
+- Time : `here <time.html>`_
 
 Make your own native libraries
 ==============================

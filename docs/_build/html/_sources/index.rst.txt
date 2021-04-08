@@ -29,6 +29,7 @@ Here are the actual utils for JDrom :
    libraries
    math
    socket
+   time
    natives
    class
 
