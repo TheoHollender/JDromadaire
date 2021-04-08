@@ -16,11 +16,15 @@ public class FileImporter {
 	public static ArrayList<String> underLoad = new ArrayList();
 	
 	public static ClassNode importFile(String name, Token t) {
+		File f = new File(EntryPoint.relativePath+"/"+name.replace(".", "/")+EntryPoint.extension);
+		File dir = new File(EntryPoint.relativePath+"/"+name.replace(".", "/"));
+		if (dir.isDirectory()) {
+			return importFile(name+".__init__", t);
+		}
 		if (modules.containsKey(name))  {
 			return modules.get(name);
 		}
-		File f = new File(EntryPoint.relativePath+"/"+name.replace(".", "/")+EntryPoint.extension);
-		if (underLoad.contains(f.getName())) {
+		if (underLoad.contains(name)) {
 			EntryPoint.raiseErr("Recursive import not allowed, tryed to import "+name);
 			return null;
 		}
@@ -31,7 +35,7 @@ public class FileImporter {
 			return null;
 		}
 		
-		underLoad.add(f.getName());
+		underLoad.add(name);
 		VariableContext gbSave = EntryPoint.globalContext;
 		ClassNode cs = new ClassNode(-1, -1);
 		EntryPoint.globalContext = new VariableContext();

@@ -144,6 +144,9 @@ public class Parser {
 		if (this.current_token.type == TokenType.IMPORT) {
 			return this.parseImport();
 		}
+		if (this.current_token.type == TokenType.FROM) {
+			return this.parseFromImport();
+		}
 		return this.parseNode();
 	}
 	
@@ -157,11 +160,59 @@ public class Parser {
 
 		if (!LibLoader.loadModule((String) this.current_token.value)) {
 			ClassNode cs = FileImporter.importFile((String) this.current_token.value, this.current_token);
+			
+			String[] spl = ((String) this.current_token.value).split("\\.");
+			cs.name = spl[spl.length - 1];
+			
 			if (cs != null) {
-				EntryPoint.globalContext.values.put((String) this.current_token.value, cs);
+				EntryPoint.globalContext.createClasses((String) this.current_token.value, cs);
+				EntryPoint.globalContext.setValue((String) this.current_token.value, cs);
 			}
 		}
 		this.advance();
+		
+		return null;
+	}
+	
+	private Node parseFromImport() {
+		this.advance();
+		if (this.current_token.type != TokenType.NAME) {
+			System.out.println("Missing name after import");
+			EntryPoint.raiseToken(this.current_token);
+			return null;
+		}
+
+		ClassNode cs = null;
+		if (!LibLoader.hasModule((String) this.current_token.value)) {
+			cs = FileImporter.importFile((String) this.current_token.value, this.current_token);
+		} else {
+			cs = LibLoader.getModule((String)this.current_token.value);
+		}
+		this.advance();
+		
+		if (this.current_token.type != TokenType.IMPORT) {
+			System.out.println("Missing import after from name");
+			EntryPoint.raiseToken(this.current_token);
+			return null;
+		}
+		this.advance();
+		
+		ArrayList<String> datas = new ArrayList<String>();
+		if (this.current_token.type == TokenType.MUL) {
+			datas.add("*");
+			this.advance();
+		} else if (this.current_token.type == TokenType.NAME){
+			while(this.current_token.type == TokenType.NAME){
+				datas.add((String) this.current_token.value);
+				this.advance();
+				if (this.current_token.type != TokenType.COMMA) {
+					break;
+				}
+				this.advance();
+			}
+		}
+		
+		EntryPoint.globalContext.importClass(cs, datas);
 		
 		return null;
 	}
