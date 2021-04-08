@@ -1,6 +1,7 @@
 package main;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
@@ -11,6 +12,7 @@ import java.util.List;
 
 import evaluator.Evaluator;
 import functions.FunctionImporter;
+import libs.FileImporter;
 import parser.Node;
 import parser.OpNode;
 import parser.Parser;
@@ -27,7 +29,7 @@ public class EntryPoint {
 			System.out.println("Usage: jlox [script]");
 			System.exit(64); 
 		} else if (args.length == 1) {
-			runFile(args[0]);
+			runAndSetPath(args[0]);
 		} else {
 			runPrompt();
 		}
@@ -51,12 +53,26 @@ public class EntryPoint {
 	      if (line == null) break;
 	      String[] spl = line.split(" ");
 	      if (spl[0].equals("RUN")) {
-	    	  runFile(spl[1]);
+	    	  runAndSetPath(spl[1]);
 	    	  continue;
 	      }
 	      run(line, true);
 	      hadError = false;
 	    }
+	}
+	
+	public static final String extension = ".dmd";
+	public static String relativePath = "C:\\";
+	public static void runAndSetPath(String fname) {
+		File f = new File(fname);
+		FileImporter.underLoad.add(f.getName());
+		try {
+			relativePath = (f.getParentFile().getCanonicalPath());
+			runFile(fname);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public static boolean raised = false;
@@ -65,18 +81,12 @@ public class EntryPoint {
 	public static void raiseToken(Token tok) {
 		raised = true;
 		System.out.println("Error at line "+(tok.line+1)+" at col "+(tok.col+1));
-	}
-	/*public static void raiseNode(Node node) {
-		raised = true;
-		for(StackItem it:stack) {
-			it.throwException();
-		}
-	}*/
-	static {
-		System.setProperty("java.library.path", "./lib");
+		throw new RuntimeInterpreterException();
 	}
 	
 	public static void run(String source, boolean printAll) {
+		try {
+			
 		raised = false;
 		Scanner scanner = new Scanner(source);
 	    List<Token> tokens = scanner.scanTokens();
@@ -94,6 +104,8 @@ public class EntryPoint {
 	    setStackName("<module>");
 	    Evaluator.evaluate(evNodes, globalContext, printAll);
 	    unregisterStack(globalContext);
+
+		} catch (RuntimeInterpreterException e) {}
 	}
 
 
@@ -116,6 +128,7 @@ public class EntryPoint {
 			it.throwException();
 		}
 		System.out.println("Exception : "+string);
+		throw new RuntimeInterpreterException();
 	}
 	
 }
