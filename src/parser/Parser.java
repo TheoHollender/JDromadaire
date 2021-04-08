@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import evaluator.Evaluator;
+import libs.FileImporter;
 import libs.LibLoader;
 import main.EntryPoint;
 import main.Token;
@@ -155,7 +156,10 @@ public class Parser {
 		}
 
 		if (!LibLoader.loadModule((String) this.current_token.value)) {
-			// Load file
+			ClassNode cs = FileImporter.importFile((String) this.current_token.value, this.current_token);
+			if (cs != null) {
+				EntryPoint.globalContext.values.put((String) this.current_token.value, cs);
+			}
 		}
 		this.advance();
 		
