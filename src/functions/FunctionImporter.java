@@ -30,7 +30,7 @@ public class FunctionImporter {
 		// Math
 		cont.setValue("round", new RoundFunction(-2,-2));
 		
-		LibLoader.registerModule("socket", "libs/lib_openns.jar");
+		LibLoader.registerModule("openns", "libs/lib_openns.jar");
 		LibLoader.registerModule("math", "libs/math.jar");
 		LibLoader.registerModule("time", "libs/time.jar");
 		LibLoader.registerModule("random", "libs/random.jar");
