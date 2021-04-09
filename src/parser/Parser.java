@@ -240,13 +240,17 @@ public class Parser {
 			p.advance();
 			ArrayList<Node> nodes = p.parse(this.tokens, TokenType.RCURLYBRACKET);
 			
-			this.tok_id = p.tok_id;
+			this.tok_id = p.tok_id - 1;
 			this.length = this.tokens.size();
 			this.advance();
+			
 			if (this.current_token.type != TokenType.RCURLYBRACKET) {
-				System.out.println("Missing right curly bracket.");
-				EntryPoint.raiseToken(this.current_token);
-				return null;
+				this.advance();
+				if (this.current_token.type != TokenType.RCURLYBRACKET) {
+					System.out.println("Missing right curly bracket.");
+					EntryPoint.raiseToken(this.current_token);
+					return null;
+				}
 			}
 			this.advance();
 			iModifier = this.tok_id;
@@ -424,9 +428,11 @@ public class Parser {
 			n.arguments = args;
 			n.name = name;
 			
-			p.advance();
 			if (p.current_token.type != TokenType.RCURLYBRACKET) {
-				return null;
+				p.advance();
+				if (p.current_token.type != TokenType.RCURLYBRACKET) {
+					return null;
+				}
 			}
 			
 			p.advance();
@@ -585,7 +591,8 @@ public class Parser {
 							n.evaluators = nodes;
 							n.arguments = new ArrayList<>();
 							
-							p.advance();
+							if (p.current_token.type != TokenType.RCURLYBRACKET) {p.advance();}
+							
 							if (p.current_token.type == TokenType.RCURLYBRACKET) {
 								p.advance();
 								
@@ -647,9 +654,11 @@ public class Parser {
 			n.evaluators = nodes;
 			n.arguments = new ArrayList<>();
 			
-			p.advance();
 			if (p.current_token.type != TokenType.RCURLYBRACKET) {
-				return null;
+				p.advance();
+				if (p.current_token.type != TokenType.RCURLYBRACKET) {
+					return null;
+				}
 			}
 			p.advance();
 			
