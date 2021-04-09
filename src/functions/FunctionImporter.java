@@ -33,6 +33,7 @@ public class FunctionImporter {
 		LibLoader.registerModule("socket", "libs/lib_openns.jar");
 		LibLoader.registerModule("math", "libs/math.jar");
 		LibLoader.registerModule("time", "libs/time.jar");
+		LibLoader.registerModule("random", "libs/random.jar");
 	}
 	
 }
