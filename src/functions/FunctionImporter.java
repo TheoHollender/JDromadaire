@@ -32,8 +32,8 @@ public class FunctionImporter {
 		
 		LibLoader.registerModule("openns", "libs/lib_openns.jar");
 		/*LibLoader.registerModule("math", "libs/math.jar");
-		LibLoader.registerModule("time", "libs/time.jar");
-		LibLoader.registerModule("random", "libs/random.jar");*/
+		LibLoader.registerModule("time", "libs/time.jar");*/
+		LibLoader.registerModule("random", "libs/lib_random.jar");
 	}
 	
 }
