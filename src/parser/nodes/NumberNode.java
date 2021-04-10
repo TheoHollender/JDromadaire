@@ -88,7 +88,7 @@ public class NumberNode extends Node implements EvaluateOperator<NumberNode>,Una
 			return null;
 		}
 		int scaleMax = Math.max(e.getNumber().scale(), this.getNumber().scale());
-		return new NumberNode(this.getNumber().divide(e.getNumber(), scaleMax + MAX_DIVIDE_SCALE, RoundingMode.HALF_UP), this.col, this.line);
+		return new NumberNode(this.getNumber().divide(e.getNumber(), scaleMax + MAX_DIVIDE_SCALE, RoundingMode.HALF_UP).stripTrailingZeros(), this.col, this.line);
 	}
 
 	@Override
