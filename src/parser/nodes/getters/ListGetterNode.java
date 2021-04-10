@@ -25,12 +25,13 @@ public class ListGetterNode extends Node {
 		if (evaluated instanceof ListOperator) {
 			ListOperator op = (ListOperator)evaluated;
 			if(index instanceof NumberNode) {
-				if(((NumberNode) index).getValue() instanceof Integer &&
-						(Integer)((NumberNode) index).getValue() >= 0 && (Integer)((NumberNode) index).getValue() < op.length()) {
+				if(((NumberNode) index).isInt() &&
+						((NumberNode)index).isIntegerRange() &&
+						(Integer)((NumberNode) index).getNumber().intValue() >= 0 && (Integer)((NumberNode) index).getNumber().intValue() < op.length()) {
 					return op.get((NumberNode) index);
 				} else {
-					if(!(((NumberNode) index).getValue() instanceof Integer)) {
-						EntryPoint.raiseErr("Integer Object needed, received Float/Double");
+					if(!(((NumberNode) index).isInt())) {
+						EntryPoint.raiseErr("Integer Object needed, received Float");
 						return null;
 					}
 					EntryPoint.raiseErr("Index out of range exception");

@@ -1,31 +1,33 @@
 package functions;
 
+import java.math.BigDecimal;
+
 import parser.nodes.IteratorNode;
 import parser.nodes.NumberNode;
 
 public class RangeIterator extends IteratorNode{
 
-	private double counter;
-	private double end;
-	private double jump;
-	public RangeIterator(int col, int line, double begin, double end, double jump) {
+	private BigDecimal counter;
+	private BigDecimal end;
+	private BigDecimal jump;
+	public RangeIterator(int col, int line, BigDecimal debut, BigDecimal fin, BigDecimal rng) {
 		super(col, line);
-		this.counter = begin;
-		this.end = end;
-		this.jump = jump;
+		this.counter = debut;
+		this.end = fin;
+		this.jump = rng;
 		// TODO Auto-generated constructor stub
 	}
 	public boolean hasNext() {
-		if(this.jump>0) {
-			return this.counter<this.end;
+		if(this.jump.compareTo(BigDecimal.ZERO) > 0) {
+			return this.counter.compareTo(this.end) < 0;
 		}
 		else {
-			return this.counter>this.end;
+			return this.counter.compareTo(this.end) > 0;
 		}
 	}
     public Object next() {
-    	this.counter+=this.jump;
-    	return new NumberNode(this.counter - this.jump, this.col, this.line);
+    	this.counter = this.counter.add(this.jump);
+    	return new NumberNode(this.counter.subtract(this.jump), this.col, this.line);
     }
 
 }
