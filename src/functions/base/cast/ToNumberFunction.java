@@ -42,7 +42,7 @@ public class ToNumberFunction extends FunctionNode {
 				return null;
 			}
 			
-			d = new NumberNode(tokens.get(0).value, this.col, this.line);
+			d = new NumberNode((BigDecimal)tokens.get(0).value, this.col, this.line);
 		}
 		if (d instanceof NumberNode) {
 			if (pCountMax >= 1) {
