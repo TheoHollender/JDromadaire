@@ -9,12 +9,12 @@ import libs.LibLoader;
 import main.EntryPoint;
 import main.Token;
 import main.TokenType;
-import parser.nodes.ArrayNode;
 import parser.nodes.BooleanNode;
 import parser.nodes.FunctionNode;
 import parser.nodes.ListSetterNode;
 import parser.nodes.NumberNode;
 import parser.nodes.StringNode;
+import parser.nodes.builders.ArrayBuilder;
 import parser.nodes.getters.FuncGetterNode;
 import parser.nodes.getters.GetterNode;
 import parser.nodes.getters.IteratorGetterNode;
@@ -904,7 +904,7 @@ public class Parser {
 	}
 	
 	private Node buildArray() {
-		ArrayNode node = new ArrayNode(this.current_token.col, this.current_token.line);
+		ArrayBuilder node = new ArrayBuilder(this.current_token.col, this.current_token.line);
 		
 		TokenType lastType = this.current_token.type;
 		while(this.advanceResult && lastType != TokenType.RHOOK) {
@@ -912,7 +912,7 @@ public class Parser {
 			lastType = this.current_token.type;
 			
 			this.advance();
-			node.add(expr.evaluate(EntryPoint.globalContext));
+			node.add(expr);
 		}
 		
 		return node;
