@@ -48,6 +48,13 @@ public class NumberNode extends Node implements EvaluateOperator<NumberNode>,Una
 		return number.compareTo(BigDecimal.valueOf(Integer.MAX_VALUE)) < 0
 				&& number.compareTo(BigDecimal.valueOf(Integer.MIN_VALUE)) > 0;
 	}
+	public boolean isLong() {
+		return number.stripTrailingZeros().scale() <= 0;
+	}
+	public boolean isLongRange() {
+		return number.compareTo(BigDecimal.valueOf(Long.MAX_VALUE)) < 0
+				&& number.compareTo(BigDecimal.valueOf(Long.MIN_VALUE)) > 0;
+	}
 	
 	public boolean equals(Object other) {
 		if (other instanceof NumberNode) {
