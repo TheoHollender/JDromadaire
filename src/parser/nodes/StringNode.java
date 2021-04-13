@@ -16,6 +16,7 @@ import variables.VariableContext;
 public class StringNode extends ClassNode implements EvaluateOperator,ListOperator,ComparateOperator<StringNode> {
 
 	public boolean equals(Object o) {
+		System.out.println(o);
 		if (o instanceof StringNode) {
 			return ((StringNode)o).getValue().equals(this.getValue());
 		}

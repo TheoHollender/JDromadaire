@@ -1,6 +1,8 @@
 package parser.nodes;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map.Entry;
 
 import evaluator.Evaluator;
 import main.EntryPoint;
@@ -9,9 +11,14 @@ import variables.VariableContext;
 
 public class FunctionNode extends Node {
 
-	public ArrayList<Node> evaluators;
-	public ArrayList<StringNode> arguments;
-	public String name;
+	public ArrayList<Node> evaluators = new ArrayList();
+	public ArrayList<StringNode> arguments = new ArrayList();
+	public HashMap<StringNode, Object> kwargs = new HashMap<>();
+	public String name = "";
+	public boolean kwargs_enabled = false;
+	public boolean args_enabled = false;
+	public String kwarg_name = "";
+	public String arg_name = "";
 	public FunctionNode(int col, int line) {
 		super(col, line);
 	}
@@ -23,14 +30,114 @@ public class FunctionNode extends Node {
 	public Object evaluate(VariableContext context, ArrayList<Object> args) {
 		Object data = null;
 		
-		if (args.size() != arguments.size()) {
-			EntryPoint.raiseErr("Expected "+arguments.size()+" arguments, got "+args.size());
-			return null;
+		DictNode dn = new DictNode(col, line);
+		ArrayNode an = new ArrayNode(col, line);
+		
+		if (args.size() > arguments.size() && !args_enabled) {
+			EntryPoint.raiseErr("Too many arguments in function");
 		}
+		
+		boolean[] found = new boolean[arguments.size()];
+		
+		for (Entry<StringNode, Object> en:kwargs.entrySet()) {
+			if (arguments.contains(en.getKey())) {
+				found[arguments.indexOf(en.getKey())] = true;
+				context.setValue(en.getKey().getValue(), en.getValue());
+			} else {
+				if (kwargs_enabled) {
+					dn.set(en.getKey(), en.getValue());
+				} else {
+					EntryPoint.raiseErr("Name doesn't exists in function kwargs "+en.getKey().name);
+				}
+			}
+		}
+		
 		int i = 0;
 		for(Object dat:args) {
-			context.setValue(arguments.get(i).getValue(), dat);
+			if (i < arguments.size()) {
+				context.setValue(arguments.get(i).getValue(), dat);
+			} else {
+				an.add(dat);
+			}
 			i += 1;
+		}
+		
+		for (;i<found.length; i++) {
+			if (!found[i]) {
+				EntryPoint.raiseErr("Missing argument "+i+"in function "+name);
+			}
+		}
+		
+		if (args_enabled) {
+			context.setValue(arg_name, an);
+		}
+		if (kwargs_enabled) {
+			context.setValue(kwarg_name, dn);
+		}
+		
+		data = Evaluator.evaluate(this.evaluators, context, false);
+		
+		return data;
+	}
+	
+	public Object evaluate(VariableContext context, ArrayList<Object> args, HashMap<StringNode, Object> kwargs_entry) {
+		Object data = null;
+		
+		DictNode dn = new DictNode(col, line);
+		ArrayNode an = new ArrayNode(col, line);
+		
+		if (args.size() > arguments.size() && !args_enabled) {
+			EntryPoint.raiseErr("Too many arguments in function");
+		}
+		
+		boolean[] found = new boolean[arguments.size()];
+		
+		for (Entry<StringNode, Object> en:kwargs.entrySet()) {
+			if (arguments.contains(en.getKey())) {
+				found[arguments.indexOf(en.getKey())] = true;
+				context.setValue(en.getKey().getValue(), en.getValue());
+			} else {
+				if (kwargs_enabled) {
+					dn.set(en.getKey(), en.getValue());
+				} else {
+					EntryPoint.raiseErr("Name doesn't exists in function kwargs "+en.getKey().name);
+				}
+			}
+		}
+		for (Entry<StringNode, Object> en:kwargs_entry.entrySet()) {
+			if (arguments.contains(en.getKey())) {
+				found[arguments.indexOf(en.getKey())] = true;
+				context.setValue(en.getKey().getValue(), en.getValue());
+			} else {
+				if (kwargs_enabled) {
+					dn.set(en.getKey(), en.getValue());
+				} else {
+					EntryPoint.raiseErr("Name doesn't exists in function kwargs "+en.getKey().name);
+				}
+			}
+		}
+		
+		int i = 0;
+		for(Object dat:args) {
+			if (i < arguments.size()) {
+				context.setValue(arguments.get(i).getValue(), dat);
+			} else {
+				an.add(dat);
+			}
+			i += 1;
+		}
+		
+		for (;i<found.length; i++) {
+			if (!found[i]) {
+				EntryPoint.raiseErr("Missing argument "+i+"in function "+name);
+			}
+		}
+		
+		if (args_enabled) {
+			context.setValue(arg_name, an);
+		}
+		if (kwargs_enabled) {
+			context.setValue(kwarg_name, dn);
 		}
 		
 		data = Evaluator.evaluate(this.evaluators, context, false);
