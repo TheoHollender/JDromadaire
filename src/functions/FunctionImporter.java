@@ -1,5 +1,9 @@
 package functions;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+
+import ch.obermuhlner.math.big.BigDecimalMath;
 import functions.base.array.MapFunction;
 import functions.base.cast.ToNumberFunction;
 import functions.base.cast.ToStringFunction;
@@ -13,6 +17,8 @@ public class FunctionImporter {
 
 	public static void ImportFunctions() {
 		VariableContext cont = EntryPoint.globalContext;
+		
+		BigDecimalMath.acos(BigDecimal.ZERO, MathContext.DECIMAL64);
 		
 		cont.setValue("print", new PrintFunction(-2, -2));
 		cont.setValue("help", new HelpFunction(-2,-2));
@@ -32,8 +38,8 @@ public class FunctionImporter {
 		
 		LibLoader.registerModule("openns", "libs/lib_openns.jar");
 		LibLoader.registerModule("math", "libs/math.jar");
-		LibLoader.registerModule("time", "libs/time.jar");
-		LibLoader.registerModule("random", "libs/random.jar");
+		LibLoader.registerModule("time", "libs/lib_time.jar");
+		LibLoader.registerModule("random", "libs/lib_random.jar");
 	}
 	
 }

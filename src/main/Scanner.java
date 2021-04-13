@@ -1,5 +1,6 @@
 package main;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -148,6 +149,8 @@ public class Scanner {
 					hasToAdvance = false;
 				} else if ((index = this.scanCharIndex()) != -1) {
 					data = new Token(ONECHARTOKEN_TYPE[index], this.col, this.line);
+				} else if (this.scanPointName(tokens)) {
+					hasToAdvance = false;
 				} else if (!this.isCharIgnore()) {
 					System.out.println("Unexpected Character : \'" + this.current_char + "\'");
 					EntryPoint.raiseToken(new Token(null, this.col, this.line));
@@ -166,6 +169,26 @@ public class Scanner {
 		tokens.add(new Token(TokenType.EOF, this.col, this.line));
 		
 		return tokens;
+	}
+
+	private boolean scanPointName(ArrayList<Token> tokens) {
+		if (this.current_char == '.') {
+			this.advance();
+			
+			if (NAME_FIRST_CHARS.contains(String.valueOf(this.current_char))) {
+				Token data = this.scanName();
+				
+				tokens.add(new Token(TokenType.LHOOK, this.col, this.line));
+				tokens.add(new Token(TokenType.STRING, data.value, data.col, data.line));
+				tokens.add(new Token(TokenType.RHOOK, this.col, this.line));
+				
+				return true;
+			}
+			EntryPoint.raiseToken(new Token(TokenType.NAME, this.col, this.line));
+		} else {
+			return false;
+		}
+		return false;
 	}
 
 	private Token scanName() {
@@ -266,10 +289,7 @@ public class Scanner {
 		}
 		
 		try {
-			if (dot_count == 0) {
-				return new Token(TokenType.NUMBER, Integer.parseInt(numberString.toString()), this.col, this.line);
-			}
-			return new Token(TokenType.NUMBER, Float.parseFloat(numberString.toString()), this.col, this.line);
+			return new Token(TokenType.NUMBER, new BigDecimal(numberString.toString()), this.col, this.line);
 		} catch(NumberFormatException e) {
 			System.out.println("The number you requested is too big for the format used by JDrom");
 			System.out.println("Error at line "+line+" at col "+col);

@@ -69,13 +69,13 @@ public class ArrayNode extends ClassNode implements ListOperator, IteratorOperat
 
 	@Override
 	public boolean set(NumberNode n, Object o) {
-		array.set((int) n.getValue(), o);
+		array.set((int) n.getNumber().intValue(), o);
 		return true;
 	}
 
 	@Override
 	public Object get(NumberNode n) {
-		return array.get((int) n.getValue());
+		return array.get((int) n.getNumber().intValue());
 	}
 
 	@Override

@@ -23,15 +23,16 @@ public class ChrFunction extends FunctionNode {
             EntryPoint.raiseErr("Expected number as first argument, got "+args.get(0).getClass().toString());
             return null;
 		}
-		if (!(((NumberNode)args.get(0)).getValue() instanceof Integer)) {
-            EntryPoint.raiseErr("Expected integer as first argument, got "+((NumberNode)args.get(0)).getValue() .getClass().toString());
+		if (!(((NumberNode)args.get(0)).isInt() && 
+				((NumberNode)args.get(0)).isIntegerRange())) {
+            EntryPoint.raiseErr("Expected integer as first argument, got double");
             return null;
 		}
-		if (((Integer)((NumberNode)args.get(0)).getValue())<0 || ((Integer)((NumberNode)args.get(0)).getValue())>1114112) {
+		if (((NumberNode)args.get(0)).getNumber().intValue()<0 || ((NumberNode)args.get(0)).getNumber().intValue()>1114112) {
             EntryPoint.raiseErr("Expected positive Integer less than 1114112 as first argument");
             return null;
 		}
-		int ch = (int) ((NumberNode)args.get(0)).getValue();
+		int ch = ((NumberNode)args.get(0)).getNumber().intValue();
 		return new StringNode(col, line, String.valueOf((char) ch));
 	}
 	

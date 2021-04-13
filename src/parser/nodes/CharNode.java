@@ -34,7 +34,7 @@ public class CharNode extends Node implements EvaluateOperator,ComparateOperator
 			return new StringNode(this.col, this.line, this.c + "" + ((CharNode)e).getValue());
 		}
 		if (e instanceof NumberNode) {
-			return new StringNode(this.col, this.line, this.c + String.valueOf(((NumberNode)e).getValue()));
+			return new StringNode(this.col, this.line, this.c + String.valueOf(((NumberNode)e).getNumber()));
 		}
 		return null;
 	}

@@ -1,5 +1,6 @@
 package parser;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,12 +10,12 @@ import libs.LibLoader;
 import main.EntryPoint;
 import main.Token;
 import main.TokenType;
-import parser.nodes.ArrayNode;
 import parser.nodes.BooleanNode;
 import parser.nodes.FunctionNode;
 import parser.nodes.ListSetterNode;
 import parser.nodes.NumberNode;
 import parser.nodes.StringNode;
+import parser.nodes.builders.ArrayBuilder;
 import parser.nodes.getters.FuncGetterNode;
 import parser.nodes.getters.GetterNode;
 import parser.nodes.getters.IteratorGetterNode;
@@ -280,10 +281,10 @@ public class Parser {
 			Node ex = this.expr();
 			try {
 				Object v = ex.evaluate(null);
-				if (v instanceof NumberNode && ((NumberNode)v).getValue() instanceof Integer) {
-					i = (int) ((NumberNode)v).getValue();
+				if (v instanceof NumberNode && ((NumberNode)v).isInt() && ((NumberNode)v).isIntegerRange()) {
+					i = ((NumberNode)v).getNumber().intValue();
 				}else {
-					System.out.println("Break only supports integers");
+					System.out.println("Break only supports integers < 2^31");
 					EntryPoint.raiseToken(t);
 					return null;
 				}
@@ -319,10 +320,10 @@ public class Parser {
 			Node ex = this.expr();
 			try {
 				Object v = ex.evaluate(null);
-				if (v instanceof NumberNode && ((NumberNode)v).getValue() instanceof Integer) {
-					i = (int) ((NumberNode)v).getValue();
+				if (v instanceof NumberNode && ((NumberNode)v).isInt() && ((NumberNode)v).isIntegerRange()) {
+					i = ((NumberNode)v).getNumber().intValue();
 				}else {
-					System.out.println("Continue count only supports integers");
+					System.out.println("Continue count only supports integers < 2^31");
 					EntryPoint.raiseToken(t);
 					return null;
 				}
@@ -336,8 +337,8 @@ public class Parser {
 				Node ex2 = this.expr();
 				try {
 					Object v = ex2.evaluate(null);
-					if (v instanceof NumberNode && ((NumberNode)v).getValue() instanceof Integer) {
-						j = (int) ((NumberNode)v).getValue();
+					if (v instanceof NumberNode && ((NumberNode)v).isInt() && ((NumberNode)v).isIntegerRange()) {
+						j = ((NumberNode)v).getNumber().intValue();
 					}else {
 						System.out.println("Continue jump count only supports integers");
 						EntryPoint.raiseToken(t);
@@ -865,7 +866,7 @@ public class Parser {
 		
 		if (tok.type == TokenType.NUMBER) {
 			this.advance();
-			return new NumberNode(tok.value, tok.col, tok.line);
+			return new NumberNode((BigDecimal)tok.value, tok.col, tok.line);
 		} else if (tok.type == TokenType.NAME) {
 			this.advance();
 			return this.listExpr(new GetterNode((String)tok.value, tok.col, tok.line));
@@ -904,7 +905,7 @@ public class Parser {
 	}
 	
 	private Node buildArray() {
-		ArrayNode node = new ArrayNode(this.current_token.col, this.current_token.line);
+		ArrayBuilder node = new ArrayBuilder(this.current_token.col, this.current_token.line);
 		
 		TokenType lastType = this.current_token.type;
 		while(this.advanceResult && lastType != TokenType.RHOOK) {
@@ -912,7 +913,7 @@ public class Parser {
 			lastType = this.current_token.type;
 			
 			this.advance();
-			node.add(expr.evaluate(EntryPoint.globalContext));
+			node.add(expr);
 		}
 		
 		return node;

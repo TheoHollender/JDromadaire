@@ -27,11 +27,12 @@ public class ListSetterNode extends Node {
 			if (evaluated instanceof ListOperator) {
 				ListOperator op = (ListOperator)evaluated;
 				if(index instanceof NumberNode) {
-					if(((NumberNode) index).getValue() instanceof Integer &&
-							(Integer)((NumberNode) index).getValue() >= 0 && (Integer)((NumberNode) index).getValue() < op.length()) {
+					if(((NumberNode) index).isInt() &&
+							((NumberNode)index).isIntegerRange() &&
+							(Integer)((NumberNode) index).getNumber().intValue() >= 0 && (Integer)((NumberNode) index).getNumber().intValue() < op.length()) {
 						return op.get((NumberNode) index);
 					} else {
-						if(!(((NumberNode) index).getValue() instanceof Integer)) {
+						if(!(((NumberNode) index).isInt() && ((NumberNode) index).isIntegerRange())) {
 							EntryPoint.raiseErr("Integer Object needed, received Float/Double");
 							return null;
 						}
@@ -48,12 +49,13 @@ public class ListSetterNode extends Node {
 			if (evaluated instanceof ListOperator) {
 				ListOperator op = (ListOperator)evaluated;
 				if(index instanceof NumberNode) {
-					if(((NumberNode) index).getValue() instanceof Integer &&
-							(Integer)((NumberNode) index).getValue() >= 0 && (Integer)((NumberNode) index).getValue() < op.length()) {
+					if(((NumberNode) index).isInt() &&
+							((NumberNode)index).isIntegerRange() &&
+							(Integer)((NumberNode) index).getNumber().intValue() >= 0 && (Integer)((NumberNode) index).getNumber().intValue() < op.length()) {
 						op.set((NumberNode) index, expr);
 						return expr;
 					} else {
-						if(!(((NumberNode) index).getValue() instanceof Integer)) {
+						if(!(((NumberNode) index).isInt() && ((NumberNode) index).isIntegerRange())) {
 							EntryPoint.raiseErr("Integer Object needed, received Float/Double");
 							return null;
 						}
