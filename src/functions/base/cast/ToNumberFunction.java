@@ -1,5 +1,6 @@
 package functions.base.cast;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,13 +42,13 @@ public class ToNumberFunction extends FunctionNode {
 				return null;
 			}
 			
-			d = new NumberNode(tokens.get(0).value, this.col, this.line);
+			d = new NumberNode((BigDecimal)tokens.get(0).value, this.col, this.line);
 		}
 		if (d instanceof NumberNode) {
 			if (pCountMax >= 1) {
 				return d;
-			} else if (!(((NumberNode) d).getValue() instanceof Integer)) {
-				return new NumberNode((int)Math.floor(((NumberNode) d).getDoubleValue()), ((NumberNode) d).col, ((NumberNode) d).line);
+			} else if (!(((NumberNode) d).isInt())) {
+				return new NumberNode(((NumberNode)d).getNumber().setScale(0, BigDecimal.ROUND_FLOOR), ((NumberNode) d).col, ((NumberNode) d).line);
 			}
 			return d;
 		}

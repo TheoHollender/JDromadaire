@@ -1,9 +1,9 @@
 package functions;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import main.EntryPoint;
-import parser.nodes.ArrayNode;
 import parser.nodes.FunctionNode;
 import parser.nodes.NumberNode;
 import variables.VariableContext;
@@ -15,15 +15,15 @@ public class RangeFunction extends FunctionNode {
 	}
 
 	public Object evaluate(VariableContext context, ArrayList<Object> args) {
-		double debut = 0;
-		double rng = 1;
-		double fin = 1;
+		BigDecimal debut = BigDecimal.ZERO;
+		BigDecimal rng = BigDecimal.ONE;
+		BigDecimal fin = BigDecimal.ONE;
 		if(args.size()==1) {
 			if (!(args.get(0) instanceof NumberNode)) {
 	            EntryPoint.raiseErr("Expected number as first argument, got "+args.get(0).getClass().toString());
 	            return null;
 			}
-			fin = (double) ((NumberNode)args.get(0)).getDoubleValue();
+			fin = ((NumberNode)args.get(0)).getNumber();
 		}
 		else if(args.size()==2) {
 			if (!(args.get(0) instanceof NumberNode)) {
@@ -34,8 +34,8 @@ public class RangeFunction extends FunctionNode {
 	            EntryPoint.raiseErr("Expected number as second argument, got "+args.get(1).getClass().toString());
 	            return null;
 			}
-			debut = (double) ((NumberNode)args.get(0)).getDoubleValue();
-			fin = (double) ((NumberNode)args.get(1)).getDoubleValue();
+			debut = ((NumberNode)args.get(0)).getNumber();
+			fin = ((NumberNode)args.get(1)).getNumber();
 		}
 		else if(args.size()==3) {
 			if (!(args.get(0) instanceof NumberNode)) {
@@ -50,10 +50,10 @@ public class RangeFunction extends FunctionNode {
 	            EntryPoint.raiseErr("Expected number as third argument, got "+args.get(2).getClass().toString());
 	            return null;
 			}
-			debut = (double) ((NumberNode)args.get(0)).getDoubleValue();
-			fin = (double) ((NumberNode)args.get(1)).getDoubleValue();
-			rng = (double) ((NumberNode)args.get(2)).getDoubleValue();
-			if(rng==0) {
+			debut = ((NumberNode)args.get(0)).getNumber();
+			fin = ((NumberNode)args.get(1)).getNumber();
+			rng = ((NumberNode)args.get(2)).getNumber();
+			if(rng.equals(BigDecimal.ZERO)) {
 				EntryPoint.raiseErr("Third argument cannot be a zero");
 	            return null;
 			}

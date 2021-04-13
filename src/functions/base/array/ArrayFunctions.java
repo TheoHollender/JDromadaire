@@ -55,8 +55,8 @@ public class ArrayFunctions {
 			ArrayNode arr = getFromArgs(args, "add", this);
 			if (!argsFound && args.size() > 1) {return new BooleanNode(-1,-1, false);}
 			boolean b = true;
-			if ((args.get(1) instanceof NumberNode) && (((NumberNode)args.get(1)).getValue() instanceof Integer)) {
-				b = arr.removeByIndex((int) ((NumberNode)args.get(1)).getValue());
+			if ((args.get(1) instanceof NumberNode) && (((NumberNode)args.get(1)).isInt()) && (((NumberNode)args.get(1)).isIntegerRange())) {
+				b = arr.removeByIndex(((NumberNode)args.get(1)).getNumber().intValue());
 			} else {
 				arr.remove(args.get(1));
 			}

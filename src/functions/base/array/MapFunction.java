@@ -50,8 +50,8 @@ public class MapFunction extends FunctionNode {
 				EntryPoint.raiseErr("Expected number as third argument, got "+args.get(2).getClass().toString());
 				return null;
 			}
-			if(!(((NumberNode)args.get(2)).getValue() instanceof Integer)) {
-				EntryPoint.raiseErr("Expected integer as third argument, got "+((NumberNode)args.get(2)).getValue().getClass().toString());
+			if(!(((NumberNode)args.get(2)).isInt() && ((NumberNode)args.get(2)).isIntegerRange())) {
+				EntryPoint.raiseErr("Expected integer < 2^31 as third argument, got float");
 				return null;
 			}
 			if (!(args.get(3) instanceof ArrayNode)) {
@@ -59,7 +59,7 @@ public class MapFunction extends FunctionNode {
 				return null;
 			}
 			
-			index = (int) ((NumberNode)args.get(2)).getValue();
+			index = ((NumberNode)args.get(2)).getNumber().intValue();
 			ArrayNode baseargs = (ArrayNode)args.get(3);
 			for (int j = 0; j < baseargs.array.size(); j++) {
 				dtTS.add(baseargs.array.get(j));

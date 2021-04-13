@@ -1,5 +1,6 @@
 package main;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -288,10 +289,7 @@ public class Scanner {
 		}
 		
 		try {
-			if (dot_count == 0) {
-				return new Token(TokenType.NUMBER, Integer.parseInt(numberString.toString()), this.col, this.line);
-			}
-			return new Token(TokenType.NUMBER, Float.parseFloat(numberString.toString()), this.col, this.line);
+			return new Token(TokenType.NUMBER, new BigDecimal(numberString.toString()), this.col, this.line);
 		} catch(NumberFormatException e) {
 			System.out.println("The number you requested is too big for the format used by JDrom");
 			System.out.println("Error at line "+line+" at col "+col);

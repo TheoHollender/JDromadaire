@@ -1,5 +1,6 @@
 package functions;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import main.EntryPoint;
@@ -15,14 +16,14 @@ public class RoundFunction extends FunctionNode {
 	}
 
 	public Object evaluate(VariableContext context, ArrayList<Object> args) {
-		double pre = 0;
-		double nb = 1;
+		BigDecimal pre = BigDecimal.ZERO;
+		BigDecimal nb = BigDecimal.ONE;
 		if(args.size()==1) {
 			if (!(args.get(0) instanceof NumberNode)) {
 	            EntryPoint.raiseErr("Expected number as first argument, got "+args.get(0).getClass().toString());
 	            return null;
 			}
-			nb = (double) ((NumberNode)args.get(0)).getDoubleValue();
+			nb = ((NumberNode)args.get(0)).getNumber();
 		}
 		else if(args.size()==2) {
 			if (!(args.get(0) instanceof NumberNode)) {
@@ -33,14 +34,20 @@ public class RoundFunction extends FunctionNode {
 	            EntryPoint.raiseErr("Expected number as second argument, got "+args.get(1).getClass().toString());
 	            return null;
 			}
-			nb = (double) ((NumberNode)args.get(0)).getDoubleValue();
-			pre = (double) ((NumberNode)args.get(1)).getDoubleValue();
+			if (!(((NumberNode)args.get(1)).isInt() && ((NumberNode)args.get(1)).isIntegerRange())) {
+				EntryPoint.raiseErr("Expected integer < 2^31 and > -2^31");
+				return null;
+			}
+			nb = ((NumberNode)args.get(0)).getNumber();
+			pre = ((NumberNode)args.get(1)).getNumber();
 		}
 		else {
 			EntryPoint.raiseErr("1 or 2 arguments expected, "+args.size()+" received");
 			return null;
 		}
-		return new NumberNode(Math.round(nb*Math.pow(10, pre))/Math.pow(10, pre),col,line);
+		
+		BigDecimal d = nb.multiply(BigDecimal.TEN.pow(pre.intValue())).setScale(0, BigDecimal.ROUND_HALF_UP).divide(BigDecimal.TEN.pow(pre.intValue()));
+		return new NumberNode(d, ((NumberNode)args.get(0)).col, ((NumberNode)args.get(0)).line);
 	}
 	
 }
