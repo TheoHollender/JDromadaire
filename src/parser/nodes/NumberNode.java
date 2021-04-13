@@ -1,8 +1,10 @@
 package parser.nodes;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.math.RoundingMode;
 
+import ch.obermuhlner.math.big.BigDecimalMath;
 import main.EntryPoint;
 import parser.Node;
 import parser.ValueNode;
@@ -101,7 +103,7 @@ public class NumberNode extends Node implements EvaluateOperator<NumberNode>,Una
 
 	@Override
 	public Object power(NumberNode e) {
-		return new NumberNode(this.getNumber().pow(e.getNumber().intValue()), this.col, this.line);
+		return new NumberNode(BigDecimalMath.pow(this.getNumber(), e.getNumber(), MathContext.DECIMAL64), this.col, this.line);
 	}
 
 	@Override
