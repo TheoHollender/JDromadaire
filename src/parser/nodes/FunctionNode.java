@@ -21,6 +21,7 @@ public class FunctionNode extends Node {
 	public String arg_name = "";
 	public FunctionNode(int col, int line) {
 		super(col, line);
+		this.typeName = "function";
 	}
 
 	public Object evaluate(VariableContext context) {

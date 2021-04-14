@@ -4,6 +4,14 @@ import variables.VariableContext;
 
 public class Node {
 	
+	public String typeName = null;
+	public String type() {
+		if (typeName != null) {
+			return typeName;
+		}
+		return this.getClass().toString();
+	}
+	
 	public int col;
 	public int line;
 	
