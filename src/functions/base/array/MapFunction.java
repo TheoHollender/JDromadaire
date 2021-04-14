@@ -1,12 +1,14 @@
 package functions.base.array;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import main.EntryPoint;
 import parser.nodes.ArrayNode;
 import parser.nodes.FunctionNode;
 import parser.nodes.NumberNode;
 import parser.nodes.ReturnNode;
+import parser.nodes.StringNode;
 import variables.VariableContext;
 
 public class MapFunction extends FunctionNode {
@@ -23,7 +25,7 @@ public class MapFunction extends FunctionNode {
 		return o;
 	}
 
-	public Object evaluate(VariableContext ctx, ArrayList<Object> args) {
+	public Object evaluate(VariableContext ctx, ArrayList<Object> args, HashMap<StringNode, Object> kwargs_entry) {
 		if (args.size() != 2 && args.size() != 4) {
 			EntryPoint.raiseErr("Expected 2 or 4 arguments, got "+args.size());
 			return null;

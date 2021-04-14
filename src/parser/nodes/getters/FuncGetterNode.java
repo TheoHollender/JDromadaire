@@ -40,6 +40,9 @@ public class FuncGetterNode extends Node {
 		if (this.left instanceof GetterNode) {
 			thisObj = ((GetterNode)this.left).evaluateLast(context);
 		}
+		if (this.left instanceof ListGetterNode) {
+			thisObj = ((ListGetterNode)this.left).left.evaluate(context);
+		}
 		if(thisObj instanceof ClassNode) {
 			if (!((ClassNode)thisObj).isRoot) {
 				args.add(thisObj);

@@ -1,6 +1,7 @@
 package functions.base.array;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import main.EntryPoint;
 import parser.Node;
@@ -8,6 +9,7 @@ import parser.nodes.ArrayNode;
 import parser.nodes.BooleanNode;
 import parser.nodes.FunctionNode;
 import parser.nodes.NumberNode;
+import parser.nodes.StringNode;
 import variables.VariableContext;
 
 public class ArrayFunctions {
@@ -35,7 +37,7 @@ public class ArrayFunctions {
 			super(col, line);
 		}
 		
-		public Object evaluate(VariableContext context, ArrayList<Object> args) {
+		public Object evaluate(VariableContext context, ArrayList<Object> args, HashMap<StringNode, Object> kwargs_entry) {
 			ArrayNode arr = getFromArgs(args, "add", this);
 			if (!argsFound && args.size() > 1) {return new BooleanNode(-1,-1, false);}
 			arr.add(args.get(1));
@@ -51,7 +53,7 @@ public class ArrayFunctions {
 			super(col, line);
 		}
 		
-		public Object evaluate(VariableContext context, ArrayList<Object> args) {
+		public Object evaluate(VariableContext context, ArrayList<Object> args, HashMap<StringNode, Object> kwargs_entry) {
 			ArrayNode arr = getFromArgs(args, "add", this);
 			if (!argsFound && args.size() > 1) {return new BooleanNode(-1,-1, false);}
 			boolean b = true;
@@ -72,7 +74,7 @@ public class ArrayFunctions {
 			super(col, line);
 		}
 		
-		public Object evaluate(VariableContext context, ArrayList<Object> args) {
+		public Object evaluate(VariableContext context, ArrayList<Object> args, HashMap<StringNode, Object> kwargs_entry) {
 			ArrayNode arr = getFromArgs(args, "add", this);
 			
 			int i = -2;
@@ -94,7 +96,7 @@ public class ArrayFunctions {
 			super(col, line);
 		}
 		
-		public Object evaluate(VariableContext context, ArrayList<Object> args) {
+		public Object evaluate(VariableContext context, ArrayList<Object> args, HashMap<StringNode, Object> kwargs_entry) {
 			ArrayNode arr = getFromArgs(args, "add", this);
 			
 			boolean i = false;

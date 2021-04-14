@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import main.EntryPoint;
 import parser.Node;
@@ -39,7 +40,7 @@ public class FileNodeFunctions {
 			super(col, line);
 		}
 		
-		public Object evaluate(VariableContext context, ArrayList<Object> args) {
+		public Object evaluate(VariableContext context, ArrayList<Object> args, HashMap<StringNode, Object> kwargs_entry) {
 			FileNode fn = getFromArgs(args, "exists", this);
 			if (!argsFound) {return null;}
 			File f = fn.file;
@@ -55,7 +56,7 @@ public class FileNodeFunctions {
 			super(col, line);
 		}
 		
-		public Object evaluate(VariableContext context, ArrayList<Object> args) {
+		public Object evaluate(VariableContext context, ArrayList<Object> args, HashMap<StringNode, Object> kwargs_entry) {
 			FileNode fn = getFromArgs(args, "mkdir", this);
 			if (!argsFound) {return null;}
 			File f = fn.file;
@@ -71,7 +72,7 @@ public class FileNodeFunctions {
 			super(col, line);
 		}
 		
-		public Object evaluate(VariableContext context, ArrayList<Object> args) {
+		public Object evaluate(VariableContext context, ArrayList<Object> args, HashMap<StringNode, Object> kwargs_entry) {
 			FileNode fn = getFromArgs(args, "create_file", this);
 			if (!argsFound) {return null;}
 			
@@ -93,7 +94,7 @@ public class FileNodeFunctions {
 			super(col, line);
 		}
 		
-		public Object evaluate(VariableContext context, ArrayList<Object> args) {
+		public Object evaluate(VariableContext context, ArrayList<Object> args, HashMap<StringNode, Object> kwargs_entry) {
 			FileNode fn = getFromArgs(args, "delete", this);
 			if (!argsFound) {return null;}
 			File f = fn.file;
@@ -118,7 +119,7 @@ public class FileNodeFunctions {
 			super(col, line);
 		}
 		
-		public Object evaluate(VariableContext context, ArrayList<Object> args) {
+		public Object evaluate(VariableContext context, ArrayList<Object> args, HashMap<StringNode, Object> kwargs_entry) {
 			FileNode fn = getFromArgs(args, "read_file", this);
 			if (!argsFound) {return null;}
 			
@@ -141,7 +142,7 @@ public class FileNodeFunctions {
 			super(col, line);
 		}
 		
-		public Object evaluate(VariableContext context, ArrayList<Object> args) {
+		public Object evaluate(VariableContext context, ArrayList<Object> args, HashMap<StringNode, Object> kwargs_entry) {
 			FileNode fn = getFromArgs(args, "exists", this);
 			if (!argsFound || args.size() < 2) {return null;}
 			

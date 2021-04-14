@@ -2,10 +2,12 @@ package functions;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import main.EntryPoint;
 import parser.nodes.FunctionNode;
 import parser.nodes.NumberNode;
+import parser.nodes.StringNode;
 import variables.VariableContext;
 
 public class RangeFunction extends FunctionNode {
@@ -14,7 +16,7 @@ public class RangeFunction extends FunctionNode {
 		super(col, line);
 	}
 
-	public Object evaluate(VariableContext context, ArrayList<Object> args) {
+	public Object evaluate(VariableContext context, ArrayList<Object> args, HashMap<StringNode, Object> kwargs_entry) {
 		BigDecimal debut = BigDecimal.ZERO;
 		BigDecimal rng = BigDecimal.ONE;
 		BigDecimal fin = BigDecimal.ONE;

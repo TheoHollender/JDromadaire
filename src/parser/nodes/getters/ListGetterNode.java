@@ -9,7 +9,7 @@ import variables.VariableContext;
 
 public class ListGetterNode extends Node {
 
-	private Node left;
+	public Node left;
 	private Node index;
 
 	public ListGetterNode(int col, int line, Node left, Node index) {
