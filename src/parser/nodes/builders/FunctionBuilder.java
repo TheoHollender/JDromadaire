@@ -11,12 +11,21 @@ import variables.VariableContext;
 
 public class FunctionBuilder extends Node {
 
-	public FunctionBuilder(int col, int line, ArrayList<StringNode> args, HashMap<StringNode, Node> kwargs, String name, ArrayList<Node> evals) {
+	private boolean agEnabled;
+	private String agName;
+	private boolean kwEnabled;
+	private String kwName;
+
+	public FunctionBuilder(int col, int line, ArrayList<StringNode> args, HashMap<StringNode, Node> kwargs, String name, ArrayList<Node> evals, boolean agEnabled, String agName, boolean kwEnabled, String kwName) {
 		super(col, line);
 		this.args = args;
 		this.kwargs = kwargs;
 		this.evaluators = evals;
 		this.name = name;
+		this.agEnabled = agEnabled;
+		this.agName = agName;
+		this.kwEnabled = kwEnabled;
+		this.kwName = kwName;
 	}
 	
 	private HashMap<StringNode, Node> kwargs;
@@ -37,6 +46,11 @@ public class FunctionBuilder extends Node {
 		}
 		
 		f.kwargs = kw;
+		
+		f.args_enabled = agEnabled;
+		f.arg_name = agName;
+		f.kwargs_enabled = kwEnabled;
+		f.kwarg_name = kwName;
 		
 		ctx.setValue(name, f);
 		

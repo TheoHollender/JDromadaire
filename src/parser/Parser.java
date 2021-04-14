@@ -397,11 +397,40 @@ public class Parser {
 			}
 			this.advance();
 			
+			boolean agEnabled = false;
+			String agName = "";
+			boolean kwEnabled = false;
+			String kwName = "";
+			
 			ArrayList<StringNode> args = new ArrayList<>();
 			HashMap<StringNode, Node> kwargs = new HashMap<StringNode,Node>();
 			TokenType lastType = this.current_token.type;
 			while(this.advanceResult && lastType != TokenType.RPAREN
-					&& this.current_token.type == TokenType.NAME) {
+					&& (this.current_token.type == TokenType.NAME
+					|| this.current_token.type == TokenType.MUL)) {
+				if (this.current_token.type == TokenType.MUL) {
+					this.advance();
+					if (this.advanceResult && this.current_token.type == TokenType.MUL
+							&& this.next() != null
+							&& this.next().type == TokenType.NAME) {
+						this.advance();
+						kwEnabled = true;
+						kwName = (String) this.current_token.value;
+					} else if (this.current_token.type == TokenType.NAME) {
+						agEnabled = true;
+						agName = (String) this.current_token.value;
+					} else {
+						System.out.println("Unexpected Args/Kwargs token (*)");
+						EntryPoint.raiseToken(this.current_token);
+					}
+					this.advance();
+					lastType = this.current_token.type;
+					if (lastType != TokenType.RPAREN) {
+						this.advance();
+					}
+					continue;
+				}
+				
 				Token a = this.current_token;
 				this.advance();
 				
@@ -445,7 +474,7 @@ public class Parser {
 			n.kwargs = kwargs;
 			n.name = name;*/
 			
-			FunctionBuilder fb = new FunctionBuilder(0,0, args, kwargs, name, nodes);
+			FunctionBuilder fb = new FunctionBuilder(0,0, args, kwargs, name, nodes, agEnabled, agName, kwEnabled, kwName);
 			
 			if (p.current_token.type != TokenType.RCURLYBRACKET) {
 				p.advance();
@@ -962,12 +991,15 @@ public class Parser {
 	public Node funcExpr(Node node, Token t) {
 		while (this.current_token != null && this.current_token.type == TokenType.LPAREN) {
 			this.advance();
-			
+
 			ArrayList<Node> exprs = new ArrayList<Node>();
 			HashMap<StringNode, Node> kw_exprs = new HashMap<>();
+			
 			TokenType lastType = this.current_token.type;
 			while(this.advanceResult && lastType != TokenType.RPAREN) {
+				
 				Token name = null;
+				
 				if (this.current_token.type == TokenType.NAME
 						&& this.next() != null
 						&& this.next().type == TokenType.SET) {
