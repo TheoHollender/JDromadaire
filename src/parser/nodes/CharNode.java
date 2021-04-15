@@ -11,6 +11,7 @@ public class CharNode extends Node implements EvaluateOperator,ComparateOperator
 	public CharNode(int col, int line, char c) {
 		super(col, line);
 		this.c=c;
+		this.typeName = "char";
 	}
 	
 	public Object evaluate() {

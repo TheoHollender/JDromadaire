@@ -1,8 +1,10 @@
 package functions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import parser.nodes.FunctionNode;
+import parser.nodes.StringNode;
 import variables.VariableContext;
 
 public class HelpFunction extends FunctionNode {
@@ -11,7 +13,7 @@ public class HelpFunction extends FunctionNode {
 		super(col, line);
 	}
 
-	public Object evaluate(VariableContext context, ArrayList<Object> args) {
+	public Object evaluate(VariableContext context, ArrayList<Object> args, HashMap<StringNode, Object> kwargs_entry) {
 		System.out.println("Java Implementation of Drom");
 		System.out.println("Welcome to JDromadaire's help utility!\r\n"
 				+ "\r\n"

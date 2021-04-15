@@ -2,7 +2,10 @@ package parser;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+import com.google.crypto.tink.subtle.Kwp;
 
 import evaluator.Evaluator;
 import libs.FileImporter;
@@ -16,6 +19,7 @@ import parser.nodes.ListSetterNode;
 import parser.nodes.NumberNode;
 import parser.nodes.StringNode;
 import parser.nodes.builders.ArrayBuilder;
+import parser.nodes.builders.FunctionBuilder;
 import parser.nodes.getters.FuncGetterNode;
 import parser.nodes.getters.GetterNode;
 import parser.nodes.getters.IteratorGetterNode;
@@ -385,6 +389,12 @@ public class Parser {
 		this.advance();
 		
 		if(this.current_token.type == TokenType.NAME) {
+			String expectedReturnType = "";
+			if (this.next() != null && this.next().type == TokenType.NAME) {
+				expectedReturnType = (String) this.current_token.value;
+				this.advance();
+			}
+			
 			String name = (String) this.current_token.value;
 			
 			this.advance();
@@ -393,19 +403,76 @@ public class Parser {
 			}
 			this.advance();
 			
+			boolean agEnabled = false;
+			String agName = "";
+			boolean kwEnabled = false;
+			String kwName = "";
+			
 			ArrayList<StringNode> args = new ArrayList<>();
+			HashMap<StringNode, Node> kwargs = new HashMap<StringNode,Node>();
+			HashMap<String, String> expectedTypeVar = new HashMap();
 			TokenType lastType = this.current_token.type;
 			while(this.advanceResult && lastType != TokenType.RPAREN
-					&& this.current_token.type == TokenType.NAME) {
+					&& (this.current_token.type == TokenType.NAME
+					|| this.current_token.type == TokenType.MUL)) {
+				if (this.current_token.type == TokenType.MUL) {
+					this.advance();
+					if (this.advanceResult && this.current_token.type == TokenType.MUL
+							&& this.next() != null
+							&& this.next().type == TokenType.NAME) {
+						this.advance();
+						kwEnabled = true;
+						kwName = (String) this.current_token.value;
+					} else if (this.current_token.type == TokenType.NAME) {
+						agEnabled = true;
+						agName = (String) this.current_token.value;
+					} else {
+						System.out.println("Unexpected Args/Kwargs token (*)");
+						EntryPoint.raiseToken(this.current_token);
+					}
+					this.advance();
+					lastType = this.current_token.type;
+					if (lastType != TokenType.RPAREN) {
+						this.advance();
+					}
+					continue;
+				}
+				
 				Token a = this.current_token;
+				String typeVarName = null;
 				this.advance();
 				
+				if (this.current_token.type == TokenType.TWO_POINTS) {
+					this.advance();
+					
+					if (this.current_token.type != TokenType.NAME) {
+						System.out.println("Expected variable type container after two points");
+						EntryPoint.raiseToken(this.current_token);
+					}
+					
+					typeVarName = (String) this.current_token.value;
+					this.advance();
+				}
+				
 				lastType = this.current_token.type;
+				
+				if (lastType == TokenType.SET) {
+					this.advance();
+					
+					Node exp = this.bin();
+				
+					lastType = this.current_token.type;
+					
+					kwargs.put(new StringNode(a.col, a.line, (String) a.value),exp);
+				}
+				args.add(new StringNode(a.col, a.line, (String) a.value));
+				if(typeVarName != null) {
+					expectedTypeVar.put((String) a.value, typeVarName);
+				}
 				
 				if(lastType != TokenType.RPAREN) {
 					this.advance();
 				}
-				args.add(new StringNode(a.col, a.line, (String) a.value));
 			}
 			
 			if(this.current_token.type != TokenType.RPAREN) {
@@ -424,10 +491,13 @@ public class Parser {
 			p.advance();
 			ArrayList<Node> nodes = p.parse(this.tokens, TokenType.RCURLYBRACKET);
 			
-			FunctionNode n = new FunctionNode(0, 0);
+			/*FunctionNode n = new FunctionNode(0, 0);
 			n.evaluators = nodes;
 			n.arguments = args;
-			n.name = name;
+			n.kwargs = kwargs;
+			n.name = name;*/
+			
+			FunctionBuilder fb = new FunctionBuilder(0,0, args, kwargs, name, nodes, agEnabled, agName, kwEnabled, kwName, expectedTypeVar, expectedReturnType);
 			
 			if (p.current_token.type != TokenType.RCURLYBRACKET) {
 				p.advance();
@@ -437,11 +507,10 @@ public class Parser {
 			}
 			
 			p.advance();
-			this.saverContext.setValue(name, n);
 			this.iModifier = p.tok_id;
 			this.tok_id = p.tok_id - 1;
 			this.advance();
-			return n;
+			return fb;
 		}
 		
 		return null;
@@ -945,17 +1014,33 @@ public class Parser {
 	public Node funcExpr(Node node, Token t) {
 		while (this.current_token != null && this.current_token.type == TokenType.LPAREN) {
 			this.advance();
-			
+
 			ArrayList<Node> exprs = new ArrayList<Node>();
+			HashMap<StringNode, Node> kw_exprs = new HashMap<>();
+			
 			TokenType lastType = this.current_token.type;
 			while(this.advanceResult && lastType != TokenType.RPAREN) {
+				
+				Token name = null;
+				
+				if (this.current_token.type == TokenType.NAME
+						&& this.next() != null
+						&& this.next().type == TokenType.SET) {
+					name = this.current_token;
+					this.advance();
+					this.advance();
+				}
 				Node expr = this.bin();
 				lastType = this.current_token.type;
 				if (lastType != TokenType.RPAREN) {
 					this.advance();
 				}
 				
-				exprs.add(expr);
+				if (name == null) {
+					exprs.add(expr);
+				} else {
+					kw_exprs.put(new StringNode(-1, -1, (String) name.value), expr);
+				}
 			}
 			
 			if (lastType != TokenType.RPAREN) {
@@ -965,7 +1050,7 @@ public class Parser {
 			}
 			this.advance();
 			
-			node = new FuncGetterNode(t.col, t.line, node, exprs);
+			node = new FuncGetterNode(t.col, t.line, node, exprs, kw_exprs);
 		}
 		return node;
 	}

@@ -43,7 +43,6 @@ public class Scanner {
 		TokenType.INF, TokenType.SUP,
 	};
 	
-	
 	final String source;
 	
 	char current_char = '_';
@@ -245,15 +244,34 @@ public class Scanner {
 		this.advance();
 		while(this.advanceResult) {
 			if (this.current_char == '\"' && lchar != '\\') {
-				return new Token(TokenType.STRING, string.toString(), this.col, this.line);
+				return new Token(TokenType.STRING, transformString(string.toString()), this.col, this.line);
 			}
 			
 			string.append(this.current_char);
 			
-			lchar = this.current_char;
+			if (this.current_char == '\\') {
+				if (lchar != '\\') {
+					lchar = '\\';
+				} else {
+					lchar = ' ';
+				}
+			} else {
+				lchar = this.current_char;
+			}
+			
 			this.advance();
 		}
 		return null;
+	}
+
+	private String transformString(String string) {
+		return string.replaceAll("\\\\t", "\t")
+				.replaceAll("\\\\b", "\b")
+				.replaceAll("\\\\n", "\n")
+				.replaceAll("\\\\f", "\f")
+				.replaceAll("\\\\\\\'", "\'")
+				.replaceAll("\\\\\\\"", "\"")
+				.replaceAll("\\\\\\\\", "\\\\");
 	}
 
 	private boolean isCharIgnore() {

@@ -1,11 +1,14 @@
 package parser.nodes.getters;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map.Entry;
 
 import main.EntryPoint;
 import parser.Node;
 import parser.nodes.FunctionNode;
 import parser.nodes.ReturnNode;
+import parser.nodes.StringNode;
 import parser.nodes.innerreturn.BreakNode;
 import parser.nodes.innerreturn.ContinueNode;
 import parser.nodes.innerreturn.InnerRNode;
@@ -16,11 +19,13 @@ public class FuncGetterNode extends Node {
 
 	private Node left;
 	private ArrayList<Node> exprs;
+	private HashMap<StringNode, Node> kwargs_expr = new HashMap<>();
 	private boolean creCont = true;
-	public FuncGetterNode(int col, int line, Node n, ArrayList<Node> exprs) {
+	public FuncGetterNode(int col, int line, Node n, ArrayList<Node> exprs, HashMap<StringNode, Node> kw_expr) {
 		super(col, line);
 		this.left = n;
 		this.exprs = exprs;
+		this.kwargs_expr = kw_expr;
 	}
 	public FuncGetterNode(int col, int line, Node n, ArrayList<Node> exprs, boolean creCont) {
 		super(col, line);
@@ -35,6 +40,9 @@ public class FuncGetterNode extends Node {
 		if (this.left instanceof GetterNode) {
 			thisObj = ((GetterNode)this.left).evaluateLast(context);
 		}
+		if (this.left instanceof ListGetterNode) {
+			thisObj = ((ListGetterNode)this.left).left.evaluate(context);
+		}
 		if(thisObj instanceof ClassNode) {
 			if (!((ClassNode)thisObj).isRoot) {
 				args.add(thisObj);
@@ -42,6 +50,10 @@ public class FuncGetterNode extends Node {
 		}
 		for(Node n:exprs) {
 			args.add(n.evaluate(context));
+		}
+		HashMap<StringNode, Object> kw = new HashMap<>(kwargs_expr.size());
+		for (Entry<StringNode, Node> en:kwargs_expr.entrySet()) {
+			kw.put(en.getKey(), en.getValue().evaluate(context));
 		}
 		
 		Object lefte = this.left.evaluate(EntryPoint.globalContext);
@@ -57,7 +69,7 @@ public class FuncGetterNode extends Node {
 				EntryPoint.registerStack(context);
 				EntryPoint.setStackName(leftf.name);
 			}
-			Object d = leftf.evaluate(context, args);
+			Object d = leftf.evaluate(context, args, kw);
 			if (creCont) {
 				EntryPoint.unregisterStack(context);
 			}

@@ -2,6 +2,7 @@ package functions.base.cast;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import main.EntryPoint;
@@ -21,7 +22,14 @@ public class ToNumberFunction extends FunctionNode {
 		this.pCountMax = pCountMax;
 	}
 	
-	public Object evaluate(VariableContext context, ArrayList<Object> args) {
+	public String type() {
+		if (pCountMax == 0) {
+			return "int";
+		}
+		return "number";
+	}
+	
+	public Object evaluate(VariableContext context, ArrayList<Object> args, HashMap<StringNode, Object> kwargs_entry) {
 		if (args.size() != 1) {
 			EntryPoint.raiseErr("Expected 1 argument in number cast, got "+args.size());
 			return null;

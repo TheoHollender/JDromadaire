@@ -37,6 +37,7 @@ public class StringNode extends ClassNode implements EvaluateOperator,ListOperat
 	public static final FunctionNode SPLIT = new StringFunctions.SplitFunction(-1, -1);
 	public StringNode(int col, int line, String string) {
 		super(col, line);
+		this.typeName = "string";
 		this.value = string;
 		this.isRoot = false;
 		

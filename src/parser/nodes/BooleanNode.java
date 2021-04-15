@@ -12,6 +12,7 @@ public class BooleanNode extends Node implements UnaryOperator, BinaryOperator<B
 	public BooleanNode(int col, int line, boolean b) {
 		super(col, line);
 		this.value = b;
+		this.typeName = "boolean";
 	}
 	
 	public boolean equals(Object oth) {

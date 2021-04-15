@@ -1,6 +1,7 @@
 package functions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 import parser.nodes.FunctionNode;
@@ -15,7 +16,7 @@ public class InputFunction extends FunctionNode {
 
 	private static Scanner sc = new Scanner(System.in);
 	
-	public Object evaluate(VariableContext ctx, ArrayList<Object> args) {
+	public Object evaluate(VariableContext ctx, ArrayList<Object> args, HashMap<StringNode, Object> kwargs_entry) {
 		return new StringNode(-1, -1, sc.nextLine());
 	}
 	

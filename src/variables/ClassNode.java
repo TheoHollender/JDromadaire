@@ -20,6 +20,13 @@ public class ClassNode extends Node implements ListOperator {
 		super(col, line);
 	}
 	
+	public String type() {
+		if (this.typeName != null) {
+			return this.typeName;
+		}
+		return name;
+	}
+	
 	public String toString() {
 		Object str = this.objects.get("str");
 		if (str instanceof FunctionNode) {

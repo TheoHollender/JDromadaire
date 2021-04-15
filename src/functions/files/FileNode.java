@@ -13,6 +13,7 @@ public class FileNode extends ClassNode {
 	File file;
 	public FileNode(int col, int line) {
 		super(col, line);
+		this.typeName = "file";
 		this.objects.put("filename", null);
 		this.objects.put("exists", new FileNodeFunctions.ExistsFunction(-1, -1));
 		this.objects.put("mkdir", new FileNodeFunctions.MkdirsFunction(-1, -1));
@@ -25,6 +26,7 @@ public class FileNode extends ClassNode {
 	
 	public FileNode(FileNode other, ArrayList<Object> args) {
 		super(other, args);
+		this.typeName = "file";
 		if(args.size() > 0 && (args.get(0) instanceof StringNode)) {
 			this.objects.put("filename", ((StringNode)args.get(0)).getValue());
 		} else {

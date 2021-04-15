@@ -1,6 +1,7 @@
 package functions.base.string;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import main.EntryPoint;
 import parser.Node;
@@ -35,7 +36,7 @@ public class StringFunctions {
 			super(col, line);
 		}
 		
-		public Object evaluate(VariableContext context, ArrayList<Object> args) {
+		public Object evaluate(VariableContext context, ArrayList<Object> args, HashMap<StringNode, Object> kwargs_entry) {
 			StringNode str = getFromArgs(args, "add", this);
 			if (!argsFound) {return new BooleanNode(-1,-1, false);}
 			if (args.size() != 2) {

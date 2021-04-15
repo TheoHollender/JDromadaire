@@ -18,6 +18,13 @@ public class NumberNode extends Node implements EvaluateOperator<NumberNode>,Una
 	public NumberNode(BigDecimal value, int col, int line) {
 		super(col, line);
 		this.number = value;
+		this.typeName = "number";
+		if (this.isInt()) {
+			this.typeName = "int";
+			Node n = new Node(col, line);
+			n.typeName = "number";
+			this.parents.add(n);
+		}
 	}
 	
 	public NumberNode(Object value, int col, int line) {
@@ -113,7 +120,8 @@ public class NumberNode extends Node implements EvaluateOperator<NumberNode>,Una
 
 	@Override
 	public double compare(NumberNode e) {
-		return (this.getNumber().subtract(e.getNumber())).divide(this.getNumber().subtract(e.getNumber()).abs()).doubleValue();
+		BigDecimal bd = this.getNumber().subtract(e.getNumber());
+		return bd.signum();
 	}
 
 }
