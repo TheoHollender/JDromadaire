@@ -20,6 +20,7 @@ public class FunctionNode extends Node {
 	public String kwarg_name = "";
 	public String arg_name = "";
 	public HashMap<String, String> expectedTypeVar = new HashMap();
+	public String expectedReturnType = "";
 	public FunctionNode(int col, int line) {
 		super(col, line);
 		this.typeName = "function";
@@ -148,6 +149,27 @@ public class FunctionNode extends Node {
 		}
 		
 		data = Evaluator.evaluate(this.evaluators, context, false);
+
+		if (data instanceof ReturnNode && !expectedReturnType.equals("")) {
+			ReturnNode rn = (ReturnNode) data;
+			Object o = rn.evaluate(context);
+			
+			if (o instanceof Node) {
+				Node ndata = (Node) o;
+				Object evTyper = context.getValue(expectedReturnType);
+				if (evTyper == null) {
+					evTyper = EntryPoint.globalContext.getValue(expectedReturnType);
+				}
+				
+				if (evTyper instanceof Node) {
+					String type = ((Node) evTyper).type();
+					
+					if (!ndata.isInType(type)) {
+						EntryPoint.raiseErr("Expected "+type+" as return, got "+ndata.type());
+					}
+				}
+			}
+		}
 		
 		return data;
 	}

@@ -389,6 +389,12 @@ public class Parser {
 		this.advance();
 		
 		if(this.current_token.type == TokenType.NAME) {
+			String expectedReturnType = "";
+			if (this.next() != null && this.next().type == TokenType.NAME) {
+				expectedReturnType = (String) this.current_token.value;
+				this.advance();
+			}
+			
 			String name = (String) this.current_token.value;
 			
 			this.advance();
@@ -491,7 +497,7 @@ public class Parser {
 			n.kwargs = kwargs;
 			n.name = name;*/
 			
-			FunctionBuilder fb = new FunctionBuilder(0,0, args, kwargs, name, nodes, agEnabled, agName, kwEnabled, kwName, expectedTypeVar);
+			FunctionBuilder fb = new FunctionBuilder(0,0, args, kwargs, name, nodes, agEnabled, agName, kwEnabled, kwName, expectedTypeVar, expectedReturnType);
 			
 			if (p.current_token.type != TokenType.RCURLYBRACKET) {
 				p.advance();
