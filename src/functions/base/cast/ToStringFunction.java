@@ -14,6 +14,10 @@ public class ToStringFunction extends FunctionNode {
 		super(col, line);
 	}
 
+	public String type() {
+		return "string";
+	}
+	
 	public Object evaluate(VariableContext context, ArrayList<Object> args, HashMap<StringNode, Object> kwargs_entry) {
 		if (args.size() != 1) {
 			EntryPoint.raiseErr("Expected 1 argument in str, got "+args.size());

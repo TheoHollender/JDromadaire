@@ -19,6 +19,7 @@ public class FunctionNode extends Node {
 	public boolean args_enabled = false;
 	public String kwarg_name = "";
 	public String arg_name = "";
+	public HashMap<String, String> expectedTypeVar = new HashMap();
 	public FunctionNode(int col, int line) {
 		super(col, line);
 		this.typeName = "function";
@@ -81,6 +82,8 @@ public class FunctionNode extends Node {
 		return data;
 	}
 	
+	
+	
 	public Object evaluate(VariableContext context, ArrayList<Object> args, HashMap<StringNode, Object> kwargs_entry) {
 		Object data = null;
 		
@@ -97,6 +100,7 @@ public class FunctionNode extends Node {
 			if (arguments.contains(en.getKey())) {
 				found[arguments.indexOf(en.getKey())] = true;
 				context.setValue(en.getKey().getValue(), en.getValue());
+				evaluateKwargs(en, context);
 			} else {
 				if (kwargs_enabled) {
 					dn.set(en.getKey(), en.getValue());
@@ -109,6 +113,7 @@ public class FunctionNode extends Node {
 			if (arguments.contains(en.getKey())) {
 				found[arguments.indexOf(en.getKey())] = true;
 				context.setValue(en.getKey().getValue(), en.getValue());
+				evaluateKwargs(en, context);
 			} else {
 				if (kwargs_enabled) {
 					dn.set(en.getKey(), en.getValue());
@@ -122,6 +127,7 @@ public class FunctionNode extends Node {
 		for(Object dat:args) {
 			if (i < arguments.size()) {
 				context.setValue(arguments.get(i).getValue(), dat);
+				evaluateArgs(arguments.get(i).getValue(), dat, context);
 			} else {
 				an.add(dat);
 			}
@@ -144,6 +150,31 @@ public class FunctionNode extends Node {
 		data = Evaluator.evaluate(this.evaluators, context, false);
 		
 		return data;
+	}
+
+	private void evaluateArgs(String value, Object dat, VariableContext context) {
+		if (dat instanceof Node) {
+			Node typeTester = (Node) dat;
+			
+			if (expectedTypeVar.containsKey(value)) {
+				String s = expectedTypeVar.get(value);
+				Object o = context.getValue(s);
+				if (o == null) {
+					o = EntryPoint.globalContext.getValue(s);
+				}
+				if (o instanceof Node) {
+					String type = ((Node)o).type();
+					
+					if (!typeTester.isInType(type)) {
+						EntryPoint.raiseErr("Expected "+type+" as "+value+" argument, got "+typeTester.type());
+					}
+				}
+			}
+		}
+	}
+	
+	public void evaluateKwargs(Entry<StringNode, Object> en, VariableContext context) {
+		evaluateArgs(en.getKey().getValue(), en.getValue(), context);
 	}
 	
 }

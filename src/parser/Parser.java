@@ -404,6 +404,7 @@ public class Parser {
 			
 			ArrayList<StringNode> args = new ArrayList<>();
 			HashMap<StringNode, Node> kwargs = new HashMap<StringNode,Node>();
+			HashMap<String, String> expectedTypeVar = new HashMap();
 			TokenType lastType = this.current_token.type;
 			while(this.advanceResult && lastType != TokenType.RPAREN
 					&& (this.current_token.type == TokenType.NAME
@@ -432,7 +433,20 @@ public class Parser {
 				}
 				
 				Token a = this.current_token;
+				String typeVarName = null;
 				this.advance();
+				
+				if (this.current_token.type == TokenType.TWO_POINTS) {
+					this.advance();
+					
+					if (this.current_token.type != TokenType.NAME) {
+						System.out.println("Expected variable type container after two points");
+						EntryPoint.raiseToken(this.current_token);
+					}
+					
+					typeVarName = (String) this.current_token.value;
+					this.advance();
+				}
 				
 				lastType = this.current_token.type;
 				
@@ -446,6 +460,9 @@ public class Parser {
 					kwargs.put(new StringNode(a.col, a.line, (String) a.value),exp);
 				}
 				args.add(new StringNode(a.col, a.line, (String) a.value));
+				if(typeVarName != null) {
+					expectedTypeVar.put((String) a.value, typeVarName);
+				}
 				
 				if(lastType != TokenType.RPAREN) {
 					this.advance();
@@ -474,7 +491,7 @@ public class Parser {
 			n.kwargs = kwargs;
 			n.name = name;*/
 			
-			FunctionBuilder fb = new FunctionBuilder(0,0, args, kwargs, name, nodes, agEnabled, agName, kwEnabled, kwName);
+			FunctionBuilder fb = new FunctionBuilder(0,0, args, kwargs, name, nodes, agEnabled, agName, kwEnabled, kwName, expectedTypeVar);
 			
 			if (p.current_token.type != TokenType.RCURLYBRACKET) {
 				p.advance();

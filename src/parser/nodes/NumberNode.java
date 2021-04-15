@@ -19,9 +19,12 @@ public class NumberNode extends Node implements EvaluateOperator<NumberNode>,Una
 		super(col, line);
 		this.number = value;
 		this.typeName = "number";
-		/*if (this.isInt()) {
+		if (this.isInt()) {
 			this.typeName = "int";
-		}*/
+			Node n = new Node(col, line);
+			n.typeName = "number";
+			this.parents.add(n);
+		}
 	}
 	
 	public NumberNode(Object value, int col, int line) {

@@ -15,8 +15,9 @@ public class FunctionBuilder extends Node {
 	private String agName;
 	private boolean kwEnabled;
 	private String kwName;
+	private HashMap<String, String> expectedTypeVar;
 
-	public FunctionBuilder(int col, int line, ArrayList<StringNode> args, HashMap<StringNode, Node> kwargs, String name, ArrayList<Node> evals, boolean agEnabled, String agName, boolean kwEnabled, String kwName) {
+	public FunctionBuilder(int col, int line, ArrayList<StringNode> args, HashMap<StringNode, Node> kwargs, String name, ArrayList<Node> evals, boolean agEnabled, String agName, boolean kwEnabled, String kwName, HashMap<String, String> expectedTypeVar) {
 		super(col, line);
 		this.args = args;
 		this.kwargs = kwargs;
@@ -26,6 +27,7 @@ public class FunctionBuilder extends Node {
 		this.agName = agName;
 		this.kwEnabled = kwEnabled;
 		this.kwName = kwName;
+		this.expectedTypeVar = expectedTypeVar;
 	}
 	
 	private HashMap<StringNode, Node> kwargs;
@@ -51,6 +53,7 @@ public class FunctionBuilder extends Node {
 		f.arg_name = agName;
 		f.kwargs_enabled = kwEnabled;
 		f.kwarg_name = kwName;
+		f.expectedTypeVar = expectedTypeVar;
 		
 		ctx.setValue(name, f);
 		

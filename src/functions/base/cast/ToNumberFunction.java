@@ -22,6 +22,13 @@ public class ToNumberFunction extends FunctionNode {
 		this.pCountMax = pCountMax;
 	}
 	
+	public String type() {
+		if (pCountMax == 0) {
+			return "int";
+		}
+		return "number";
+	}
+	
 	public Object evaluate(VariableContext context, ArrayList<Object> args, HashMap<StringNode, Object> kwargs_entry) {
 		if (args.size() != 1) {
 			EntryPoint.raiseErr("Expected 1 argument in number cast, got "+args.size());

@@ -1,5 +1,7 @@
 package parser;
 
+import java.util.ArrayList;
+
 import variables.VariableContext;
 
 public class Node {
@@ -10,6 +12,19 @@ public class Node {
 			return typeName;
 		}
 		return this.getClass().toString();
+	}
+	public ArrayList<Node> parents = new ArrayList<Node>();
+	public boolean isInType(String s) {
+		if (typeName.equals(s)) {
+			return true;
+		}
+		
+		for(Node p:parents) {
+			if (p.isInType(s)) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public int col;
