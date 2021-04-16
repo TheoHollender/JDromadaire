@@ -28,6 +28,7 @@ import parser.nodes.getters.ReturnGetterNode;
 import parser.nodes.innerreturn.BreakNode;
 import parser.nodes.innerreturn.ContinueNode;
 import parser.nodes.statements.ForNode;
+import parser.nodes.statements.GlobalizerNode;
 import parser.nodes.statements.IfNode;
 import variables.ClassNode;
 import variables.VariableContext;
@@ -53,6 +54,13 @@ public class Parser {
 	public Token next() {
 		if (this.tok_id + 1 < this.tokens.size()) {
 			return this.tokens.get(this.tok_id + 1);
+		}
+		return null;
+	}
+	
+	public Token last() {
+		if (this.tok_id > 0 && this.tok_id <= this.tokens.size()) {
+			return this.tokens.get(this.tok_id - 1);
 		}
 		return null;
 	}
@@ -122,6 +130,22 @@ public class Parser {
 	}
 	
 	private Node parseChoice() {
+		int cp_tok_id = this.tok_id;
+		if (this.current_token.type == TokenType.GLOBAL) {			
+			this.advance();
+			Node n = this.parseChoice();
+			if (n instanceof SetterNode) {
+				((SetterNode) n).isGlobalSetted = true;
+				return n;
+			}
+			if(n instanceof ListSetterNode) {
+				((ListSetterNode) n).isGlobalContext = true;
+				return n;
+			}
+			this.tok_id = cp_tok_id - 1;
+			this.advance();
+		}
+		
 		if (this.current_token.type == TokenType.EOF) {
 			return null;
 		}
@@ -798,6 +822,10 @@ public class Parser {
 				}
 			}
 			
+
+			this.tok_id = cp_tok_id - 1;
+			this.advance();
+			this.advance();
 			TokenType[] opeq_types = new TokenType[] {
 					TokenType.PLUS, TokenType.MINUS,
 					TokenType.POW, TokenType.MUL, TokenType.DIV,
@@ -932,6 +960,11 @@ public class Parser {
 	
 	private Node factor() {
 		Token tok = this.current_token;
+		
+		if (tok.type == TokenType.GLOBAL) {
+			this.advance();
+			return new GlobalizerNode(tok.col, tok.line, this.factor());
+		}
 		
 		if (tok.type == TokenType.NUMBER) {
 			this.advance();
