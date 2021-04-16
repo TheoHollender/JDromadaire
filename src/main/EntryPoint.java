@@ -105,7 +105,9 @@ public class EntryPoint {
 	    Evaluator.evaluate(evNodes, globalContext, printAll);
 	    unregisterStack(globalContext);
 
-		} catch (RuntimeInterpreterException e) {}
+		} catch (RuntimeInterpreterException e) {
+			stack.clear();
+		}
 	}
 
 

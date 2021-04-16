@@ -1,6 +1,7 @@
 package functions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import main.EntryPoint;
 import parser.nodes.FunctionNode;
@@ -14,7 +15,7 @@ public class OrdFunction extends FunctionNode {
 		super(col, line);
 	}
 
-	public Object evaluate(VariableContext context, ArrayList<Object> args) {
+	public Object evaluate(VariableContext context, ArrayList<Object> args, HashMap<StringNode, Object> kwargs_entry) {
 		if(args.size()!=1) {
 			EntryPoint.raiseErr("Expected 1 argument, got "+args.size());
             return null;

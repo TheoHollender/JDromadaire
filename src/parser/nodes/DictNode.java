@@ -13,6 +13,7 @@ public class DictNode extends Node implements ListOperator {
 	
 	public DictNode(int col, int line) {
 		super(col, line);
+		this.typeName = "array";
 	}
 	
 	public Object evaluate(VariableContext context) {

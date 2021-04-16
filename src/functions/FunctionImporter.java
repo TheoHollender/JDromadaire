@@ -5,12 +5,12 @@ import java.math.MathContext;
 
 import ch.obermuhlner.math.big.BigDecimalMath;
 import functions.base.array.MapFunction;
+import functions.base.cast.ToBooleanFunction;
 import functions.base.cast.ToNumberFunction;
 import functions.base.cast.ToStringFunction;
 import functions.files.FileNode;
 import libs.LibLoader;
 import main.EntryPoint;
-import parser.nodes.NumberNode;
 import variables.VariableContext;
 
 public class FunctionImporter {
@@ -27,11 +27,13 @@ public class FunctionImporter {
 		cont.setValue("str", new ToStringFunction(-2,-2));
 		cont.setValue("int", new ToNumberFunction(-2,-2, 0));
 		cont.setValue("number", new ToNumberFunction(-2,-2, 1));
+		cont.setValue("boolean", new ToBooleanFunction(-2,-2));
 		cont.setValue("File", new FileNode(-2,-2));
 		cont.setValue("range", new RangeFunction(-2,-2));
 		cont.setValue("sum", new SumFunction(-2,-2));
 		cont.setValue("chr", new ChrFunction(-2,-2));
 		cont.setValue("ord", new OrdFunction(-2,-2));
+		cont.setValue("type", new TypeFunction(-2,-2));
 
 		// Math
 		cont.setValue("round", new RoundFunction(-2,-2));

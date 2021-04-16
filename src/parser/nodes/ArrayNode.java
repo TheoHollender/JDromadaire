@@ -22,6 +22,8 @@ public class ArrayNode extends ClassNode implements ListOperator, IteratorOperat
 	public ArrayNode(int col, int line) {
 		super(col, line);
 		
+		this.typeName = "array";
+		
 		isRoot = false;
 		isSetable = true;
 		

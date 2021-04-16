@@ -2,11 +2,13 @@ package functions;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import main.EntryPoint;
 import parser.nodes.ArrayNode;
 import parser.nodes.FunctionNode;
 import parser.nodes.NumberNode;
+import parser.nodes.StringNode;
 import variables.VariableContext;
 
 public class RoundFunction extends FunctionNode {
@@ -15,7 +17,7 @@ public class RoundFunction extends FunctionNode {
 		super(col, line);
 	}
 
-	public Object evaluate(VariableContext context, ArrayList<Object> args) {
+	public Object evaluate(VariableContext context, ArrayList<Object> args, HashMap<StringNode, Object> kwargs_entry) {
 		BigDecimal pre = BigDecimal.ZERO;
 		BigDecimal nb = BigDecimal.ONE;
 		if(args.size()==1) {

@@ -26,13 +26,13 @@ public class Scanner {
 	};
 	static final String[] STRINGTOKEN_STRING = new String[] {
 		"function", "return", "true", "false", "if", "for", "break",
-		"continue", "class", "else", "import", "from",
+		"continue", "class", "else", "import", "from", "global"
 	};
 	static final TokenType[] STRINGTOKEN_TYPE = new TokenType[] {
 		TokenType.FUNCTION, TokenType.RETURN, TokenType.TRUE,
 		TokenType.FALSE, TokenType.IF, TokenType.FOR, TokenType.BREAK,
 		TokenType.CONTINUE, TokenType.CLASS, TokenType.ELSE, 
-		TokenType.IMPORT, TokenType.FROM,
+		TokenType.IMPORT, TokenType.FROM, TokenType.GLOBAL,
 	};
 	static final String[] OPERATORTOKEN_STRING = new String[] {
 		"==", "<=", ">=", "!=", "&&", "||", "<", ">"
@@ -42,7 +42,6 @@ public class Scanner {
 		TokenType.NOTEQ, TokenType.AND, TokenType.OR,
 		TokenType.INF, TokenType.SUP,
 	};
-	
 	
 	final String source;
 	
@@ -245,15 +244,34 @@ public class Scanner {
 		this.advance();
 		while(this.advanceResult) {
 			if (this.current_char == '\"' && lchar != '\\') {
-				return new Token(TokenType.STRING, string.toString(), this.col, this.line);
+				return new Token(TokenType.STRING, transformString(string.toString()), this.col, this.line);
 			}
 			
 			string.append(this.current_char);
 			
-			lchar = this.current_char;
+			if (this.current_char == '\\') {
+				if (lchar != '\\') {
+					lchar = '\\';
+				} else {
+					lchar = ' ';
+				}
+			} else {
+				lchar = this.current_char;
+			}
+			
 			this.advance();
 		}
 		return null;
+	}
+
+	private String transformString(String string) {
+		return string.replaceAll("\\\\t", "\t")
+				.replaceAll("\\\\b", "\b")
+				.replaceAll("\\\\n", "\n")
+				.replaceAll("\\\\f", "\f")
+				.replaceAll("\\\\\\\'", "\'")
+				.replaceAll("\\\\\\\"", "\"")
+				.replaceAll("\\\\\\\\", "\\\\");
 	}
 
 	private boolean isCharIgnore() {
