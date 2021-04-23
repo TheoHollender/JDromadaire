@@ -156,17 +156,10 @@ public class FunctionNode extends Node {
 			
 			if (o instanceof Node) {
 				Node ndata = (Node) o;
-				Object evTyper = context.getValue(expectedReturnType);
-				if (evTyper == null) {
-					evTyper = EntryPoint.globalContext.getValue(expectedReturnType);
-				}
-				
-				if (evTyper instanceof Node) {
-					String type = ((Node) evTyper).type();
+				String type = expectedReturnType;
 					
-					if (!ndata.isInType(type)) {
-						EntryPoint.raiseErr("Expected "+type+" as return, got "+ndata.type());
-					}
+				if (!ndata.isInType(type)) {
+					EntryPoint.raiseErr("Expected "+type+" as return, got "+ndata.type());
 				}
 			}
 		}
@@ -179,17 +172,9 @@ public class FunctionNode extends Node {
 			Node typeTester = (Node) dat;
 			
 			if (expectedTypeVar.containsKey(value)) {
-				String s = expectedTypeVar.get(value);
-				Object o = context.getValue(s);
-				if (o == null) {
-					o = EntryPoint.globalContext.getValue(s);
-				}
-				if (o instanceof Node) {
-					String type = ((Node)o).type();
-					
-					if (!typeTester.isInType(type)) {
-						EntryPoint.raiseErr("Expected "+type+" as "+value+" argument, got "+typeTester.type());
-					}
+				String type = expectedTypeVar.get(value);
+				if (!typeTester.isInType(type)) {
+					EntryPoint.raiseErr("Expected "+type+" as "+value+" argument, got "+typeTester.type());
 				}
 			}
 		}

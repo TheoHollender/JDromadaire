@@ -15,6 +15,10 @@ public class Node {
 	}
 	public ArrayList<Node> parents = new ArrayList<Node>();
 	public boolean isInType(String s) {
+		if (s.equals("any")) {
+			return true;
+		}
+		
 		if (typeName.equals(s)) {
 			return true;
 		}

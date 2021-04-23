@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import main.EntryPoint;
 import parser.Node;
 import parser.nodes.FunctionNode;
 import parser.nodes.StringNode;
@@ -37,6 +38,21 @@ public class FunctionBuilder extends Node {
 	private ArrayList<Node> evaluators;
 	private String name;
 	
+	public String getType(String name, VariableContext ctx, String defaultV) {
+		Object o = ctx.getValue(name);
+		if (o == null) {
+			o = EntryPoint.globalContext.getValue(name);
+		}
+		
+		if (o != null) {
+			if (o instanceof Node) {
+				return ((Node)o).type();
+			}
+		}
+		
+		return defaultV;
+	}
+	
 	public Object evaluate(VariableContext ctx) {
 		FunctionNode f = new FunctionNode(this.col, this.line);
 		
@@ -55,8 +71,17 @@ public class FunctionBuilder extends Node {
 		f.arg_name = agName;
 		f.kwargs_enabled = kwEnabled;
 		f.kwarg_name = kwName;
-		f.expectedTypeVar = expectedTypeVar;
-		f.expectedReturnType = expectedReturnType;
+		
+		HashMap<String, String> computedTypeVar = new HashMap(expectedTypeVar.size());
+		for (Entry<String, String> en:expectedTypeVar.entrySet()) {
+			String s = getType(en.getValue(), ctx, null);
+			if (s == null) {
+				EntryPoint.raiseErr("The requested type ("+en.getValue()+") doesn't exists.");
+			}
+			computedTypeVar.put(en.getKey(), s);
+		}
+		f.expectedTypeVar = computedTypeVar;
+		f.expectedReturnType = getType(expectedReturnType, ctx, "");
 		
 		ctx.setValue(name, f);
 		

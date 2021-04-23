@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import main.EntryPoint;
 import parser.Node;
 import parser.nodes.FunctionNode;
 import parser.nodes.NumberNode;
@@ -13,6 +14,55 @@ import parser.operators.ListOperator;
 
 public class ClassNode extends Node implements ListOperator {
 
+	public int getIntegerValue(ArrayList<Object> args, int index) {
+		if (args.get(index) instanceof NumberNode
+				&& ((NumberNode)args.get(index)) != null
+				&& ((NumberNode)args.get(index)).isInt()
+				&& ((NumberNode)args.get(index)).isIntegerRange()){
+			return ((NumberNode)args.get(index)).getNumber().intValue();
+		}
+		EntryPoint.raiseErr("Expected integer as argument n°"+index+", got "+args.get(index).getClass());
+		return -1;
+	}
+	
+	public String getStringValue(ArrayList<Object> args, int index) {
+		if (args.get(index) instanceof StringNode
+				&& ((StringNode)args.get(index)) != null){
+			return ((StringNode)args.get(index)).getValue();
+		}
+		EntryPoint.raiseErr("Expected string as argument n°"+index+", got "+args.get(index).getClass());
+		return "";
+	}
+	
+	public void checkSize(ArrayList<Object> args, int... sizes) {
+		boolean b = false;
+		
+		for (int size:sizes) {
+			if (size == args.size()) {
+				b = true;
+				break;
+			}
+		}
+		
+		if (!b) {
+			StringBuffer strbf = new StringBuffer();
+			for(int i = 0; i < sizes.length; i++) {
+				if (i != sizes.length - 1) {
+					if (i != 0) {
+						strbf.append(", ");
+					}
+					strbf.append(sizes[i]);
+				} else {
+					if (i != 0) {
+						strbf.append(" or ");
+					}
+					strbf.append(sizes[i]);
+				}
+			}
+			EntryPoint.raiseErr("Expected "+strbf.toString()+" arguments, got "+args.size());
+		}
+	}
+	
 	public boolean isRoot = true;
 	public String name;
 	protected boolean isSetable = true;
@@ -107,7 +157,5 @@ public class ClassNode extends Node implements ListOperator {
 	public int length() {
 		return 0;
 	}
-
-	
 	
 }
