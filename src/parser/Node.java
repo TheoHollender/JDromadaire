@@ -2,6 +2,7 @@ package parser;
 
 import java.util.ArrayList;
 
+import main.EntryPoint;
 import variables.VariableContext;
 
 public class Node {
@@ -50,6 +51,23 @@ public class Node {
 			return ((ValueNode) this).getValue();
 		}
 		
+		return null;
+	}
+
+	public static Object undoCast(Object base, Object end) {
+		return end;
+	}
+	
+	public void recoverNativeModifications(Object o) {
+		
+	}
+
+	public Object castTo(Class<?> type) {
+		if (type == this.getClass()) {
+			return this;
+		}
+		
+		EntryPoint.raiseErr("Native cast error : Couldn't cast "+this.getClass()+" to "+type);
 		return null;
 	}
 	

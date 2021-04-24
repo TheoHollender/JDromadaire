@@ -1,5 +1,6 @@
 .settings/
 bin/
+ressources/
 .project
 .classpath
 keyset-master.json
