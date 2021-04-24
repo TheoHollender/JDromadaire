@@ -112,4 +112,13 @@ public class StringNode extends ClassNode implements EvaluateOperator,ListOperat
 		return this.value.compareTo(e.getValue());
 	}
 	
+	public Object castTo(Class<?> type) {
+		if (type == CharSequence.class ||
+				type == String.class) {
+			return this.value;
+		}
+		
+		return super.castTo(type);
+	}
+	
 }

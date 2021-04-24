@@ -1,9 +1,20 @@
 package parser.nodes;
 
+import java.lang.reflect.Array;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.math.BigDecimal;
+import java.nio.Buffer;
+import java.nio.CharBuffer;
+import java.nio.DoubleBuffer;
+import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
+import java.nio.LongBuffer;
 import java.util.ArrayList;
 
 import functions.base.array.ArrayFunctions;
 import main.EntryPoint;
+import parser.Node;
 import parser.operators.ComparateOperator;
 import parser.operators.IteratorOperator;
 import parser.operators.ListOperator;
@@ -137,6 +148,81 @@ public class ArrayNode extends ClassNode implements ListOperator, IteratorOperat
 			}
 		}
 		return 0;
+	}
+	
+	public static Object undoComponentCast(Object base, Object end) {
+		if (base instanceof Node) {
+			Method m;
+			try {
+				m = base.getClass().getMethod("undoCast", new Class[] {Object.class, Object.class});
+				return m.invoke(null, base, end);
+			} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return base.getClass().cast(end);
+	}
+	
+	public static Object undoCast(Object base, Object end) {
+		if (end instanceof Buffer) {
+			end = ((Buffer) end).array();
+		}
+		
+		if (base instanceof ArrayNode) {
+			((ArrayNode) base).recoverNativeModifications(end);
+			return base;
+		}
+		
+		return base;
+	}
+	
+	public void recoverNativeModifications(Object o) {
+		for (int i=0; i<this.array.size(); i++) {
+			this.array.set(i, undoComponentCast(array.get(i), Array.get(o, i)));
+		}
+	}
+	
+	public Object castTo(Class<?> type) {
+		if (type.isArray()) {
+			Object o = Array.newInstance(type.getComponentType(), this.array.size());
+			
+			for (int i=0; i<this.array.size(); i++)
+	            Array.set(o, i, this.castItem(array.get(i), type.getComponentType()));
+			
+			return o;
+		}
+		
+		if (type == FloatBuffer.class) {
+			return this.castTo(float[].class);
+		}
+		if (type == IntBuffer.class) {
+			return this.castTo(int[].class);
+		}
+		if (type == LongBuffer.class) {
+			return this.castTo(long[].class);
+		}
+		if (type == DoubleBuffer.class) {
+			return this.castTo(double[].class);
+		}
+		if (type == CharBuffer.class) {
+			return this.castTo(char[].class);
+		}
+		
+		return super.castTo(type);
+	}
+
+	private Object castItem(Object o, Class<?> componentType) {
+		if (o instanceof Node) {
+			return ((Node) o).castTo(componentType);
+		}
+		
+		try {
+			return componentType.cast(o);
+		} catch (Exception e) {
+			EntryPoint.raiseErr("Failed to cast component to "+componentType+" in native method");
+			return null;
+		}
 	}
 
 }

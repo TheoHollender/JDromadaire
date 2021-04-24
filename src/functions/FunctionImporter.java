@@ -11,10 +11,11 @@ import functions.base.cast.ToStringFunction;
 import functions.files.FileNode;
 import libs.LibLoader;
 import main.EntryPoint;
+import variables.NativeMethodNode;
 import variables.VariableContext;
 
 public class FunctionImporter {
-
+	
 	public static void ImportFunctions() {
 		VariableContext cont = EntryPoint.globalContext;
 		
@@ -42,6 +43,7 @@ public class FunctionImporter {
 		LibLoader.registerModule("math", "libs/math.jar");
 		LibLoader.registerModule("time", "libs/lib_time.jar");
 		LibLoader.registerModule("random", "libs/lib_random.jar");
+		LibLoader.registerModule("opengl", "libs/lib_opengl.jar");
 	}
 	
 }

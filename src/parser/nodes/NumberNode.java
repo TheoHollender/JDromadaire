@@ -124,4 +124,112 @@ public class NumberNode extends Node implements EvaluateOperator<NumberNode>,Una
 		return bd.signum();
 	}
 
+	public boolean isFloat() {
+		return true;
+	}
+
+	public boolean isFloatRange() {
+		return number.compareTo(BigDecimal.valueOf(Float.MAX_VALUE)) < 0
+				&& number.compareTo(BigDecimal.valueOf(Float.MIN_VALUE)) > 0;
+	}
+	
+	public boolean isDouble() {
+		return true;
+	}
+
+	public boolean isDoubleRange() {
+		return number.compareTo(BigDecimal.valueOf(Double.MAX_VALUE)) < 0
+				&& number.compareTo(BigDecimal.valueOf(Double.MIN_VALUE)) > 0;
+	}
+	
+	public Object castTo(Class<?> type) {
+		if (type == Integer.class || type == int.class) {
+			return this.intValue();
+		}
+		if (type == Long.class || type == long.class) {
+			return this.longValue();
+		}
+		if (type == Float.class || type == float.class) {
+			return this.floatValue();
+		}
+		if (type == Double.class || type == double.class) {
+			return this.doubleValue();
+		}
+		
+		return super.castTo(type);
+	}
+	
+	public static Object undoCast(Object base, Object end) {
+		if (end instanceof Integer) {
+			((NumberNode)base).number = BigDecimal.valueOf((int)end);
+			return base;
+		}
+		if (end instanceof Long) {
+			((NumberNode)base).number = BigDecimal.valueOf((long)end);
+			return base;
+		}
+		if (end instanceof Float) {
+			((NumberNode)base).number = BigDecimal.valueOf((float)end);
+			return base;
+		}
+		if (end instanceof Double) {
+			((NumberNode)base).number = BigDecimal.valueOf((double)end);
+			return base;
+		}
+		
+		return end;
+	}
+	
+	public int intValue() {
+		if (this.isInt()) {
+			if (this.isIntegerRange()) {
+				return this.number.intValue();
+			} else {
+				EntryPoint.raiseErr("Expected integer during cast, got integer over range limit");
+			}
+		} else {
+			EntryPoint.raiseErr("Expected integer during cast, got float or complex");
+		}
+		return -1;
+	}
+
+	public long longValue() {
+		if (this.isLong()) {
+			if (this.isLongRange()) {
+				return this.number.longValue();
+			} else {
+				EntryPoint.raiseErr("Expected long during cast, got long over range limit");
+			}
+		} else {
+			EntryPoint.raiseErr("Expected long during cast, got float or complex");
+		}
+		return -1;
+	}
+	
+	public float floatValue() {
+		if (this.isFloat()) {
+			if (this.isFloatRange()) {
+				return this.number.floatValue();
+			} else {
+				EntryPoint.raiseErr("Expected float during cast, got float over range limit");
+			}
+		} else {
+			EntryPoint.raiseErr("Expected float during cast, got complex");
+		}
+		return -1;
+	}
+	
+	public double doubleValue() {
+		if (this.isDouble()) {
+			if (this.isDoubleRange()) {
+				return this.number.doubleValue();
+			} else {
+				EntryPoint.raiseErr("Expected double during cast, got double over range limit");
+			}
+		} else {
+			EntryPoint.raiseErr("Expected double during cast, got complex");
+		}
+		return -1;
+	}
+	
 }
