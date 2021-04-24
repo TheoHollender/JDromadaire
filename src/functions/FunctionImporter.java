@@ -42,7 +42,6 @@ public class FunctionImporter {
 		LibLoader.registerModule("math", "libs/math.jar");
 		LibLoader.registerModule("time", "libs/lib_time.jar");
 		LibLoader.registerModule("random", "libs/lib_random.jar");
-		LibLoader.registerModule("requests", "libs/requests.jar");
 	}
 	
 }
