@@ -9,7 +9,7 @@ import variables.VariableContext;
 
 public class DictNode extends Node implements ListOperator {
 
-	private HashMap<String, Object> objects = new HashMap<String, Object>();
+	public HashMap<String, Object> objects = new HashMap<String, Object>();
 	
 	public DictNode(int col, int line) {
 		super(col, line);

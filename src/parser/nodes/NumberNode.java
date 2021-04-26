@@ -130,7 +130,7 @@ public class NumberNode extends Node implements EvaluateOperator<NumberNode>,Una
 
 	public boolean isFloatRange() {
 		return number.compareTo(BigDecimal.valueOf(Float.MAX_VALUE)) < 0
-				&& number.compareTo(BigDecimal.valueOf(Float.MIN_VALUE)) > 0;
+				&& number.compareTo(BigDecimal.valueOf(-Float.MAX_VALUE)) > 0;
 	}
 	
 	public boolean isDouble() {
@@ -139,7 +139,7 @@ public class NumberNode extends Node implements EvaluateOperator<NumberNode>,Una
 
 	public boolean isDoubleRange() {
 		return number.compareTo(BigDecimal.valueOf(Double.MAX_VALUE)) < 0
-				&& number.compareTo(BigDecimal.valueOf(Double.MIN_VALUE)) > 0;
+				&& number.compareTo(BigDecimal.valueOf(-Double.MAX_VALUE)) > 0;
 	}
 	
 	public Object castTo(Class<?> type) {
