@@ -19,6 +19,7 @@ import parser.nodes.ListSetterNode;
 import parser.nodes.NumberNode;
 import parser.nodes.StringNode;
 import parser.nodes.builders.ArrayBuilder;
+import parser.nodes.builders.DictBuilder;
 import parser.nodes.builders.FunctionBuilder;
 import parser.nodes.getters.FuncGetterNode;
 import parser.nodes.getters.GetterNode;
@@ -995,6 +996,9 @@ public class Parser {
 		} else if (tok.type == TokenType.LHOOK) {
 			this.advance();
 			return this.buildArray();
+		} else if (tok.type == TokenType.LCURLYBRACKET) {
+			this.advance();
+			return this.buildDict();
 		} else if (tok.type == TokenType.TRUE) {
 			this.advance();
 			return new BooleanNode(tok.col, tok.line, true);
@@ -1016,6 +1020,28 @@ public class Parser {
 			
 			this.advance();
 			node.add(expr);
+		}
+		
+		return node;
+	}
+	
+	private Node buildDict() {
+		DictBuilder node = new DictBuilder(this.current_token.col, this.current_token.line);
+		
+		TokenType lastType = this.current_token.type;
+		while(this.advanceResult && lastType != TokenType.RCURLYBRACKET) {
+			Node key_expr = this.bin();
+			if (this.current_token.type != TokenType.TWO_POINTS) {
+				System.out.println("Expected two points in dictionnary, you might have an error in your expression");
+				EntryPoint.raiseToken(this.current_token);
+				return null;
+			}
+			this.advance();
+			Node obj_expr = this.bin();
+			lastType = this.current_token.type;
+			
+			this.advance();
+			node.put(key_expr, obj_expr);
 		}
 		
 		return node;
