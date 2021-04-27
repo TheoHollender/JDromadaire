@@ -103,14 +103,14 @@ public class NumberNode extends Node implements EvaluateOperator<NumberNode>,Una
 			EntryPoint.raiseErr("Division by Zero Error");
 			return null;
 		}
-		int scaleMax = Math.max(e.getNumber().scale(), this.getNumber().scale());
+		int scaleMax = Math.min(0, Math.max(e.getNumber().scale(), this.getNumber().scale()));
 		BigDecimal n = this.getNumber().divide(e.getNumber(), scaleMax + MAX_DIVIDE_SCALE, RoundingMode.HALF_UP).stripTrailingZeros();
 		return new NumberNode(n.setScale(Math.max(0, n.scale())), this.col, this.line);
 	}
 
 	@Override
 	public Object power(NumberNode e) {
-		return new NumberNode(BigDecimalMath.pow(this.getNumber(), e.getNumber(), MathContext.DECIMAL64), this.col, this.line);
+		return new NumberNode(BigDecimalMath.pow(this.getNumber(), e.getNumber(), MathContext.DECIMAL128), this.col, this.line);
 	}
 
 	@Override

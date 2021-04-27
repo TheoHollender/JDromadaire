@@ -3,6 +3,7 @@ package parser.nodes;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import main.EntryPoint;
 import parser.Node;
 import parser.operators.ListOperator;
 import variables.VariableContext;
@@ -10,6 +11,7 @@ import variables.VariableContext;
 public class DictNode extends Node implements ListOperator {
 
 	public HashMap<String, Object> objects = new HashMap<String, Object>();
+	public boolean immutable = false;
 	
 	public DictNode(int col, int line) {
 		super(col, line);
@@ -27,6 +29,10 @@ public class DictNode extends Node implements ListOperator {
 
 	@Override
 	public boolean set(StringNode n, Object o) {
+		if (immutable) {
+			EntryPoint.raiseErr("The Dict object that you requested is immutable");
+		}
+		
 		this.objects.put(n.getValue(), o);
 		return true;
 	}
