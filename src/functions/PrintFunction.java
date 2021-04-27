@@ -35,7 +35,11 @@ public class PrintFunction extends FunctionNode {
 			if (hadLast) {
 				strbf.append(sep);
 			}
-			strbf.append(o);
+			if (o instanceof StringNode) {
+				strbf.append(((StringNode) o).getValue());
+			} else {
+				strbf.append(o);
+			}
 			hadLast = true;
 		}
 		strbf.append(end);

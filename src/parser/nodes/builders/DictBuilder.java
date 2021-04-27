@@ -18,6 +18,7 @@ public class DictBuilder extends Node {
 
 
 	private HashMap<Node, Node> exprs = new HashMap<Node,Node>();
+	public boolean immutable;
 
 	public void put(Node key, Node expr) {
 		exprs.put(key, expr);
@@ -42,6 +43,7 @@ public class DictBuilder extends Node {
 		DictNode dict = new DictNode(col, line);
 		
 		dict.objects = new HashMap<String,Object>(exprs.size());
+		dict.immutable = this.immutable;
 		
 		for (Entry<Node, Node> entry:exprs.entrySet()) {
 			evaluateEntry(ctx, entry, dict.objects);
