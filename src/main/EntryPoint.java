@@ -93,7 +93,7 @@ public class EntryPoint {
 	    if (tokens == null || raised) {
 	    	return ;
 	    }
-
+	    
 	    Parser p = new Parser();
 	    ArrayList<Node> evNodes = p.parse(tokens, null);
 	    if (evNodes == null || raised) {

@@ -1014,6 +1014,11 @@ public class Parser {
 		ArrayBuilder node = new ArrayBuilder(this.current_token.col, this.current_token.line);
 		
 		TokenType lastType = this.current_token.type;
+		if (this.current_token.type == TokenType.RHOOK) {
+			this.advance();
+			return node;
+		}
+		
 		while(this.advanceResult && lastType != TokenType.RHOOK) {
 			Node expr = this.bin();
 			lastType = this.current_token.type;
@@ -1029,6 +1034,11 @@ public class Parser {
 		DictBuilder node = new DictBuilder(this.current_token.col, this.current_token.line);
 		
 		TokenType lastType = this.current_token.type;
+		if (this.current_token.type == TokenType.RCURLYBRACKET) {
+			this.advance();
+			return node;
+		}
+		
 		while(this.advanceResult && lastType != TokenType.RCURLYBRACKET) {
 			Node key_expr = this.bin();
 			if (this.current_token.type != TokenType.TWO_POINTS) {
