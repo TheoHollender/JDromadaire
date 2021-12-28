@@ -1,5 +1,7 @@
 # JDromadaire
 
+WARNING Project has been shifted to https://github.com/EngDrom/JDromadaire
+
 The goal of this tool is to create a language which uses the great points of python but uses the the Java/C++/C syntax and which uses the tools of Java like the Socket which is easier than python's one.
 
 ## License
